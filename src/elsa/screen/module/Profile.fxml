@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="956.0" style="-fx-background-color: rgb(50, 50, 100);" stylesheets="@../style/Landing.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.module.Profile">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" styleClass="hover-effect-15" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+      <StackPane layoutX="50.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <ImageView fx:id="avatar" fitHeight="400.0" fitWidth="300.0" onMouseClicked="#changeAvatar" pickOnBounds="true" preserveRatio="true" styleClass="hover-effect-15" StackPane.alignment="CENTER" />
+         </children>
+      </StackPane>
+      <Label layoutX="396.0" layoutY="50.0" text="Jméno:" textFill="#ffffffb2" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="404.0" layoutY="102.0" text="Příjmení:" textFill="#ffffffb2" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="406.0" layoutY="164.0" text="Email:" textFill="#ffffffb2" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="150.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="397.0" layoutY="200.0" text="Telefon:" textFill="#ffffffb2" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="200.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="399.0" layoutY="238.0" text="Adresa:" textFill="#ffffffb2" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="250.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="firstName" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="510.0" layoutY="47.0" prefWidth="300.0" styleClass="text-field" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="lastName" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="500.0" layoutY="97.0" prefWidth="300.0" styleClass="text-field" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="email" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="500.0" layoutY="147.0" prefWidth="300.0" styleClass="text-field" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="phone" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="500.0" layoutY="197.0" prefWidth="300.0" styleClass="text-field" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="address" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="500.0" layoutY="247.0" prefWidth="300.0" styleClass="text-field" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btnEdit" focusTraversable="false" layoutX="782.0" layoutY="502.0" onAction="#edit" prefWidth="150.0" styleClass="btn-login" text="Upravit" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <padding>
+            <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+         </padding>
+      </JFXButton>
+      <JFXButton focusTraversable="false" layoutX="474.0" layoutY="473.0" onAction="#changeLogin" prefHeight="41.0" prefWidth="256.0" styleClass="btn-login" text="Změnit přihlašovací údaje" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="250.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <padding>
+            <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+         </padding>
+      </JFXButton>
+      <Label fx:id="type" alignment="CENTER" layoutX="167.0" layoutY="461.0" prefWidth="200.0" text="Typ účtu" textFill="#ffffffb2" AnchorPane.leftAnchor="100.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

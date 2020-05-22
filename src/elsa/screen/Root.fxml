@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="box" prefHeight="800.0" prefWidth="1200.0" stylesheets="@style/Root.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.Root">
+   <left>
+      <AnchorPane prefHeight="800.0" prefWidth="250.0" styleClass="box" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="80.0" text="ELSA" textFill="#ffffffcc" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </Label>
+            <Label text="database" textFill="#ffffff99" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Separator opacity="0.3" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+               <children>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#myAccount" styleClass="hover-effect-15" text="Můj účet" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#mySubjects" styleClass="hover-effect-15" text="Moje předměty" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#allSubjects" styleClass="hover-effect-15" text="Všechny předměty" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+               </children>
+            </VBox>
+            <JFXButton focusTraversable="false" onAction="#logout" styleClass="hover-effect-15" text="Odhlásit" textFill="WHITE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <Separator opacity="0.3" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <Label fx:id="statusLabel" text="Autor:" textFill="#ffffffb2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets bottom="16.0" left="16.0" />
+               </padding>
+            </Label>
+            <Label fx:id="statusContent" text="Petr Bednář (st58214)" textFill="#ffffffcc" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <padding>
+                  <Insets bottom="16.0" right="16.0" />
+               </padding>
+            </Label>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(120, 120, 120);" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

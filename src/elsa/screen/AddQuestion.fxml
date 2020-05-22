@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="box" stylesheets="@style/Landing.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.AddQuestion">
+   <center>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="btnAdd" focusTraversable="false" layoutX="458.0" layoutY="334.0" onAction="#add" prefWidth="150.0" styleClass="btn-login" text="Přidat" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+               </padding>
+            </JFXButton>
+            <JFXButton focusTraversable="false" layoutX="88.0" layoutY="334.0" onAction="#exit" prefWidth="150.0" styleClass="brn-exit" text="Zrušit" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+               </padding>
+            </JFXButton>
+            <JFXTextField fx:id="title" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="125.0" layoutY="50.0" prefHeight="31.0" prefWidth="720.0" styleClass="text-field" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <Label layoutX="89.0" layoutY="53.0" text="Název:" textFill="#ffffffb2" AnchorPane.leftAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="47.0" layoutY="248.0" text="Otázka:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="question" focusColor="#ffffff80" focusTraversable="false" layoutX="50.0" layoutY="289.0" prefHeight="219.0" prefWidth="375.0" AnchorPane.leftAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </JFXTextArea>
+            <JFXTextArea fx:id="answer" focusColor="#ffffff80" focusTraversable="false" layoutX="468.0" layoutY="289.0" prefHeight="219.0" prefWidth="375.0" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </JFXTextArea>
+            <Label layoutX="475.0" layoutY="248.0" text="Odpověď:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="47.0" layoutY="163.0" text="Body:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="227.0" layoutY="163.0" text="Číslo otázky:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="points" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="125.0" layoutY="160.0" prefWidth="70.0" styleClass="text-field">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="index" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" layoutX="355.0" layoutY="160.0" prefWidth="70.0" styleClass="text-field">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <Label layoutX="475.0" layoutY="163.0" text="Typ otázky:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="type" focusColor="#ffffff80" focusTraversable="false" layoutX="607.0" layoutY="163.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="264.0" styleClass="c-box" AnchorPane.rightAnchor="50.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="16.0" />
+               </padding></JFXComboBox>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

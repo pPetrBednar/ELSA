@@ -1,0 +1,23 @@
+/* 
+    Created on : 14.5.2020, 20:58:47
+    Author     : Petr Bednář <https://www.facebook.com/petrexis> 
+*/
+
+.hover-effect-05:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-cursor: hand;
+}
+
+.hover-effect-10:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-cursor: hand;
+}
+
+.hover-effect-15:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-cursor: hand;
+}
+
+.box {
+    -fx-background-color: rgba(27,38,52, 1);
+}
