@@ -1,7 +1,5 @@
-build.xml
-manifest.mf
 /build
 /dist
-/nbproject
-/test
+/nbproject/private
 /temp
+/test
