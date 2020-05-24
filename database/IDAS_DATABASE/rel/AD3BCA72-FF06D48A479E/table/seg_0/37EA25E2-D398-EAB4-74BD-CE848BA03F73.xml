@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="37EA25E2-D398-EAB4-74BD-CE848BA03F73" name="PREDMETY_UZIVATELE">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="UZIVATEL_ID" id="80DA9187-1D1E-D59A-0478-20C667B609EB">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="65BBCBAF-C223-A9D3-4831-DF3CA7531656" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+<Column name="PREDMET_ID" id="528E42DE-DEBF-007F-B184-DD615B5A82B7">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6FE38D18-34D7-C703-A44D-277C35A934E4" referredColumn="2CC02096-ADC5-1F79-0A00-F0A2108103FD"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A31A8639-B887-083E-FB95-6879787A7E09" name="PREDMETY_UZIVATELE_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80DA9187-1D1E-D59A-0478-20C667B609EB"/>
+<colUsage columnID="528E42DE-DEBF-007F-B184-DD615B5A82B7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="89CFC2BF-F973-3B5A-3393-2FB2EAB54C6D" name="PU_U_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>A9726102-9F25-56C9-16DD-DAD4D38482CA</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80DA9187-1D1E-D59A-0478-20C667B609EB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A3AB5949-F03C-44B4-610B-9BF318876F24" name="PU_P_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>A9726102-9F25-56C9-16DD-DAD4D38482CA</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="528E42DE-DEBF-007F-B184-DD615B5A82B7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

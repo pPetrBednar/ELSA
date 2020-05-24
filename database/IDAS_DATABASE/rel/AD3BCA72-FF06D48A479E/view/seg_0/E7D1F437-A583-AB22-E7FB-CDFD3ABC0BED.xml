@@ -1,0 +1,296 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="E7D1F437-A583-AB22-E7FB-CDFD3ABC0BED" name="STUDIJNI_MATERIALY">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:32:46 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<ordsAlias>view_5</ordsAlias>
+<userDefined>true</userDefined>
+<userDefinedSQL><![CDATA[SELECT
+    role.opravneni,
+    uzivatel.jmeno,
+    uzivatel.prijmeni,
+    predmet.nazev AS "nazev_predmet",
+    predmet.zkratka,
+    studijni_material.*
+FROM
+         studijni_material
+    INNER JOIN uzivatel ON uzivatel.id_uzivatel = studijni_material.uzivatel_id
+    INNER JOIN role ON role.id_role = uzivatel.role_id
+    INNER JOIN predmet ON predmet.id_predmet = studijni_material.predmet_id]]></userDefinedSQL>
+<parsed>true</parsed>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="opravneni" id="719E3D66-9C5F-357C-B1F1-ED8A47DFC717">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (32)</dataType>
+<headerAlias>opravneni</headerAlias>
+<reference>false</reference>
+<referencedColumn>D2A8CD02-C55B-8224-69AC-A1F4A1051C80</referencedColumn>
+<table>7582E7A5-3F43-568F-3333-3AAF8FC37711</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="jmeno" id="5BFA0CBC-A3B8-4ECC-3B51-A0874E3BDD37">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (64)</dataType>
+<headerAlias>jmeno</headerAlias>
+<reference>false</reference>
+<referencedColumn>8AA39AC4-9AF9-17BF-BEEE-8D05C6BA9A97</referencedColumn>
+<table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="prijmeni" id="A22967A0-E8DA-46E4-602E-A242DF9B63B0">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (64)</dataType>
+<headerAlias>prijmeni</headerAlias>
+<reference>false</reference>
+<referencedColumn>2DABF6F1-0503-5D73-E174-D2B977C18442</referencedColumn>
+<table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_predmet" id="D7C4EB37-3B96-7349-0000-DAE9A68E0179">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 17:29:07 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>nazev_predmet</alias>
+<dataType>UNKNOWN</dataType>
+<headerAlias>nazev_predmet</headerAlias>
+<reference>false</reference>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="zkratka" id="4E472CB9-CEB5-930C-AD2D-177DE70BD98A">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (8)</dataType>
+<headerAlias>zkratka</headerAlias>
+<reference>false</reference>
+<referencedColumn>DDB353BA-50DC-33ED-24DA-98F33F9B8622</referencedColumn>
+<table>3C72B14A-40A6-A2D9-69D7-64CD89E5F8E4</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="id_studijniMaterial" id="1DB1F036-84E5-7377-6C46-81D70C39E302">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>id_studijniMaterial</headerAlias>
+<reference>false</reference>
+<referencedColumn>03F880F5-7ABC-41B2-57B7-31A5C5CB4E69</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev" id="6D238021-0A02-C162-7EFE-6A632609AFE9">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 17:29:07 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (128)</dataType>
+<headerAlias>nazev</headerAlias>
+<reference>false</reference>
+<referencedColumn>85CD5D63-8BAF-8415-5996-49A6571E65BB</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="stran" id="F7BC6573-3DD4-CC64-2091-155B6DAC9D2C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>stran</headerAlias>
+<reference>false</reference>
+<referencedColumn>19BF4CD8-E9D8-89A7-7326-8C226D01CA93</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="datumVytvoreni" id="7F5A8ED1-E139-39C0-BC82-9E5E10AC4D3D">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>DATE</dataType>
+<headerAlias>datumVytvoreni</headerAlias>
+<reference>false</reference>
+<referencedColumn>013EEF02-5B7F-0070-9148-A116595E5C76</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="datumZmeny" id="39C4CB83-A414-AC4A-AB9D-BA25326814E7">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>DATE</dataType>
+<headerAlias>datumZmeny</headerAlias>
+<reference>false</reference>
+<referencedColumn>AE24F83B-EB29-FD67-4F01-17888B730F36</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="popis" id="F01075A9-7B68-3A55-FABB-6A3FF3C686A6">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (512)</dataType>
+<headerAlias>popis</headerAlias>
+<reference>false</reference>
+<referencedColumn>99479708-FEC4-F2E2-43C4-695D45DD497D</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="soubor" id="274B3A4D-F496-3653-EAD1-8460C817A9D4">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>BLOB</dataType>
+<headerAlias>soubor</headerAlias>
+<reference>false</reference>
+<referencedColumn>38115034-BF81-0ABA-3470-08B1D57DF045</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="pripona" id="C2F14E4C-01ED-3E86-8DEB-BD13E624159E">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 15:34:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>CHAR (8)</dataType>
+<headerAlias>pripona</headerAlias>
+<reference>false</reference>
+<referencedColumn>666A4964-698F-2C1A-1A2E-FD46F893FB19</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="PREDMET_ID" id="890F9DD7-3F0E-AFC7-0631-D49D5297FD83">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 17:24:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>PREDMET_ID</headerAlias>
+<reference>false</reference>
+<referencedColumn>B6D68877-A672-9EDF-4D89-5A66A1305470</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="UZIVATEL_ID" id="09938C67-FE85-0F3A-0580-5101F9DF304D">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 17:29:07 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>UZIVATEL_ID</headerAlias>
+<reference>false</reference>
+<referencedColumn>13D5AD6B-0863-8470-0832-896819479D1B</referencedColumn>
+<table>445A2D13-8D38-CA68-13C8-1BD627EE871D</table>
+</viewElement>
+</viewElements>
+<usedObjects>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="445A2D13-8D38-CA68-13C8-1BD627EE871D">
+<container>true</container>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="375FD076-880A-0AAE-A4B9-289AA9208B7F">
+<container>true</container>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="7582E7A5-3F43-568F-3333-3AAF8FC37711">
+<container>true</container>
+<tableName>ROLE</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="3C72B14A-40A6-A2D9-69D7-64CD89E5F8E4">
+<container>true</container>
+<tableName>PREDMET</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="D2A8CD02-C55B-8224-69AC-A1F4A1051C80">
+<columnName>opravneni</columnName>
+<tableName>ROLE</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="8AA39AC4-9AF9-17BF-BEEE-8D05C6BA9A97">
+<columnName>jmeno</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="2DABF6F1-0503-5D73-E174-D2B977C18442">
+<columnName>prijmeni</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="DDB353BA-50DC-33ED-24DA-98F33F9B8622">
+<columnName>zkratka</columnName>
+<tableName>PREDMET</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="03F880F5-7ABC-41B2-57B7-31A5C5CB4E69">
+<columnName>id_studijniMaterial</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="85CD5D63-8BAF-8415-5996-49A6571E65BB">
+<columnName>nazev</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="19BF4CD8-E9D8-89A7-7326-8C226D01CA93">
+<columnName>stran</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="013EEF02-5B7F-0070-9148-A116595E5C76">
+<columnName>datumVytvoreni</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="AE24F83B-EB29-FD67-4F01-17888B730F36">
+<columnName>datumZmeny</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="99479708-FEC4-F2E2-43C4-695D45DD497D">
+<columnName>popis</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="38115034-BF81-0ABA-3470-08B1D57DF045">
+<columnName>soubor</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="666A4964-698F-2C1A-1A2E-FD46F893FB19">
+<columnName>pripona</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="B6D68877-A672-9EDF-4D89-5A66A1305470">
+<columnName>PREDMET_ID</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="13D5AD6B-0863-8470-0832-896819479D1B">
+<columnName>UZIVATEL_ID</columnName>
+<tableName>STUDIJNI_MATERIAL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="CDF0B160-2EEF-DAE8-F7CF-E721483B970A">
+<columnName>ROLE_ID</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="9B83E909-1620-9A67-8239-61698E216E06">
+<columnName>id_uzivatel</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="2CC02096-ADC5-1F79-0A00-F0A2108103FD">
+<columnName>id_predmet</columnName>
+<tableName>PREDMET</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="7ECF6F4C-E5F6-FC24-BC3E-850EC48D109C">
+<columnName>nazev</columnName>
+<tableName>PREDMET</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="9FB730B8-479A-1435-10C9-F7FE3BE10F30">
+<columnName>id_role</columnName>
+<tableName>ROLE</tableName>
+</UsedObject>
+</usedObjects>
+</TableView>

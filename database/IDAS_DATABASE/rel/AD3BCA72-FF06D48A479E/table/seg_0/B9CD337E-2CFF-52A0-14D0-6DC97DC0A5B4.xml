@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B9CD337E-2CFF-52A0-14D0-6DC97DC0A5B4" name="DRUH_OTAZKY">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>121C4F52-F6BC-3E6F-54A6-208AA57331E2</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_druhOtazky" id="EE256E31-84F7-D219-FC2F-77F18A6ED243">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>79FE4798-BF7F-195E-CC24-1D9CCB8E3AAC</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>DRUH_OTAZKY_SEQ</autoIncrementSequenceName>
+</Column>
+<Column name="nazev" id="01835491-9497-1A90-C469-427556C949EF">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>1F31151A-14DA-B36B-C898-3A9A481F1951</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>128</dataTypeSize>
+<ownDataTypeParameters>128,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="zkratka" id="A5FA4A5F-9A60-7FE9-A60D-42A16FF92DE6">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>6B3898FF-41CE-EEA0-3482-5F3C0B2C247F</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32</dataTypeSize>
+<ownDataTypeParameters>32,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="popis" id="2BF91503-FBAC-1480-516F-B1A6E953685C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>CCF3963E-5BCD-2086-1CF5-A4B0EB505768</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>256</dataTypeSize>
+<ownDataTypeParameters>256,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F8E37526-C159-423C-AE82-A9F9363D2AA6" name="DRUH_OTAZKY_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>BD044D1B-5EA8-891B-362D-8D0B7D78C3D5</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EE256E31-84F7-D219-FC2F-77F18A6ED243"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

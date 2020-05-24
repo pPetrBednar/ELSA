@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_12" directorySegmentName="seg_0" id="8F26882E-6E2D-9622-996C-B69892C48C5E">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 12:57:05 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<sourcePk>10B973C2-09E3-7F8B-751D-203631231394</sourcePk>
+<targetPk>BD044D1B-5EA8-891B-362D-8D0B7D78C3D5</targetPk>
+<identifying>false</identifying>
+<nameOnSource>má</nameOnSource>
+<nameOnTarget>patří</nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>C1F2FACF-0B52-8A9E-4608-8806D506D6CB</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>121C4F52-F6BC-3E6F-54A6-208AA57331E2</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

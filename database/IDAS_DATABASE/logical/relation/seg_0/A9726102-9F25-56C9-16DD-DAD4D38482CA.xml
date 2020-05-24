@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="PREDMETY_UZIVATELE" directorySegmentName="seg_0" id="A9726102-9F25-56C9-16DD-DAD4D38482CA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:21:18 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<sourcePk>41DD7D28-70F9-2D16-2CE1-663472CC8197</sourcePk>
+<targetPk>028EA91A-5299-8864-A7C6-01B37BED9EA4</targetPk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>03751471-625E-5949-F60D-B8B753ABDEEA</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>DA21AE45-45B2-5284-021B-26675D75D928</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

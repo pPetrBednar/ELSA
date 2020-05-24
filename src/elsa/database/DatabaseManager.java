@@ -263,6 +263,28 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    public ArrayList<Comment> getAllCommentsOfStudyMaterial(Integer id) throws SQLException {
+
+        ArrayList<Comment> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM komentare WHERE studijni_material_id = '" + id + "' ORDER BY datumpridani DESC");
+        ResultSet rset = stmt.executeQuery();
+
+        while (rset.next()) {
+            Comment s = new Comment(
+                    rset.getInt("id_komentar"),
+                    rset.getString("text"),
+                    rset.getDate("datumpridani"),
+                    rset.getDate("datumzmeny"),
+                    rset.getString("jmeno") + " " + rset.getString("prijmeni"),
+                    rset.getInt("uzivatel_id")
+            );
+
+            data.add(s);
+        }
+        return data;
+    }
+
     /*
     
     SUB / UNSUB SUBJECT

@@ -21,3 +21,26 @@
 .box {
     -fx-background-color: rgba(27,38,52, 1);
 }
+
+.location-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.9);
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 0px 10px 0px 0px;
+    -fx-cursor: hand;
+}
+
+.location-label:hover {
+    -fx-text-fill:   rgb(185, 210, 250);
+}
+
+.location-arrow {
+    -fx-text-fill: rgba(255, 255, 255, 0.9);
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 0px 10px 0px 0px;
+}
+
+.location-box {
+   /* -fx-background-color: rgba(0, 0, 0, 0.1);*/
+}

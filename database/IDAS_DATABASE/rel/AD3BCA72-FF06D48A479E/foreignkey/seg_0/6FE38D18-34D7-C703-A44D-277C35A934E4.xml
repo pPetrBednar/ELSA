@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="6FE38D18-34D7-C703-A44D-277C35A934E4" containerWithKeyObject="37EA25E2-D398-EAB4-74BD-CE848BA03F73" localFKIndex="A3AB5949-F03C-44B4-610B-9BF318876F24" name="PU_P_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>A9726102-9F25-56C9-16DD-DAD4D38482CA</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>PREDMET</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>3C72B14A-40A6-A2D9-69D7-64CD89E5F8E4</referredTableID>
+<keyObject>A41351AE-E068-0328-18F8-F0C1D79140E7</keyObject>
+<referredKeyID>A41351AE-E068-0328-18F8-F0C1D79140E7</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_predmet</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

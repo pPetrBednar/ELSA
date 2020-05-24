@@ -1,0 +1,151 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C1F2FACF-0B52-8A9E-4608-8806D506D6CB" name="OTAZKA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:16 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_otazka" id="6AE70FA5-1971-35DC-45C5-F43C9F5C16AB">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:22 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazev" id="B8F108E4-FA58-FDA6-BA6D-E37B9D0E1849">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:26 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>128</dataTypeSize>
+<ownDataTypeParameters>128,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="otazka" id="748D6792-DC5C-4500-BBBD-1D7C2611AA5D">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:33 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1024</dataTypeSize>
+<ownDataTypeParameters>1024,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="odpoved" id="54BC8584-F698-94BE-A7F3-A8F3B99A266B">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:37 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1024</dataTypeSize>
+<ownDataTypeParameters>1024,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="body" id="7F99DD8E-B7B3-2D17-6F9F-183759138F3B">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:48 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="poradi" id="81660193-CBE2-E5AD-095B-7F0017A2B499">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-18 20:54:54 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_kviz" id="FE0F4540-724F-DFE9-290D-DA3FC8BDA11E">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 12:57:43 UTC</createdTime>
+<generatorID>0F18BADC-CE8C-38D3-490A-7FEC103A1211</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<referedAttribute>0401C346-2F6A-AAC2-6411-172E831C3A97</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_druhOtazky" id="F0AD2EE1-0C76-2C24-187D-C4AAA3D0FEE0">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 13:04:26 UTC</createdTime>
+<generatorID>8F26882E-6E2D-9622-996C-B69892C48C5E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<referedAttribute>79FE4798-BF7F-195E-CC24-1D9CCB8E3AAC</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_uzivatel" id="6C0AE24C-114C-D798-AB61-54E74216991C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 14:25:57 UTC</createdTime>
+<generatorID>19B4BDE0-6FD3-E5A8-84C8-A95CE7D67434</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<referedAttribute>C3AA3271-A639-3E98-FAD8-670F7E089003</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="10B973C2-09E3-7F8B-751D-203631231394" name="OTAZKA PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:32:25 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>6AE70FA5-1971-35DC-45C5-F43C9F5C16AB</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

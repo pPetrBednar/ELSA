@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="IDAS_DATABASE" id="8CF44668-B871-765E-85F4-296A7109E5DF" version="3.5">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 08:49:16 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>8CF44668-B871-765E-85F4-296A7109E5DF</designId>
+</OSDM_Design>

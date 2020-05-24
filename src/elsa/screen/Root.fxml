@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,7 +15,7 @@
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="250.0" styleClass="box" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="80.0" text="ELSA" textFill="#ffffffcc" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label prefHeight="40.0" text="ELSA" textFill="#ffffffcc" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -22,7 +23,7 @@
                   <Insets left="24.0" />
                </padding>
             </Label>
-            <Label text="database" textFill="#ffffff99" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0">
+            <Label text="database" textFill="#ffffff99" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="10.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -88,4 +89,15 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(120, 120, 120);" BorderPane.alignment="CENTER" />
    </center>
+   <top>
+      <AnchorPane style="-fx-background-color: rgba(27,38,52, 1);;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="location" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="50.0" styleClass="location-box" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>

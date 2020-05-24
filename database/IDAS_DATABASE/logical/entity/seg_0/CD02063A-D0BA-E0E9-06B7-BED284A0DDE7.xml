@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="CD02063A-D0BA-E0E9-06B7-BED284A0DDE7" name="KVIZ">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:12 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_kviz" id="0401C346-2F6A-AAC2-6411-172E831C3A97">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:20 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazev" id="923AE8A4-9727-1E6B-D96C-85BAFA4807E3">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:32 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>128</dataTypeSize>
+<ownDataTypeParameters>128,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="popis" id="A40A91AC-C6E1-492E-D886-221A3C6A7A11">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:37 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>256</dataTypeSize>
+<ownDataTypeParameters>256,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_studijniMaterial" id="69FB7F6B-9A5D-5FDF-39A7-E322E11A4EB0">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 12:55:36 UTC</createdTime>
+<generatorID>D571CC60-AD88-50E6-CEEF-5D9148BFBB7F</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<referedAttribute>8B03ABCE-B3A5-F33C-A8B5-ECF92C33CE86</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_uzivatel" id="FF5F2B7F-F286-0526-3064-CDBB5192C105">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 14:25:40 UTC</createdTime>
+<generatorID>93142033-278E-5E08-6A5C-F011F49B1056</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<referedAttribute>C3AA3271-A639-3E98-FAD8-670F7E089003</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="1AF2E3D8-4B2D-9F5F-E898-FD1925C40AF1" name="KVIZ PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:26 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>0401C346-2F6A-AAC2-6411-172E831C3A97</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

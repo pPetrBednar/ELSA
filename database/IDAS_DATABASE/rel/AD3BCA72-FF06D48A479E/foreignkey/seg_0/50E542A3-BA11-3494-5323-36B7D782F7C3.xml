@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="50E542A3-BA11-3494-5323-36B7D782F7C3" containerWithKeyObject="5D36AD4D-D857-1F3A-09E2-DDC0B8CB4E1F" localFKIndex="6E970803-7C45-B7AD-A94C-DE388DC45490" name="KM_KATEGORIE_MATERIALU_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>8137B2B7-867E-CDD9-3CBE-39D177B72546</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>KATEGORIE_MATERIALU</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>30E3CAA2-E99D-33DB-1CB2-2C7A053CE2A6</referredTableID>
+<keyObject>1B2F0BB2-35AC-D4D6-39F4-D67476A7207E</keyObject>
+<referredKeyID>1B2F0BB2-35AC-D4D6-39F4-D67476A7207E</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_kategorieMaterialu</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

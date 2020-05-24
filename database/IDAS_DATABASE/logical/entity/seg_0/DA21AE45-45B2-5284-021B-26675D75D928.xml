@@ -1,0 +1,86 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="DA21AE45-45B2-5284-021B-26675D75D928" name="PREDMET">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:33:33 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_predmet" id="C6226B40-CCAA-6BFB-2AA6-E6BA2E7EE3BB">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:33:39 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazev" id="F0B2C250-BDDC-9463-30F6-CEB8FF160FD5">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:33:43 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>128</dataTypeSize>
+<ownDataTypeParameters>128,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="zkratka" id="99E532F3-A7C3-8F82-8F6B-AEC863328782">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:33:51 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>8</dataTypeSize>
+<ownDataTypeParameters>8,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="popis" id="4E1AC01A-4A0E-0C29-0D71-9D4B108F2E7C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 14:16:25 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>256</dataTypeSize>
+<ownDataTypeParameters>256,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="028EA91A-5299-8864-A7C6-01B37BED9EA4" name="PREDMET PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 12:47:12 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>C6226B40-CCAA-6BFB-2AA6-E6BA2E7EE3BB</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

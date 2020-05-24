@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="88DBAB09-6FEA-9165-2B68-1E140032BD0A" name="KOMENTAR">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:44 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_komentar" id="7B2E5875-D270-F557-9B65-39B7ABBC135F">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:26:50 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="text" id="4B971E1D-1901-F4A9-5414-D354E4C11615">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:27:05 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1024</dataTypeSize>
+<ownDataTypeParameters>1024,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="datumPridani" id="3CB0AA09-FDA6-7B88-4F3A-AE596D3D01CA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:27:36 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="datumZmeny" id="3308A9ED-9B88-0138-A19C-D487BA51E472">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:27:41 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_studijniMaterial" id="4AFAD5E9-36E4-16A4-AA6E-EC0AA240F8DA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 12:49:28 UTC</createdTime>
+<generatorID>5B01151C-AA09-1F5E-C868-9AFE04164024</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<referedAttribute>8B03ABCE-B3A5-F33C-A8B5-ECF92C33CE86</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_uzivatel" id="8F0162B7-AF3C-C959-42F8-C8C1D18A6ADF">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-20 14:25:25 UTC</createdTime>
+<generatorID>B765EF64-A97C-B0B9-B55A-8FB94DE6D82E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<referedAttribute>C3AA3271-A639-3E98-FAD8-670F7E089003</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="445DD224-B290-F5DD-BEC7-38D6D9A92061" name="KOMENTAR PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-03-10 10:29:25 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="08F38FDC-4F3F-74D0-48BA-281A46F74B17" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>7B2E5875-D270-F557-9B65-39B7ABBC135F</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="95EF7110-DBCB-F669-3293-6118BD713101" name="KVIZ">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>CD02063A-D0BA-E0E9-06B7-BED284A0DDE7</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_kviz" id="5ABF6B84-C05D-6834-F761-247AE3763536">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>0401C346-2F6A-AAC2-6411-172E831C3A97</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>KVIZ_SEQ</autoIncrementSequenceName>
+</Column>
+<Column name="nazev" id="70B18E4A-5D60-F6E0-A23E-FE63FB191993">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>923AE8A4-9727-1E6B-D96C-85BAFA4807E3</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>128</dataTypeSize>
+<ownDataTypeParameters>128,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="popis" id="CFDF7B7A-2823-DD65-9EE2-0578CF45055F">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>A40A91AC-C6E1-492E-D886-221A3C6A7A11</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>256</dataTypeSize>
+<ownDataTypeParameters>256,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="STUDIJNI_MATERIAL_ID" id="967D5884-09A8-84A8-40C3-DA09DCB8701C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>69FB7F6B-9A5D-5FDF-39A7-E322E11A4EB0</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A4EF5C9E-B815-57F8-AEAD-1C344AA59F7E" referredColumn="03F880F5-7ABC-41B2-57B7-31A5C5CB4E69"/>
+</associations>
+</Column>
+<Column name="UZIVATEL_ID" id="FAC68CA6-6E66-65BA-F721-E03097F83184">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>FF5F2B7F-F286-0526-3064-CDBB5192C105</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C84C085F-A393-0042-7F04-34D990A2DE98" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="49DB42CE-F201-D3C8-A1B3-5DC39CD112E8" name="KVIZ_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>1AF2E3D8-4B2D-9F5F-E898-FD1925C40AF1</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5ABF6B84-C05D-6834-F761-247AE3763536"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2A39527E-FA77-7E7E-C7DB-C70206C68FB4" name="K_STUDIJNI_MATERIAL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>D571CC60-AD88-50E6-CEEF-5D9148BFBB7F</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="967D5884-09A8-84A8-40C3-DA09DCB8701C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="28A4E5DE-F5BC-8E30-0288-D8F9F25F67AE" name="K_UZIVATEL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>93142033-278E-5E08-6A5C-F011F49B1056</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FAC68CA6-6E66-65BA-F721-E03097F83184"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

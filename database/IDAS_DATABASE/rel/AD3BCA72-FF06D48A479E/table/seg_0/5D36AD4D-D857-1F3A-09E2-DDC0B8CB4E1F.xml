@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5D36AD4D-D857-1F3A-09E2-DDC0B8CB4E1F" name="KATEGORIZACE_MATERIALU">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="STUDIJNI_MATERIAL_ID" id="184AC58E-248B-D3EC-961B-7A64D0C6672C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="ED3D2F79-D8BD-B888-DAD8-FCB8D7488DBB" referredColumn="03F880F5-7ABC-41B2-57B7-31A5C5CB4E69"/>
+</associations>
+</Column>
+<Column name="KATEGORIE_MATERIALU_ID" id="49348B40-761F-3F49-6F0F-67FDB08A97E0">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="50E542A3-BA11-3494-5323-36B7D782F7C3" referredColumn="31B16237-F474-0790-3054-78A526BA0639"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CE475D56-6105-EDF0-0219-4C757AC411F7" name="KATEGORIZACE_MATERIALU_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="184AC58E-248B-D3EC-961B-7A64D0C6672C"/>
+<colUsage columnID="49348B40-761F-3F49-6F0F-67FDB08A97E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E516AA08-BF0F-082D-AD08-3D6A1AC7016A" name="KM_STUDIJNI_MATERIAL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>8137B2B7-867E-CDD9-3CBE-39D177B72546</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="184AC58E-248B-D3EC-961B-7A64D0C6672C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6E970803-7C45-B7AD-A94C-DE388DC45490" name="KM_KATEGORIE_MATERIALU_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>8137B2B7-867E-CDD9-3CBE-39D177B72546</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="49348B40-761F-3F49-6F0F-67FDB08A97E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

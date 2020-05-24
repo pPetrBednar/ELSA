@@ -253,4 +253,9 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
 
         callback.compose(ViewType.STUDY_MATERIAL_VIEW);
     }
+
+    @FXML
+    private void openComments(ActionEvent event) {
+        callback.compose(ViewType.COMMENTS);
+    }
 }

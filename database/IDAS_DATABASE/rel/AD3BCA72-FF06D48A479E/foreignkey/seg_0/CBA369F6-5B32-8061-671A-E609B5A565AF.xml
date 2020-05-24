@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="CBA369F6-5B32-8061-671A-E609B5A565AF" containerWithKeyObject="779444BB-54DE-020C-5115-4CC8BBF1CE65" localFKIndex="D39177FF-2CFE-BB28-2D17-21D7BE37C9A1" name="OTAZKA_DRUH_OTAZKY_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-14 14:26:49 UTC</createdTime>
+<generatorID>8F26882E-6E2D-9622-996C-B69892C48C5E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>DRUH_OTAZKY</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>B9CD337E-2CFF-52A0-14D0-6DC97DC0A5B4</referredTableID>
+<keyObject>F8E37526-C159-423C-AE82-A9F9363D2AA6</keyObject>
+<referredKeyID>F8E37526-C159-423C-AE82-A9F9363D2AA6</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_druhOtazky</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

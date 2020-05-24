@@ -8,6 +8,7 @@ import elsa.screen.handlers.ModuleLoader;
 import elsa.screen.handlers.Screen;
 import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.module.AllSubjects;
+import elsa.screen.module.Comments;
 import elsa.screen.module.Main;
 import elsa.screen.module.MySubjects;
 import elsa.screen.module.Profile;
@@ -29,10 +30,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -44,7 +47,7 @@ import javafx.stage.Modality;
  */
 public class Root extends Screen<Root> implements Initializable {
 
-    private final boolean TESTING = false;
+    private final boolean TESTING = true;
 
     private Compositor compositor;
     private ScreenLoader<Login> login;
@@ -56,6 +59,7 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<SubjectView, Root> subjectView;
     private ModuleLoader<StudyMaterialView, Root> studyMaterialView;
     private ModuleLoader<QuizView, Root> quizView;
+    private ModuleLoader<Comments, Root> comments;
 
     private DatabaseManager db;
     @FXML
@@ -64,6 +68,8 @@ public class Root extends Screen<Root> implements Initializable {
     private Label statusLabel;
     @FXML
     private Label statusContent;
+    @FXML
+    private HBox location;
 
     /**
      * Initializes the controller class.
@@ -135,6 +141,7 @@ public class Root extends Screen<Root> implements Initializable {
             subjectView = new ModuleLoader<>("SubjectView");
             studyMaterialView = new ModuleLoader<>("StudyMaterialView");
             quizView = new ModuleLoader<>("QuizView");
+            comments = new ModuleLoader<>("Comments");
         }
 
         @Override
@@ -163,6 +170,9 @@ public class Root extends Screen<Root> implements Initializable {
 
             quizView.setCallback(controller);
             quizView.getController().setDb(db);
+
+            comments.setCallback(controller);
+            comments.getController().setDb(db);
         }
 
         @Override
@@ -193,10 +203,18 @@ public class Root extends Screen<Root> implements Initializable {
                 case PROFILE:
                     composeProfile();
                     break;
+                case COMMENTS:
+                    composeComments();
+                    break;
             }
         }
 
         private void composeLogin() {
+
+            location.getChildren().clear();
+            Label l = new Label("Přihlášení");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
 
             Pane p = new Pane();
             p.setBackground(new Background(new BackgroundFill(Color.rgb(120, 120, 120), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -230,36 +248,147 @@ public class Root extends Screen<Root> implements Initializable {
         }
 
         private void composeMain() {
+            location.getChildren().clear();
+            Label l = new Label("Hlavní stránka");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
             main.getController().load();
             box.setCenter(main.getContent());
         }
 
         private void composeMySubjects() {
+            location.getChildren().clear();
+            Label l = new Label("Moje předměty");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
             mySubjects.getController().load();
             box.setCenter(mySubjects.getContent());
         }
 
         private void composeAllSubjects() {
+
+            location.getChildren().clear();
+            Label l = new Label("Všechny předměty");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
             allSubjects.getController().load();
             box.setCenter(allSubjects.getContent());
         }
 
         private void composeSubjectView() {
+            location.getChildren().clear();
+
+            Label l1 = new Label(db.getSelectedSubject().getTitle());
+            l1.getStyleClass().add("location-label");
+            location.getChildren().add(l1);
+
             subjectView.getController().load(db.getSelectedSubject());
             box.setCenter(subjectView.getContent());
         }
 
         private void composeStudyMaterialView() {
+            location.getChildren().clear();
+
+            Label l1 = new Label(db.getSelectedSubject().getTitle());
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedStudyMaterial().getTitle());
+            l2.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2);
+
             studyMaterialView.getController().load(db.getSelectedStudyMaterial());
             box.setCenter(studyMaterialView.getContent());
         }
 
         private void composeQuizView() {
+
+            location.getChildren().clear();
+
+            Label l1 = new Label(db.getSelectedSubject().getTitle());
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedStudyMaterial().getTitle());
+            l2.getStyleClass().add("location-label");
+
+            l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.STUDY_MATERIAL_VIEW;
+                compose();
+            });
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label(db.getSelectedQuiz().getTitle());
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
             quizView.getController().load(db.getSelectedQuiz());
             box.setCenter(quizView.getContent());
         }
 
+        private void composeComments() {
+
+            location.getChildren().clear();
+
+            Label l1 = new Label(db.getSelectedSubject().getTitle());
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedStudyMaterial().getTitle());
+            l2.getStyleClass().add("location-label");
+
+            l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.STUDY_MATERIAL_VIEW;
+                compose();
+            });
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label("Komentáře");
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            comments.getController().load(db.getSelectedStudyMaterial());
+            box.setCenter(comments.getContent());
+        }
+
         private void composeProfile() {
+
+            location.getChildren().clear();
+            Label l = new Label("Profil");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
             profile.getController().load();
             box.setCenter(profile.getContent());
         }
@@ -274,5 +403,9 @@ public class Root extends Screen<Root> implements Initializable {
     public void compose(ViewType viewType) {
         compositor.viewType = viewType;
         compositor.compose();
+    }
+
+    public HBox getLocation() {
+        return location;
     }
 }
