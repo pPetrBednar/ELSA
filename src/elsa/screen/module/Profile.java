@@ -4,8 +4,11 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
 import elsa.database.User;
+import elsa.screen.EditProfile;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
+import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.Information;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 
 /**
  * FXML Controller class
@@ -57,7 +61,7 @@ public class Profile extends Module<Profile, Root> implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        lock();
     }
 
     public void setDb(DatabaseManager db) {
@@ -85,7 +89,11 @@ public class Profile extends Module<Profile, Root> implements Initializable {
         FileChooser f = new FileChooser();
         File file = f.showOpenDialog(callback.getStage());
 
-        if (file.exists()) {
+        if (file == null) {
+            return;
+        }
+
+        if (file.exists() && file.isFile()) {
             if (checkType(file.getName())) {
                 Image image = new Image(new FileInputStream(file));
                 avatar.setImage(image);
@@ -93,15 +101,11 @@ public class Profile extends Module<Profile, Root> implements Initializable {
                 try {
                     db.editImage(avatar.getImage());
                 } catch (SQLException | IOException ex) {
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setContentText("Nastala chyba při změně avataru.");
-                    a.showAndWait();
+                    Information.display("Nastala chyba při změně avataru.");
                     return;
                 }
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Avatar byl úspěšně změněn.");
-                a.showAndWait();
+                Information.display("Avatar byl úspěšně změněn.");
             }
         }
     }
@@ -140,9 +144,20 @@ public class Profile extends Module<Profile, Root> implements Initializable {
     private void edit(ActionEvent event) {
 
         if (edit) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Profil byl úspěšně upraven.");
-            a.showAndWait();
+
+            if (firstName.getText().isEmpty() || lastName.getText().isEmpty() || email.getText().isEmpty()) {
+                Information.display("Jméno, příjmení a email nelze nechat prázdné.");
+                return;
+            }
+
+            try {
+                db.editProfileInformation(firstName.getText(), lastName.getText(), email.getText(), phone.getText(), address.getText());
+                Information.display("Profil byl úspěšně upraven.");
+            } catch (SQLException ex) {
+                //Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
+                Information.display("Nastala chyba při úpravě profilu.");
+            }
+
             edit = false;
             btnEdit.setText("Upravit");
             lock();
@@ -154,6 +169,13 @@ public class Profile extends Module<Profile, Root> implements Initializable {
     }
 
     @FXML
-    private void changeLogin(ActionEvent event) {
+    private void changeLogin(ActionEvent event) throws IOException {
+
+        ScreenLoader<EditProfile> ch = new ScreenLoader<>("EditProfile");
+        ch.setupStage("Úprava profilu", callback.getStage(), Modality.WINDOW_MODAL);
+        ch.setTransparent(true);
+        ch.getController().setDb(db);
+        ch.getController().load();
+        ch.getStage().showAndWait();
     }
 }

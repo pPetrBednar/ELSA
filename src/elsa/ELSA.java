@@ -2,6 +2,7 @@ package elsa;
 
 import elsa.screen.Root;
 import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.Information;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,6 +17,7 @@ public class ELSA extends Application {
         ScreenLoader<Root> root = new ScreenLoader<>("Root");
         root.setupRootStage("ELSA", stage);
         root.setTransparent(false);
+        Information.init(root.getStage());
         root.getStage().show();
     }
 

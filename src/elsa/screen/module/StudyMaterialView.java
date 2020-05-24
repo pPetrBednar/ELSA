@@ -10,6 +10,7 @@ import elsa.screen.AddStudyMaterial;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
 import java.awt.Desktop;
 import java.io.File;
@@ -232,16 +233,12 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
             out.write(data);
             out.close();
 
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Soubor uložen a nyní bude otevřen.");
-            a.showAndWait();
+            Information.display("Soubor uložen a nyní bude otevřen.");
 
             Desktop.getDesktop().open(f);
         } catch (SQLException | IOException ex) {
             //Logger.getLogger(StudyMaterialView.class.getName()).log(Level.SEVERE, null, ex);
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Soubor nemohl být uložen.");
-            a.showAndWait();
+            Information.display("Soubor nemohl být uložen.");
         }
     }
 

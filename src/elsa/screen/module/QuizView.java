@@ -14,6 +14,7 @@ import elsa.screen.AddStudyMaterial;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
 import java.io.IOException;
 import java.net.URL;
@@ -117,9 +118,7 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
 
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText(s.getDescription());
-                a.showAndWait();
+                Information.display(s.getDescription());
             }
         });
 
@@ -201,9 +200,7 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
     }
 
     private void submitAnswers() {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText("Nic nebylo odesláno.");
-        a.showAndWait();
+        Information.display("Nic nebylo odesláno.");
     }
 
     public void load(Quiz s) {

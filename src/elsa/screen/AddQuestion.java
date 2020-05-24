@@ -9,6 +9,7 @@ import elsa.database.Question;
 import elsa.database.QuestionType;
 import elsa.database.Quiz;
 import elsa.screen.handlers.Screen;
+import elsa.screen.tools.Information;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -68,9 +69,7 @@ public class AddQuestion extends Screen<AddQuestion> implements Initializable {
     private void add(ActionEvent event) {
 
         if (title.getText().isEmpty() || question.getText().isEmpty() || points.getText().isEmpty() || index.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Některé údaje nebyly vyplněny.");
-            a.showAndWait();
+            Information.display("Některé údaje nebyly vyplněny.");
             return;
         }
 
@@ -80,9 +79,7 @@ public class AddQuestion extends Screen<AddQuestion> implements Initializable {
             p = Integer.parseInt(points.getText());
             i = Integer.parseInt(index.getText());
         } catch (NumberFormatException ex) {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Některé hodnoty mají nesprávný typ.");
-            a.showAndWait();
+            Information.display("Některé hodnoty mají nesprávný typ.");
             return;
         }
 
@@ -90,27 +87,19 @@ public class AddQuestion extends Screen<AddQuestion> implements Initializable {
             try {
                 db.editQuestion(id, title.getText(), question.getText(), answer.getText(), p, i, type.getSelectionModel().getSelectedItem());
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Úprava otázky úspěšná.");
-                a.showAndWait();
+                Information.display("Úprava otázky úspěšná.");
             } catch (SQLException ex) {
-                Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při úpravě došlo k chybě.");
-                a.showAndWait();
+                // Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
+                Information.display("Při úpravě došlo k chybě.");
             }
         } else {
             try {
                 db.addQuestion(title.getText(), question.getText(), answer.getText(), p, i, type.getSelectionModel().getSelectedItem());
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Vložení otázky úspěšné.");
-                a.showAndWait();
+                Information.display("Vložení otázky úspěšné.");
             } catch (SQLException ex) {
                 // Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při vložení došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při vložení došlo k chybě.");
             }
         }
         close();

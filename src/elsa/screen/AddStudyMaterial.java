@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
 import elsa.database.StudyMaterial;
 import elsa.screen.handlers.Screen;
+import elsa.screen.tools.Information;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -66,9 +67,7 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
     private void add(ActionEvent event) {
 
         if (title.getText().isEmpty() || pages.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Některé údaje nebyly vyplněny.");
-            a.showAndWait();
+            Information.display("Některé údaje nebyly vyplněny.");
             return;
         }
 
@@ -76,9 +75,7 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
         try {
             p = Integer.parseInt(pages.getText());
         } catch (NumberFormatException ex) {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Počet stran není číslo.");
-            a.showAndWait();
+            Information.display("Počet stran není číslo.");
             return;
         }
 
@@ -86,36 +83,24 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
             try {
                 db.editStudyMaterial(id, title.getText(), p, description.getText(), selectedFile);
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Úprava studijního materiálu byla úspěšná.");
-                a.showAndWait();
+                Information.display("Úprava studijního materiálu byla úspěšná.");
             } catch (SQLException ex) {
                 //Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při úpravě došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při úpravě došlo k chybě.");
             } catch (FileNotFoundException ex) {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Soubor nenalezen.");
-                a.showAndWait();
+                Information.display("Soubor nenalezen.");
             }
 
         } else {
             try {
                 db.addStudyMaterial(title.getText(), p, description.getText(), selectedFile);
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Vložení studijního materiálu bylo úspěšné.");
-                a.showAndWait();
+                Information.display("Vložení studijního materiálu bylo úspěšné.");
             } catch (SQLException ex) {
                 //Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při vložení došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při vložení došlo k chybě.");
             } catch (FileNotFoundException ex) {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Soubor nenalezen.");
-                a.showAndWait();
+                Information.display("Soubor nenalezen.");
             }
         }
         close();

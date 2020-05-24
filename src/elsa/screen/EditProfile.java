@@ -20,20 +20,14 @@ import javafx.scene.control.Alert;
  *
  * @author Petr Bednář <https://www.facebook.com/petrexis>
  */
-public class Register extends Screen<Register> implements Initializable {
-
+public class EditProfile extends Screen<EditProfile> implements Initializable {
+    
     private DatabaseManager db;
-
+    
     @FXML
     private JFXTextField login;
     @FXML
     private JFXPasswordField password;
-    @FXML
-    private JFXTextField firstName;
-    @FXML
-    private JFXTextField lastName;
-    @FXML
-    private JFXTextField email;
     @FXML
     private JFXPasswordField passwordAgain;
 
@@ -42,39 +36,46 @@ public class Register extends Screen<Register> implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
-
+    
     public void setDb(DatabaseManager db) {
         this.db = db;
     }
-
+    
+    public void load() {
+        login.setText(db.getUser().getLogin());
+    }
+    
     @FXML
     private void exit(ActionEvent event) {
         close();
     }
-
+    
     @FXML
-    private void register(ActionEvent event) {
-
-        if (!password.getText().equals(passwordAgain.getText())) {
-            Information.display("Hesla se neshodují.");
+    private void edit(ActionEvent event) {
+        
+        if (!password.getText().isEmpty()) {
+            if (!password.getText().equals(passwordAgain.getText())) {
+                Information.display("Hesla se neshodují.");
+                return;
+            }
+        }
+        
+        if (login.getText().isEmpty()) {
+            Information.display("Přihlašovací jméno nebylo vyplněno.");
             return;
         }
-
-        if (login.getText().isEmpty() || password.getText().isEmpty() || firstName.getText().isEmpty() || lastName.getText().isEmpty() || email.getText().isEmpty()) {
-            Information.display("Některé údaje nebyly vyplněny.");
-            return;
-        }
-
+        
         try {
-            db.register(login.getText(), password.getText(), firstName.getText(), lastName.getText(), email.getText());
-
-            Information.display("Registrace byla úspěšná.");
+            db.editLoginInformation(login.getText(), password.getText());
+            Information.display("Úprava údajů byla úspěšná.");
         } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(EditProfile.class.getName()).log(Level.SEVERE, null, ex);
+
+            Information.display("Úprava údajů byla neúspěšná.");
         }
         close();
     }
-
+    
 }

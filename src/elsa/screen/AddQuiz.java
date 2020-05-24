@@ -8,6 +8,7 @@ import elsa.database.DatabaseManager;
 import elsa.database.Quiz;
 import elsa.database.StudyMaterial;
 import elsa.screen.handlers.Screen;
+import elsa.screen.tools.Information;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -57,9 +58,7 @@ public class AddQuiz extends Screen<AddQuiz> implements Initializable {
     private void add(ActionEvent event) {
 
         if (title.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Některé údaje nebyly vyplněny.");
-            a.showAndWait();
+            Information.display("Některé údaje nebyly vyplněny.");
             return;
         }
 
@@ -67,27 +66,19 @@ public class AddQuiz extends Screen<AddQuiz> implements Initializable {
             try {
                 db.editQuiz(id, title.getText(), description.getText());
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Úprava kvízu úspěšná.");
-                a.showAndWait();
+                Information.display("Úprava kvízu úspěšná.");
             } catch (SQLException ex) {
                 // Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při úpravě došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při úpravě došlo k chybě.");
             }
         } else {
             try {
                 db.addQuiz(title.getText(), description.getText());
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Vložení kvízu úspěšné.");
-                a.showAndWait();
+                Information.display("Vložení kvízu úspěšné.");
             } catch (SQLException ex) {
                 // Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při vložení došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při vložení došlo k chybě.");
             }
         }
         close();

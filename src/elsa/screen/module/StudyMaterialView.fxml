@@ -105,6 +105,11 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </JFXButton>
+                        <JFXButton focusTraversable="false" layoutX="645.0" layoutY="309.0" onAction="#openComments" styleClass="btn-open" text="Komentáře" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="309.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                      <padding>
                         <Insets bottom="36.0" />

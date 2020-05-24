@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
 import elsa.database.Subject;
 import elsa.screen.handlers.Screen;
+import elsa.screen.tools.Information;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -59,9 +60,7 @@ public class AddSubject extends Screen<AddSubject> implements Initializable {
     private void add(ActionEvent event) {
 
         if (title.getText().isEmpty() || shortcut.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Některé údaje nebyly vyplněny.");
-            a.showAndWait();
+            Information.display("Některé údaje nebyly vyplněny.");
             return;
         }
 
@@ -69,28 +68,20 @@ public class AddSubject extends Screen<AddSubject> implements Initializable {
             try {
                 db.editSubject(id, title.getText(), shortcut.getText(), description.getText());
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Úprava předmětu úspěšná.");
-                a.showAndWait();
+                Information.display("Úprava předmětu úspěšná.");
             } catch (SQLException ex) {
                 // Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při úpravě došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při úpravě došlo k chybě.");
             }
 
         } else {
             try {
                 db.addSubject(title.getText(), shortcut.getText(), description.getText());
 
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Vložení předmětu úspěšné.");
-                a.showAndWait();
+                Information.display("Vložení předmětu úspěšné.");
             } catch (SQLException ex) {
                 // Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Při vložení došlo k chybě.");
-                a.showAndWait();
+                Information.display("Při vložení došlo k chybě.");
             }
         }
         close();

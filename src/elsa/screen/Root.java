@@ -14,6 +14,7 @@ import elsa.screen.module.Profile;
 import elsa.screen.module.QuizView;
 import elsa.screen.module.StudyMaterialView;
 import elsa.screen.module.SubjectView;
+import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +44,7 @@ import javafx.stage.Modality;
  */
 public class Root extends Screen<Root> implements Initializable {
 
-    private final boolean TESTING = true;
+    private final boolean TESTING = false;
 
     private Compositor compositor;
     private ScreenLoader<Login> login;
@@ -74,9 +75,7 @@ public class Root extends Screen<Root> implements Initializable {
         try {
             db = new DatabaseManager();
         } catch (SQLException ex) {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Nelze připojit k databázi.");
-            a.showAndWait();
+            Information.display("Nelze připojit k databázi.");
             System.exit(0);
         }
 
