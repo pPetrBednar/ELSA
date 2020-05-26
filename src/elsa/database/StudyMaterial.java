@@ -23,6 +23,7 @@ public class StudyMaterial {
     private String extension;
     private String createdBy;
 
+    private ArrayList<StudyMaterialType> type;
     private ArrayList<Quiz> quizList;
 
     public StudyMaterial(Integer id, String title, Integer pages, Date created, Date changed, String description, Blob file, String extension, String createdBy) {
@@ -35,6 +36,14 @@ public class StudyMaterial {
         this.file = file;
         this.extension = extension;
         this.createdBy = createdBy;
+    }
+
+    public ArrayList<StudyMaterialType> getType() {
+        return type;
+    }
+
+    public void setType(ArrayList<StudyMaterialType> type) {
+        this.type = type;
     }
 
     public ArrayList<Quiz> getQuizList() {

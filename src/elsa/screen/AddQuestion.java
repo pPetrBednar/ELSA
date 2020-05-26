@@ -12,6 +12,7 @@ import elsa.screen.handlers.Screen;
 import elsa.screen.tools.Information;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -31,6 +33,8 @@ public class AddQuestion extends Screen<AddQuestion> implements Initializable {
     private DatabaseManager db;
     private boolean edit = false;
     private Integer id;
+
+    private ArrayList<QuestionType> types;
 
     @FXML
     private JFXTextField title;
@@ -52,12 +56,36 @@ public class AddQuestion extends Screen<AddQuestion> implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        type.setItems(FXCollections.observableArrayList(QuestionType.values()));
-        type.getSelectionModel().select(QuestionType.WRITE);
+
     }
 
     public void setDb(DatabaseManager db) {
         this.db = db;
+
+        try {
+            types = db.getAllQuestionTypes();
+            type.setItems(FXCollections.observableArrayList(types));
+            type.getSelectionModel().select(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        type.setConverter(new StringConverter<QuestionType>() {
+            @Override
+            public String toString(QuestionType object) {
+                return object.getText();
+            }
+
+            @Override
+            public QuestionType fromString(String string) {
+                for (QuestionType t : types) {
+                    if (t.getText().equals(string)) {
+                        return t;
+                    }
+                }
+                return null;
+            }
+        });
     }
 
     @FXML

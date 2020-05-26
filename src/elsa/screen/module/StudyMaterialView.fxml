@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -90,12 +91,12 @@
                               <Font name="System Bold" size="23.0" />
                            </font>
                         </Label>
-                        <Label layoutX="36.0" layoutY="313.0" text="Soubor:" wrapText="true" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="313.0">
+                        <Label layoutX="36.0" layoutY="332.0" text="Soubor:" wrapText="true" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="332.0">
                            <font>
                               <Font name="System Bold" size="19.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="file" focusTraversable="false" layoutX="220.0" layoutY="309.0" onAction="#openFile" styleClass="btn-open" text="Otevřít" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="309.0">
+                        <JFXButton fx:id="file" focusTraversable="false" layoutX="220.0" layoutY="328.0" onAction="#openFile" styleClass="btn-open" text="Otevřít" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="328.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -105,11 +106,17 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton focusTraversable="false" layoutX="645.0" layoutY="309.0" onAction="#openComments" styleClass="btn-open" text="Komentáře" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="309.0">
+                        <JFXButton focusTraversable="false" layoutX="645.0" layoutY="328.0" onAction="#openComments" styleClass="btn-open" text="Komentáře" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="328.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </JFXButton>
+                        <Label layoutX="34.0" layoutY="266.0" text="Kategorie:" wrapText="true" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="260.0">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="typeList" alignment="CENTER_LEFT" layoutX="220.0" layoutY="254.0" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="36.0" />
                      </children>
                      <padding>
                         <Insets bottom="36.0" />

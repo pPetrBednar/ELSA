@@ -94,10 +94,7 @@
             <JFXComboBox fx:id="type" focusColor="#ffffff80" focusTraversable="false" layoutX="607.0" layoutY="163.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="264.0" styleClass="c-box" AnchorPane.rightAnchor="50.0">
                <opaqueInsets>
                   <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets left="16.0" />
-               </padding></JFXComboBox>
+               </opaqueInsets></JFXComboBox>
          </children>
       </AnchorPane>
    </center>

@@ -8,13 +8,15 @@
 <userDefinedSQL><![CDATA[SELECT
     uzivatel.jmeno,
     uzivatel.prijmeni,
-    kviz.nazev                 AS "nazev_kviz",
-    studijni_material.nazev    AS "nazev_studijni_material",
-    predmet.nazev              AS "nazev_predmet",
-    predmet.zkratka            AS "zkratka_predmet",
+    kviz.nazev                   AS "nazev_kviz",
+    studijni_material.nazev      AS "nazev_studijni_material",
+    predmet.nazev                AS "nazev_predmet",
+    predmet.zkratka              AS "zkratka_predmet",
     otazka.*,
-    druh_otazky.zkratka        AS "zkratka_druh_otazky",
-    druh_otazky.popis
+    druh_otazky.id_druhotazky    AS "id_druh_otazky",
+    druh_otazky.nazev            AS "nazev_druh_otazky",
+    druh_otazky.zkratka          AS "zkratka_druh_otazky",
+    druh_otazky.popis            AS "popis_druh_otazky"
 FROM
          otazka
     INNER JOIN kviz ON kviz.id_kviz = otazka.kviz_id
@@ -48,9 +50,9 @@ FROM
 <referencedColumn>2DABF6F1-0503-5D73-E174-D2B977C18442</referencedColumn>
 <table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_kviz" id="12867A00-416E-B58E-CD12-6903F41A5EC9">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_kviz" id="5AFE80EA-E0B1-211F-2434-07B3194717BD">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-19 12:51:03 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -59,9 +61,9 @@ FROM
 <headerAlias>nazev_kviz</headerAlias>
 <reference>false</reference>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_studijni_material" id="4A00600F-539A-C8BE-029A-1C423DB1C210">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_studijni_material" id="B55D246D-93F0-A914-99BF-2D178692091A">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-19 12:51:03 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -70,9 +72,9 @@ FROM
 <headerAlias>nazev_studijni_material</headerAlias>
 <reference>false</reference>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_predmet" id="F30BA2E2-BDE4-480C-9FC7-5A3B0911470B">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_predmet" id="C9710A29-8F43-31F4-3264-02885A37A56E">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-19 12:51:03 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -81,9 +83,9 @@ FROM
 <headerAlias>nazev_predmet</headerAlias>
 <reference>false</reference>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="zkratka_predmet" id="A1FA0A38-970D-AD28-148F-90B18AAB36BB">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="zkratka_predmet" id="A6FE1053-4031-860B-0BEF-4B9322BDCB0D">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-19 12:51:03 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -104,9 +106,9 @@ FROM
 <referencedColumn>DD7BBB2F-95A2-27E8-B459-FB315F4793D2</referencedColumn>
 <table>779444BB-54DE-020C-5115-4CC8BBF1CE65</table>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev" id="3749BF85-D052-C41E-DFA5-54D34AA80D18">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev" id="776C2796-CA03-F49C-71D5-A26ED77C206C">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-19 12:51:03 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -200,9 +202,31 @@ FROM
 <referencedColumn>FEB16DFE-BFD0-C59E-1946-DA28749A3DB0</referencedColumn>
 <table>779444BB-54DE-020C-5115-4CC8BBF1CE65</table>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="zkratka_druh_otazky" id="57D099E2-FE89-290F-7CCF-75553A140F75">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="id_druh_otazky" id="DF93ECF3-E4A0-5375-B839-024063FDD273">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-19 12:51:03 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>id_druh_otazky</alias>
+<dataType>UNKNOWN</dataType>
+<headerAlias>id_druh_otazky</headerAlias>
+<reference>false</reference>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev_druh_otazky" id="FDA0670E-94BF-672F-C62A-1BB2F6DAF4E0">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<alias>nazev_druh_otazky</alias>
+<dataType>UNKNOWN</dataType>
+<headerAlias>nazev_druh_otazky</headerAlias>
+<reference>false</reference>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="zkratka_druh_otazky" id="DF09D8BD-EF59-D217-247A-82DB3347E4FD">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -211,17 +235,16 @@ FROM
 <headerAlias>zkratka_druh_otazky</headerAlias>
 <reference>false</reference>
 </viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="popis" id="C86A1A8E-9B26-9AB0-D271-B7E7C4FE3744">
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="popis_druh_otazky" id="3045123E-15C7-38F2-32BF-C58A4362AF63">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-18 21:05:02 UTC</createdTime>
+<createdTime>2020-05-26 19:51:48 UTC</createdTime>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
-<dataType>VARCHAR2 (256)</dataType>
-<headerAlias>popis</headerAlias>
+<alias>popis_druh_otazky</alias>
+<dataType>UNKNOWN</dataType>
+<headerAlias>popis_druh_otazky</headerAlias>
 <reference>false</reference>
-<referencedColumn>2BF91503-FBAC-1480-516F-B1A6E953685C</referencedColumn>
-<table>B9CD337E-2CFF-52A0-14D0-6DC97DC0A5B4</table>
 </viewElement>
 </viewElements>
 <usedObjects>
@@ -293,13 +316,21 @@ FROM
 <columnName>UZIVATEL_ID</columnName>
 <tableName>OTAZKA</tableName>
 </UsedObject>
-<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="2BF91503-FBAC-1480-516F-B1A6E953685C">
-<columnName>popis</columnName>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="EE256E31-84F7-D219-FC2F-77F18A6ED243">
+<columnName>id_druhOtazky</columnName>
 <tableName>DRUH_OTAZKY</tableName>
 </UsedObject>
 <UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="9B83E909-1620-9A67-8239-61698E216E06">
 <columnName>id_uzivatel</columnName>
 <tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="01835491-9497-1A90-C469-427556C949EF">
+<columnName>nazev</columnName>
+<tableName>DRUH_OTAZKY</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="2BF91503-FBAC-1480-516F-B1A6E953685C">
+<columnName>popis</columnName>
+<tableName>DRUH_OTAZKY</tableName>
 </UsedObject>
 <UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="03F880F5-7ABC-41B2-57B7-31A5C5CB4E69">
 <columnName>id_studijniMaterial</columnName>
@@ -336,10 +367,6 @@ FROM
 <UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="85CD5D63-8BAF-8415-5996-49A6571E65BB">
 <columnName>nazev</columnName>
 <tableName>STUDIJNI_MATERIAL</tableName>
-</UsedObject>
-<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="EE256E31-84F7-D219-FC2F-77F18A6ED243">
-<columnName>id_druhOtazky</columnName>
-<tableName>DRUH_OTAZKY</tableName>
 </UsedObject>
 <UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="70B18E4A-5D60-F6E0-A23E-FE63FB191993">
 <columnName>nazev</columnName>

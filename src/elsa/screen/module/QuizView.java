@@ -118,7 +118,7 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
 
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                Information.display(s.getDescription());
+                Information.display(s.getType().getDescription());
             }
         });
 

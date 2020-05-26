@@ -5,6 +5,7 @@ import elsa.database.DatabaseManager;
 import elsa.database.Permission;
 import elsa.database.Quiz;
 import elsa.database.StudyMaterial;
+import elsa.database.StudyMaterialType;
 import elsa.screen.AddQuiz;
 import elsa.screen.AddStudyMaterial;
 import elsa.screen.Root;
@@ -31,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
@@ -61,6 +63,8 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
     private JFXButton file;
     @FXML
     private JFXButton btnAddQuiz;
+    @FXML
+    private HBox typeList;
 
     /**
      * Initializes the controller class.
@@ -146,6 +150,14 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
         return ap;
     }
 
+    private Label createTypeLabel(StudyMaterialType t) {
+
+        Label l = new Label(t.getText());
+        l.setStyle("-fx-text-fill: #ffffffe5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 4px 16px 4px 16px; -fx-background-color: rgba(0, 0, 0, 0.5)");
+
+        return l;
+    }
+
     private void openQuiz(Quiz q) {
         db.setSelectedQuiz(q);
         callback.compose(ViewType.QUIZ_VIEW);
@@ -180,6 +192,7 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
     public void load(StudyMaterial s) {
 
         quizList.getChildren().clear();
+        typeList.getChildren().clear();
 
         if (db.getUser().getPermission() == Permission.ADMINISTRATOR || (db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
             btnAddQuiz.setVisible(true);
@@ -209,6 +222,12 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
         if (s.getQuizList() != null) {
             s.getQuizList().forEach((t) -> {
                 quizList.getChildren().add(createLabel(t));
+            });
+        }
+
+        if (s.getType() != null) {
+            s.getType().forEach((t) -> {
+                typeList.getChildren().add(createTypeLabel(t));
             });
         }
 

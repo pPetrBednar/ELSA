@@ -12,18 +12,16 @@ public class Question {
     private String q;
     private String a;
     private Integer points;
-    private String description;
     private QuestionType type;
     private String createdBy;
 
-    public Question(Integer id, Integer index, String title, String q, String a, Integer points, String description, QuestionType type, String createdBy) {
+    public Question(Integer id, Integer index, String title, String q, String a, Integer points, QuestionType type, String createdBy) {
         this.id = id;
         this.index = index;
         this.title = title;
         this.q = q;
         this.a = a;
         this.points = points;
-        this.description = description;
         this.type = type;
         this.createdBy = createdBy;
     }
@@ -74,14 +72,6 @@ public class Question {
 
     public void setPoints(Integer points) {
         this.points = points;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public QuestionType getType() {

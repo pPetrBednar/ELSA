@@ -1,15 +1,23 @@
 package elsa.screen.module;
 
+import com.jfoenix.controls.JFXButton;
 import elsa.database.Comment;
 import elsa.database.DatabaseManager;
 import elsa.database.Permission;
 import elsa.database.StudyMaterial;
+import elsa.screen.AddComment;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
+import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.ViewType;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -18,6 +26,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 
 /**
  * FXML Controller class
@@ -30,6 +39,8 @@ public class Comments extends Module<Comments, Root> implements Initializable {
 
     @FXML
     private VBox list;
+    @FXML
+    private JFXButton btnAddComment;
 
     /**
      * Initializes the controller class.
@@ -94,7 +105,7 @@ public class Comments extends Module<Comments, Root> implements Initializable {
         AnchorPane.setBottomAnchor(l8, 0.0);
         AnchorPane.setRightAnchor(l8, 0.0);
 
-        if (db.getUser().getPermission() == Permission.ADMINISTRATOR || db.getUser().getId().equals(s.getCreatedById()) || (db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
+        if (db.getUser().getPermission() == Permission.ADMINISTRATOR || db.getUser().getId().equals(s.getCreatedById())) {
 
             Label l4 = new Label("Upravit");
             l4.setAlignment(Pos.CENTER);
@@ -130,6 +141,25 @@ public class Comments extends Module<Comments, Root> implements Initializable {
 
             ap.getChildren().addAll(id, l1, l6, l7, l8, l4, l5);
 
+        } else if ((db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
+
+            Label l5 = new Label("Odebrat");
+            l5.setAlignment(Pos.CENTER);
+            l5.setPrefWidth(75);
+            l5.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+            l5.getStyleClass().add("hover-effect-15");
+
+            AnchorPane.setTopAnchor(l5, 0.0);
+            AnchorPane.setBottomAnchor(l5, 100.0);
+            AnchorPane.setRightAnchor(l5, 150.0);
+
+            l5.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+                if (e.getButton() == MouseButton.PRIMARY) {
+                    removeComment(s);
+                }
+            });
+
+            ap.getChildren().addAll(id, l1, l6, l7, l8, l5);
         } else {
 
             ap.getChildren().addAll(id, l1, l6, l7, l8);
@@ -140,30 +170,30 @@ public class Comments extends Module<Comments, Root> implements Initializable {
     }
 
     private void editComment(Comment s) {
-        /*  
+
         try {
-            ScreenLoader<AddSubject> add = new ScreenLoader<>("AddSubject");
-            add.setupStage("Úprava předmětu", callback.getStage(), Modality.WINDOW_MODAL);
+            ScreenLoader<AddComment> add = new ScreenLoader<>("AddComment");
+            add.setupStage("Úprava komentáře", callback.getStage(), Modality.WINDOW_MODAL);
             add.setTransparent(true);
             add.getController().setDb(db);
             add.getController().load(s);
             add.getStage().showAndWait();
-            
-            callback.compose(ViewType.ALL_SUBJECTS);
+
+            callback.compose(ViewType.COMMENTS);
         } catch (IOException ex) {
             Logger.getLogger(AllSubjects.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     private void removeComment(Comment s) {
 
-        /* try {
-            db.removeSubject(s);
+        try {
+            db.removeComment(s);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        callback.compose(ViewType.MY_SUBJECTS);*/
+
+        callback.compose(ViewType.COMMENTS);
     }
 
     public void load(StudyMaterial s) {
@@ -183,5 +213,17 @@ public class Comments extends Module<Comments, Root> implements Initializable {
                 list.getChildren().add(createLabel(t, i--));
             }
         }
+    }
+
+    @FXML
+    private void addComment(ActionEvent event) throws IOException {
+
+        ScreenLoader<AddComment> add = new ScreenLoader<>("AddComment");
+        add.setupStage("Vložení komentáře", callback.getStage(), Modality.WINDOW_MODAL);
+        add.setTransparent(true);
+        add.getController().setDb(db);
+        add.getStage().showAndWait();
+
+        callback.compose(ViewType.COMMENTS);
     }
 }
