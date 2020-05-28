@@ -2,7 +2,6 @@ package elsa.database;
 
 import elsa.tools.BCrypt;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 
 /**
  *
@@ -31,6 +29,14 @@ public class DatabaseManager extends DatabaseConfig {
     private Subject selectedSubject;
     private StudyMaterial selectedStudyMaterial;
     private Quiz selectedQuiz;
+
+    private String getFileExtension(String fileName) {
+        int lastIndexOf = fileName.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return null; // empty extension
+        }
+        return fileName.substring(lastIndexOf + 1);
+    }
 
     /*
     
@@ -406,7 +412,7 @@ public class DatabaseManager extends DatabaseConfig {
 
     public void addStudyMaterial(String title, Integer pages, String description, File file) throws SQLException, FileNotFoundException {
         Connection con = OracleConnector.getConnection();
-        PreparedStatement in = con.prepareStatement("INSERT INTO studijni_material(id_studijniMaterial, nazev, stran, datumvytvoreni, datumzmeny, popis, soubor, predmet_id, uzivatel_id) VALUES(STUDIJNI_MATERIAL_SEQ.NEXTVAL, ?, ?, SYSDATE, SYSDATE, ?, ?, ?, ?)");
+        PreparedStatement in = con.prepareStatement("INSERT INTO studijni_material(id_studijniMaterial, nazev, stran, datumvytvoreni, datumzmeny, popis, soubor, pripona, predmet_id, uzivatel_id) VALUES(STUDIJNI_MATERIAL_SEQ.NEXTVAL, ?, ?, SYSDATE, SYSDATE, ?, ?, ?, ?, ?)");
 
         in.setString(1, title);
         in.setInt(2, pages);
@@ -414,12 +420,14 @@ public class DatabaseManager extends DatabaseConfig {
 
         if (file == null) {
             in.setNull(4, 0);
+            in.setString(5, null);
         } else {
             in.setBinaryStream(4, new FileInputStream(file));
+            in.setString(5, getFileExtension(file.getName()));
         }
 
-        in.setInt(5, selectedSubject.getId());
-        in.setInt(6, user.getId());
+        in.setInt(6, selectedSubject.getId());
+        in.setInt(7, user.getId());
 
         in.executeUpdate();
         con.commit();
@@ -567,7 +575,7 @@ public class DatabaseManager extends DatabaseConfig {
         if (file == null) {
             up = con.prepareStatement("UPDATE studijni_material SET nazev = ?, stran = ?, datumzmeny = SYSDATE, popis = ? WHERE id_studijnimaterial = '" + id + "'");
         } else {
-            up = con.prepareStatement("UPDATE studijni_material SET nazev = ?, stran = ?, datumzmeny = SYSDATE, popis = ?, soubor = ? WHERE id_studijnimaterial = '" + id + "'");
+            up = con.prepareStatement("UPDATE studijni_material SET nazev = ?, stran = ?, datumzmeny = SYSDATE, popis = ?, soubor = ?, pripona = ? WHERE id_studijnimaterial = '" + id + "'");
         }
 
         up.setString(1, title);
@@ -578,6 +586,7 @@ public class DatabaseManager extends DatabaseConfig {
 
         } else {
             up.setBinaryStream(4, new FileInputStream(file));
+            up.setString(5, getFileExtension(file.getName()));
         }
 
         up.executeUpdate();
