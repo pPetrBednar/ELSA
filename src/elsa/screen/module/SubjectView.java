@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import elsa.database.DatabaseManager;
 import elsa.database.Permission;
 import elsa.database.StudyMaterial;
+import elsa.database.StudyMaterialType;
 import elsa.database.Subject;
 import elsa.screen.AddStudyMaterial;
 import elsa.screen.AddSubject;
@@ -14,7 +15,12 @@ import elsa.screen.tools.ViewType;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -25,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
@@ -36,6 +43,8 @@ import javafx.stage.Modality;
 public class SubjectView extends Module<SubjectView, Root> implements Initializable {
 
     private DatabaseManager db;
+    private Subject subject;
+    private boolean listSorted = true;
 
     @FXML
     private Label title;
@@ -165,7 +174,8 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
 
     public void load(Subject s) {
 
-        materialsList.getChildren().clear();
+        subject = s;
+        listSorted = true;
 
         if (db.getUser().getPermission() == Permission.ADMINISTRATOR || (db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
             btnAddStudyMaterial.setVisible(true);
@@ -183,12 +193,81 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
             Logger.getLogger(SubjectView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (s.getMaterials() != null) {
-            s.getMaterials().forEach((t) -> {
-                materialsList.getChildren().add(createLabel(t));
-            });
+        refreshList();
+    }
+
+    private void refreshList() {
+
+        materialsList.getChildren().clear();
+        if (listSorted) {
+            if (subject.getMaterials() != null) {
+                loadMaterialsList(subject.getMaterials());
+            }
+        } else {
+            if (subject.getMaterials() != null) {
+                subject.getMaterials().forEach((t) -> {
+                    materialsList.getChildren().add(createLabel(t));
+                });
+            }
+        }
+    }
+
+    private void loadMaterialsList(ArrayList<StudyMaterial> arr) {
+
+        HashMap<String, ArrayList<StudyMaterial>> map = new HashMap<>();
+
+        for (StudyMaterial sm : arr) {
+
+            if (sm.getType() != null && !sm.getType().isEmpty()) {
+                for (StudyMaterialType smt : sm.getType()) {
+
+                    ArrayList<StudyMaterial> res = map.get(smt.getText());
+
+                    if (res == null) {
+                        res = new ArrayList<>();
+                        res.add(sm);
+                        map.put(smt.getText(), res);
+                    } else {
+                        res.add(sm);
+                    }
+                }
+            }
         }
 
+        SortedSet<String> keys = new TreeSet<>(map.keySet());
+
+        for (String key : keys) {
+
+            AnchorPane ap = new AnchorPane();
+            ap.setPrefHeight(70);
+
+            Pane pane = new Pane();
+            pane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.1)");
+            AnchorPane.setTopAnchor(pane, 0.0);
+            AnchorPane.setLeftAnchor(pane, 0.0);
+            AnchorPane.setBottomAnchor(pane, 0.0);
+            AnchorPane.setRightAnchor(pane, 0.0);
+
+            Label l2 = new Label(key);
+            l2.setAlignment(Pos.CENTER_LEFT);
+            l2.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 18px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
+
+            AnchorPane.setTopAnchor(l2, 0.0);
+            AnchorPane.setLeftAnchor(l2, 0.0);
+            AnchorPane.setBottomAnchor(l2, 0.0);
+            AnchorPane.setRightAnchor(l2, 0.0);
+            ap.getChildren().addAll(pane, l2);
+
+            materialsList.getChildren().add(ap);
+
+            ArrayList<StudyMaterial> res = map.get(key);
+
+            if (res != null && !res.isEmpty()) {
+                res.forEach((t) -> {
+                    materialsList.getChildren().add(createLabel(t));
+                });
+            }
+        }
     }
 
     @FXML

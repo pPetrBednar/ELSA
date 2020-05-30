@@ -231,7 +231,6 @@ public class AllSubjects extends Module<AllSubjects, Root> implements Initializa
             ArrayList<Subject> data = db.getAllSubjects();
 
             if (data != null && !data.isEmpty()) {
-                System.out.println(data.size());
                 data.forEach((t) -> {
                     list.getChildren().add(createLabel(t));
                 });

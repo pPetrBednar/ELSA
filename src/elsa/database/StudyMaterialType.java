@@ -6,23 +6,23 @@ package elsa.database;
  */
 public class StudyMaterialType {
 
-    private int id;
+    private Integer id;
     private String text;
     private String shortcut;
     private String description;
 
-    public StudyMaterialType(int id, String text, String shortcut, String description) {
+    public StudyMaterialType(Integer id, String text, String shortcut, String description) {
         this.id = id;
         this.text = text;
         this.shortcut = shortcut;
         this.description = description;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

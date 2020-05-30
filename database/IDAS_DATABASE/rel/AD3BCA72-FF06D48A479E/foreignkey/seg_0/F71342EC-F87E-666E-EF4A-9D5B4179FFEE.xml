@@ -1,11 +1,11 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="DDDADD59-9CF1-4091-2DDA-06DA98498D3A" containerWithKeyObject="D1538959-3EE8-1945-5BBF-431CA467429C" localFKIndex="79465626-0723-AD07-7357-5DE9835E6DE1" name="USM_STUDIJNI_MATERIAL_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="F71342EC-F87E-666E-EF4A-9D5B4179FFEE" containerWithKeyObject="13E9CE51-9B20-3C37-EC11-A882C0F424BF" localFKIndex="C18E835C-4B6D-7CD2-6774-BEF47B2B8ADE" name="UM_STUDIJNI_MATERIAL_FK">
 <createdBy>petrb</createdBy>
-<createdTime>2020-05-14 14:48:41 UTC</createdTime>
-<generatorID>F12487A3-F770-CDC1-AF20-3471EC1F6660</generatorID>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>82ED1377-9612-B048-C782-9AAAE0BCABB8</generatorID>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <referredTableLongName>STUDIJNI_MATERIAL</referredTableLongName>
-<deleteRule>CASCADE</deleteRule>
+<deleteRule>NO ACTION</deleteRule>
 <referredTableID>445A2D13-8D38-CA68-13C8-1BD627EE871D</referredTableID>
 <keyObject>051BC3EE-401F-2F7F-33B6-EED33DCBCC7C</keyObject>
 <referredKeyID>051BC3EE-401F-2F7F-33B6-EED33DCBCC7C</referredKeyID>

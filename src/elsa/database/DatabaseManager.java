@@ -410,7 +410,7 @@ public class DatabaseManager extends DatabaseConfig {
         con.commit();
     }
 
-    public void addStudyMaterial(String title, Integer pages, String description, File file) throws SQLException, FileNotFoundException {
+    public void addStudyMaterial(String title, Integer pages, String description, File file, ArrayList<StudyMaterialType> types) throws SQLException, FileNotFoundException {
         Connection con = OracleConnector.getConnection();
         PreparedStatement in = con.prepareStatement("INSERT INTO studijni_material(id_studijniMaterial, nazev, stran, datumvytvoreni, datumzmeny, popis, soubor, pripona, predmet_id, uzivatel_id) VALUES(STUDIJNI_MATERIAL_SEQ.NEXTVAL, ?, ?, SYSDATE, SYSDATE, ?, ?, ?, ?, ?)");
 
@@ -428,6 +428,33 @@ public class DatabaseManager extends DatabaseConfig {
 
         in.setInt(6, selectedSubject.getId());
         in.setInt(7, user.getId());
+
+        in.executeUpdate();
+        con.commit();
+
+        if (types == null || types.isEmpty()) {
+            return;
+        }
+
+        PreparedStatement get = con.prepareStatement("SELECT STUDIJNI_MATERIAL_SEQ.CURRVAL AS id FROM studijni_material");
+        ResultSet rset = get.executeQuery();
+        Integer id = null;
+
+        while (rset.next() && id == null) {
+            id = rset.getInt("id");
+        }
+
+        for (StudyMaterialType t : types) {
+            addStudyMaterialType(id, t);
+        }
+    }
+
+    public void addStudyMaterialType(Integer id, StudyMaterialType type) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement in = con.prepareStatement("INSERT INTO kategorizace_materialu(studijni_material_id, kategorie_materialu_id) VALUES(?, ?)");
+
+        in.setInt(1, id);
+        in.setInt(2, type.getId());
 
         in.executeUpdate();
         con.commit();
@@ -539,6 +566,15 @@ public class DatabaseManager extends DatabaseConfig {
         con.commit();
     }
 
+    public void removeStudyMaterialType(Integer id, StudyMaterialType type) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        PreparedStatement del = con.prepareStatement("DELETE FROM kategorizace_materialu WHERE studijni_material_id = '" + id + "' AND kategorie_materialu_id = '" + type.getId() + "'");
+
+        del.executeUpdate();
+        con.commit();
+    }
+
     /*
     
     UPDATE DATA
@@ -569,7 +605,7 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
-    public void editStudyMaterial(Integer id, String title, Integer pages, String description, File file) throws SQLException, FileNotFoundException {
+    public void editStudyMaterial(Integer id, String title, Integer pages, String description, File file, ArrayList<StudyMaterialType> types) throws SQLException, FileNotFoundException {
         Connection con = OracleConnector.getConnection();
         PreparedStatement up;
         if (file == null) {
@@ -593,11 +629,62 @@ public class DatabaseManager extends DatabaseConfig {
         con.commit();
 
         addStudyMaterialChange(id);
+        studyMaterialTypeEdit(id, types);
+    }
+
+    private void studyMaterialTypeEdit(Integer id, ArrayList<StudyMaterialType> types) throws SQLException {
+
+        if (selectedSubject == null || selectedSubject.getMaterials() == null || types == null) {
+            return;
+        }
+
+        StudyMaterial selected = null;
+        for (StudyMaterial sm : selectedSubject.getMaterials()) {
+            if (sm.getId().equals(id)) {
+                selected = sm;
+            }
+        }
+
+        if (selected == null) {
+            return;
+        }
+
+        ArrayList<StudyMaterialType> toRemove = new ArrayList<>();
+        ArrayList<StudyMaterialType> same = new ArrayList<>();
+
+        for (StudyMaterialType sm : selected.getType()) {
+
+            StudyMaterialType found = null;
+            for (StudyMaterialType t : types) {
+                if (sm.getId().equals(t.getId())) {
+                    found = t;
+                    break;
+                }
+            }
+
+            if (found != null) {
+                same.add(found);
+            } else {
+                toRemove.add(sm);
+            }
+        }
+
+        for (StudyMaterialType sm : same) {
+            types.remove(sm);
+        }
+
+        for (StudyMaterialType sm : toRemove) {
+            removeStudyMaterialType(id, sm);
+        }
+
+        for (StudyMaterialType sm : types) {
+            addStudyMaterialType(id, sm);
+        }
     }
 
     private void addStudyMaterialChange(Integer id) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        PreparedStatement up = con.prepareStatement("INSERT INTO upravy_studijniho_materialu(uzivatel_id, studijni_material_id, datum) VALUES(?, ?, SYSDATE)");
+        PreparedStatement up = con.prepareStatement("INSERT INTO uprava_materialu(id_upravamaterialu, datum, uzivatel_id, studijni_material_id) VALUES(UPRAVA_MATERIALU_SEQ.NEXTVAL, SYSDATE, ?, ?)");
 
         up.setInt(1, user.getId());
         up.setInt(2, id);

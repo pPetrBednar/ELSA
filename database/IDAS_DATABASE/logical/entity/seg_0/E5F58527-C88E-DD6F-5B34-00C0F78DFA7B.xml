@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E5F58527-C88E-DD6F-5B34-00C0F78DFA7B" name="UPRAVA_MATERIALU">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:09:30 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_upravaMaterialu" id="E3A57F28-C6C2-FDDD-B956-59D39CFAC36B">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:09:54 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="datum" id="C4D153FE-0F3C-6273-D560-258290A50244">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:10:19 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_uzivatel" id="B9554FD9-2D08-94FE-A6ED-D228B954F36E">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:11:27 UTC</createdTime>
+<generatorID>B4E5ACF6-9981-7B72-5125-A1D7BB51D3AB</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<referedAttribute>C3AA3271-A639-3E98-FAD8-670F7E089003</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_studijniMaterial" id="ABFB98CB-95B4-E672-B8FE-E3E79A66D4DC">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:12:12 UTC</createdTime>
+<generatorID>82ED1377-9612-B048-C782-9AAAE0BCABB8</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<referedAttribute>8B03ABCE-B3A5-F33C-A8B5-ECF92C33CE86</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="2C51E7DE-61FA-CDA6-BF5A-C9EA77061B5C" name="UPRAVA_MATERIALU PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:10:53 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E3A57F28-C6C2-FDDD-B956-59D39CFAC36B</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

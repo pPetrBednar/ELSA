@@ -129,7 +129,7 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
 
         if (edit) {
             try {
-                db.editStudyMaterial(id, title.getText(), p, description.getText(), selectedFile);
+                db.editStudyMaterial(id, title.getText(), p, description.getText(), selectedFile, selectedTypes);
 
                 Information.display("Úprava studijního materiálu byla úspěšná.");
             } catch (SQLException ex) {
@@ -141,7 +141,7 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
 
         } else {
             try {
-                db.addStudyMaterial(title.getText(), p, description.getText(), selectedFile);
+                db.addStudyMaterial(title.getText(), p, description.getText(), selectedFile, selectedTypes);
 
                 Information.display("Vložení studijního materiálu bylo úspěšné.");
             } catch (SQLException ex) {
@@ -177,6 +177,11 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
         pages.setText(s.getPages().toString());
         description.setText(s.getDescription());
         id = s.getId();
+
+        s.getType().forEach((t) -> {
+            selectedTypes.add(t);
+        });
+        refreshSelectedTypes();
     }
 
     private AnchorPane getLabelType(StudyMaterialType s) {
@@ -217,8 +222,23 @@ public class AddStudyMaterial extends Screen<AddStudyMaterial> implements Initia
 
     @FXML
     private void addType(ActionEvent event) {
-        selectedTypes.add(type.getSelectionModel().getSelectedItem());
-        refreshSelectedTypes();
+
+        StudyMaterialType sel = type.getSelectionModel().getSelectedItem();
+        boolean found = false;
+
+        for (StudyMaterialType t : selectedTypes) {
+            if (t.equals(sel)) {
+                found = true;
+            }
+        }
+
+        if (!found) {
+            selectedTypes.add(type.getSelectionModel().getSelectedItem());
+            refreshSelectedTypes();
+        } else {
+            Information.display("Nelze přidat stejnou kategorii vícekrát.");
+        }
+
     }
 
 }

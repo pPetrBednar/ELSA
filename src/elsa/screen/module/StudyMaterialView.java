@@ -158,6 +158,12 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
         return l;
     }
 
+    private Label createSpacer() {
+        Label l = new Label();
+        l.setPrefWidth(16);
+        return l;
+    }
+
     private void openQuiz(Quiz q) {
         db.setSelectedQuiz(q);
         callback.compose(ViewType.QUIZ_VIEW);
@@ -227,7 +233,7 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
 
         if (s.getType() != null) {
             s.getType().forEach((t) -> {
-                typeList.getChildren().add(createTypeLabel(t));
+                typeList.getChildren().addAll(createTypeLabel(t), createSpacer());
             });
         }
 

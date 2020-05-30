@@ -1,0 +1,102 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="13E9CE51-9B20-3C37-EC11-A882C0F424BF" name="UPRAVA_MATERIALU">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>E5F58527-C88E-DD6F-5B34-00C0F78DFA7B</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_upravaMaterialu" id="429EB80A-0F93-CB56-43AF-FD66B4701F99">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>E3A57F28-C6C2-FDDD-B956-59D39CFAC36B</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>UPRAVA_MATERIALU_SEQ</autoIncrementSequenceName>
+</Column>
+<Column name="datum" id="38B3228C-FCC8-0E18-AFC4-BDBC51AF4D06">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>C4D153FE-0F3C-6273-D560-258290A50244</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UZIVATEL_ID" id="6AEFCC64-F812-E98B-EE57-8DC4C20ADC69">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>B9554FD9-2D08-94FE-A6ED-D228B954F36E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2554C9BE-E614-07AF-D792-2450CE941138" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+<Column name="STUDIJNI_MATERIAL_ID" id="EFB4A8C6-5067-18D4-1168-6F384714871B">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>ABFB98CB-95B4-E672-B8FE-E3E79A66D4DC</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F71342EC-F87E-666E-EF4A-9D5B4179FFEE" referredColumn="03F880F5-7ABC-41B2-57B7-31A5C5CB4E69"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B2F24DE8-B131-BFBF-4EED-2B705A4BD9E8" name="UPRAVA_MATERIALU_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>2C51E7DE-61FA-CDA6-BF5A-C9EA77061B5C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="429EB80A-0F93-CB56-43AF-FD66B4701F99"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1C16E026-A1DA-43A8-EF60-5EB2ED20F20F" name="UM_UZIVATEL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>B4E5ACF6-9981-7B72-5125-A1D7BB51D3AB</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6AEFCC64-F812-E98B-EE57-8DC4C20ADC69"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C18E835C-4B6D-7CD2-6774-BEF47B2B8ADE" name="UM_STUDIJNI_MATERIAL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-05-29 23:15:02 UTC</createdTime>
+<generatorID>82ED1377-9612-B048-C782-9AAAE0BCABB8</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EFB4A8C6-5067-18D4-1168-6F384714871B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

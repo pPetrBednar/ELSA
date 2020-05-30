@@ -187,7 +187,6 @@ public class MySubjects extends Module<MySubjects, Root> implements Initializabl
         ArrayList<Subject> data = db.getUser().getSubjects();
 
         if (data != null && !data.isEmpty()) {
-            System.out.println(data.size());
             data.forEach((t) -> {
                 list.getChildren().add(createLabel(t));
             });
