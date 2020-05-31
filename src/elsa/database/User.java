@@ -27,6 +27,10 @@ public class User {
 
     private ArrayList<Subject> subjects;
 
+    public User(Integer id) {
+        this.id = id;
+    }
+
     public User(Integer id, String login, Permission permission, String firstName, String lastName, String email, String phone, String address, Image avatar) {
         this.id = id;
         this.login = login;

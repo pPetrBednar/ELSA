@@ -14,7 +14,11 @@ public enum ViewType {
     STUDY_MATERIAL_VIEW,
     QUIZ_VIEW,
     PROFILE,
-    COMMENTS;
+    COMMENTS,
+    ADMINISTRATION,
+    QUESTION_TYPES,
+    MATERIAL_TYPES,
+    PUBLIC_PROFILE;
 
     private ViewType() {
     }

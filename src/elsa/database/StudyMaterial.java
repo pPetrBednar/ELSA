@@ -22,11 +22,12 @@ public class StudyMaterial {
     private Blob file;
     private String extension;
     private String createdBy;
+    private Integer createdById;
 
     private ArrayList<StudyMaterialType> type;
     private ArrayList<Quiz> quizList;
 
-    public StudyMaterial(Integer id, String title, Integer pages, Date created, Date changed, String description, Blob file, String extension, String createdBy) {
+    public StudyMaterial(Integer id, String title, Integer pages, Date created, Date changed, String description, Blob file, String extension, String createdBy, Integer createdById) {
         this.id = id;
         this.title = title;
         this.pages = pages;
@@ -36,22 +37,7 @@ public class StudyMaterial {
         this.file = file;
         this.extension = extension;
         this.createdBy = createdBy;
-    }
-
-    public ArrayList<StudyMaterialType> getType() {
-        return type;
-    }
-
-    public void setType(ArrayList<StudyMaterialType> type) {
-        this.type = type;
-    }
-
-    public ArrayList<Quiz> getQuizList() {
-        return quizList;
-    }
-
-    public void setQuizList(ArrayList<Quiz> quizList) {
-        this.quizList = quizList;
+        this.createdById = createdById;
     }
 
     public Integer getId() {
@@ -110,6 +96,14 @@ public class StudyMaterial {
         this.file = file;
     }
 
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -118,12 +112,30 @@ public class StudyMaterial {
         this.createdBy = createdBy;
     }
 
-    public String getExtension() {
-        return extension;
+    public Integer getCreatedById() {
+        return createdById;
     }
 
-    public void setExtension(String extension) {
-        this.extension = extension;
+    public void setCreatedById(Integer createdById) {
+        this.createdById = createdById;
     }
+
+    public ArrayList<StudyMaterialType> getType() {
+        return type;
+    }
+
+    public void setType(ArrayList<StudyMaterialType> type) {
+        this.type = type;
+    }
+
+    public ArrayList<Quiz> getQuizList() {
+        return quizList;
+    }
+
+    public void setQuizList(ArrayList<Quiz> quizList) {
+        this.quizList = quizList;
+    }
+
+   
 
 }

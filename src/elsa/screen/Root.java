@@ -2,16 +2,20 @@ package elsa.screen;
 
 import elsa.database.DBException;
 import elsa.database.DatabaseManager;
-import elsa.database.User;
+import elsa.database.Permission;
 import elsa.screen.handlers.ICompositor;
 import elsa.screen.handlers.ModuleLoader;
 import elsa.screen.handlers.Screen;
 import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.module.Administration;
 import elsa.screen.module.AllSubjects;
 import elsa.screen.module.Comments;
 import elsa.screen.module.Main;
+import elsa.screen.module.MaterialTypes;
 import elsa.screen.module.MySubjects;
 import elsa.screen.module.Profile;
+import elsa.screen.module.PublicProfile;
+import elsa.screen.module.QuestionTypes;
 import elsa.screen.module.QuizView;
 import elsa.screen.module.StudyMaterialView;
 import elsa.screen.module.SubjectView;
@@ -28,7 +32,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -37,6 +40,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 
@@ -61,6 +65,12 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<QuizView, Root> quizView;
     private ModuleLoader<Comments, Root> comments;
 
+    private ModuleLoader<Administration, Root> administration;
+    private ModuleLoader<QuestionTypes, Root> questionTypes;
+    private ModuleLoader<MaterialTypes, Root> materialTypes;
+
+    private ModuleLoader<PublicProfile, Root> publicProfile;
+
     private DatabaseManager db;
     @FXML
     private BorderPane box;
@@ -70,6 +80,8 @@ public class Root extends Screen<Root> implements Initializable {
     private Label statusContent;
     @FXML
     private HBox location;
+    @FXML
+    private VBox adminZone;
 
     /**
      * Initializes the controller class.
@@ -127,6 +139,24 @@ public class Root extends Screen<Root> implements Initializable {
         compositor.compose();
     }
 
+    @FXML
+    private void administration(ActionEvent event) {
+        compositor.viewType = ViewType.ADMINISTRATION;
+        compositor.compose();
+    }
+
+    @FXML
+    private void questionTypes(ActionEvent event) {
+        compositor.viewType = ViewType.QUESTION_TYPES;
+        compositor.compose();
+    }
+
+    @FXML
+    private void materialTypes(ActionEvent event) {
+        compositor.viewType = ViewType.MATERIAL_TYPES;
+        compositor.compose();
+    }
+
     private class Compositor implements ICompositor {
 
         ViewType viewType;
@@ -142,6 +172,12 @@ public class Root extends Screen<Root> implements Initializable {
             studyMaterialView = new ModuleLoader<>("StudyMaterialView");
             quizView = new ModuleLoader<>("QuizView");
             comments = new ModuleLoader<>("Comments");
+
+            administration = new ModuleLoader<>("Administration");
+            questionTypes = new ModuleLoader<>("QuestionTypes");
+            materialTypes = new ModuleLoader<>("MaterialTypes");
+
+            publicProfile = new ModuleLoader<>("PublicProfile");
         }
 
         @Override
@@ -173,6 +209,18 @@ public class Root extends Screen<Root> implements Initializable {
 
             comments.setCallback(controller);
             comments.getController().setDb(db);
+
+            administration.setCallback(controller);
+            administration.getController().setDb(db);
+
+            questionTypes.setCallback(controller);
+            questionTypes.getController().setDb(db);
+
+            materialTypes.setCallback(controller);
+            materialTypes.getController().setDb(db);
+
+            publicProfile.setCallback(controller);
+            publicProfile.getController().setDb(db);
         }
 
         @Override
@@ -206,11 +254,24 @@ public class Root extends Screen<Root> implements Initializable {
                 case COMMENTS:
                     composeComments();
                     break;
+                case ADMINISTRATION:
+                    composeAdministration();
+                    break;
+                case QUESTION_TYPES:
+                    composeQuestionTypes();
+                    break;
+                case MATERIAL_TYPES:
+                    composeMaterialTypes();
+                    break;
+                case PUBLIC_PROFILE:
+                    composePublicProfile();
+                    break;
             }
         }
 
         private void composeLogin() {
 
+            adminZone.setVisible(false);
             location.getChildren().clear();
             Label l = new Label("Přihlášení");
             l.getStyleClass().add("location-label");
@@ -238,6 +299,10 @@ public class Root extends Screen<Root> implements Initializable {
 
             if (db.getUser() == null) {
                 System.exit(0);
+            }
+
+            if (db.getUser().getPermission() == Permission.ADMINISTRATOR) {
+                adminZone.setVisible(true);
             }
 
             statusLabel.setText("Uživatel:");
@@ -391,6 +456,46 @@ public class Root extends Screen<Root> implements Initializable {
 
             profile.getController().load();
             box.setCenter(profile.getContent());
+        }
+
+        private void composeAdministration() {
+            location.getChildren().clear();
+            Label l = new Label("Administrace");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            administration.getController().load();
+            box.setCenter(administration.getContent());
+        }
+
+        private void composeQuestionTypes() {
+            location.getChildren().clear();
+            Label l = new Label("Druhy otázek");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            questionTypes.getController().load();
+            box.setCenter(questionTypes.getContent());
+        }
+
+        private void composeMaterialTypes() {
+            location.getChildren().clear();
+            Label l = new Label("Kategorie studijních materiálů");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            materialTypes.getController().load();
+            box.setCenter(materialTypes.getContent());
+        }
+
+        private void composePublicProfile() {
+            location.getChildren().clear();
+            Label l = new Label("Veřejný profil");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            publicProfile.getController().load();
+            box.setCenter(publicProfile.getContent());
         }
 
         @Override

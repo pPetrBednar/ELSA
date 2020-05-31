@@ -8,6 +8,7 @@ import elsa.database.Question;
 import elsa.database.Quiz;
 import elsa.database.StudyMaterial;
 import elsa.database.Subject;
+import elsa.database.User;
 import elsa.screen.AddQuestion;
 import elsa.screen.AddQuiz;
 import elsa.screen.AddStudyMaterial;
@@ -126,10 +127,17 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
         l3.setAlignment(Pos.CENTER);
         l3.setPrefWidth(250);
         l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+         l3.getStyleClass().add("hover-effect-15");
 
         AnchorPane.setTopAnchor(l3, 0.0);
         AnchorPane.setBottomAnchor(l3, 550.0);
         AnchorPane.setRightAnchor(l3, 0.0);
+        
+        l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                openUser(s.getCreatedById());
+            }
+        });
 
         if (db.getUser().getPermission() == Permission.ADMINISTRATOR || (db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
 
@@ -171,6 +179,11 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
         }
 
         return ap;
+    }
+    
+    private void openUser(Integer s) {
+        db.setSelectedPublicProfile(new User(s));
+        callback.compose(ViewType.PUBLIC_PROFILE);
     }
 
     private void editQuestion(Question s) {

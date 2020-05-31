@@ -5,6 +5,7 @@ import elsa.database.Comment;
 import elsa.database.DatabaseManager;
 import elsa.database.Permission;
 import elsa.database.StudyMaterial;
+import elsa.database.User;
 import elsa.screen.AddComment;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
@@ -84,6 +85,12 @@ public class Comments extends Module<Comments, Root> implements Initializable {
         AnchorPane.setTopAnchor(l6, 0.0);
         AnchorPane.setBottomAnchor(l6, 100.0);
         AnchorPane.setRightAnchor(l6, 0.0);
+        
+        l6.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                openUser(s.getCreatedById());
+            }
+        });
 
         Label l7 = new Label("Přidáno: " + StudyMaterial.DATE_FORMAT.format(s.getCreated()));
         l7.setAlignment(Pos.CENTER);
@@ -167,6 +174,11 @@ public class Comments extends Module<Comments, Root> implements Initializable {
         }
 
         return ap;
+    }
+    
+    private void openUser(Integer s) {
+        db.setSelectedPublicProfile(new User(s));
+        callback.compose(ViewType.PUBLIC_PROFILE);
     }
 
     private void editComment(Comment s) {

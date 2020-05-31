@@ -6,6 +6,7 @@ import elsa.database.Permission;
 import elsa.database.StudyMaterial;
 import elsa.database.StudyMaterialType;
 import elsa.database.Subject;
+import elsa.database.User;
 import elsa.screen.AddStudyMaterial;
 import elsa.screen.AddSubject;
 import elsa.screen.Root;
@@ -88,10 +89,17 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
         l3.setAlignment(Pos.CENTER);
         l3.setPrefWidth(250);
         l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        l3.getStyleClass().add("hover-effect-15");
 
         AnchorPane.setTopAnchor(l3, 0.0);
         AnchorPane.setBottomAnchor(l3, 0.0);
         AnchorPane.setRightAnchor(l3, 0.0);
+
+        l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                openUser(s.getCreatedById());
+            }
+        });
 
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
@@ -139,6 +147,11 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
         }
 
         return ap;
+    }
+
+    private void openUser(Integer s) {
+        db.setSelectedPublicProfile(new User(s));
+        callback.compose(ViewType.PUBLIC_PROFILE);
     }
 
     private void openMaterial(StudyMaterial s) {

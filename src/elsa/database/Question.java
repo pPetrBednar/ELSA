@@ -14,8 +14,9 @@ public class Question {
     private Integer points;
     private QuestionType type;
     private String createdBy;
+    private Integer createdById;
 
-    public Question(Integer id, Integer index, String title, String q, String a, Integer points, QuestionType type, String createdBy) {
+    public Question(Integer id, Integer index, String title, String q, String a, Integer points, QuestionType type, String createdBy, Integer createdById) {
         this.id = id;
         this.index = index;
         this.title = title;
@@ -24,6 +25,7 @@ public class Question {
         this.points = points;
         this.type = type;
         this.createdBy = createdBy;
+        this.createdById = createdById;
     }
 
     public Integer getId() {
@@ -88,6 +90,14 @@ public class Question {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Integer getCreatedById() {
+        return createdById;
+    }
+
+    public void setCreatedById(Integer createdById) {
+        this.createdById = createdById;
     }
 
 }

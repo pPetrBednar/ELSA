@@ -29,6 +29,7 @@ public class DatabaseManager extends DatabaseConfig {
     private Subject selectedSubject;
     private StudyMaterial selectedStudyMaterial;
     private Quiz selectedQuiz;
+    private User selectedPublicProfile;
 
     private String getFileExtension(String fileName) {
         int lastIndexOf = fileName.lastIndexOf(".");
@@ -87,6 +88,14 @@ public class DatabaseManager extends DatabaseConfig {
         this.selectedQuiz = selectedQuiz;
     }
 
+    public User getSelectedPublicProfile() {
+        return selectedPublicProfile;
+    }
+
+    public void setSelectedPublicProfile(User selectedPublicProfile) {
+        this.selectedPublicProfile = selectedPublicProfile;
+    }
+
     /*
     
     LOGIN / REGISTER
@@ -137,6 +146,28 @@ public class DatabaseManager extends DatabaseConfig {
         }
 
         loadUsersSubjects();
+    }
+
+    public User getPublicUserData() throws SQLException, IOException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE WHERE id_uzivatel = '" + selectedPublicProfile.getId() + "'");
+        ResultSet rset = stmt.executeQuery();
+
+        while (rset.next()) {
+
+            return new User(
+                    rset.getInt("id_uzivatel"),
+                    null,
+                    Permission.valueOf(rset.getString("opravneni")),
+                    rset.getString("jmeno"),
+                    rset.getString("prijmeni"),
+                    rset.getString("email"),
+                    rset.getString("telefon"),
+                    rset.getString("adresa"),
+                    getImageFromBlob(rset.getBlob("image"))
+            );
+        }
+        return null;
     }
 
     private Image getImageFromBlob(Blob blob) throws SQLException, IOException {
@@ -201,7 +232,8 @@ public class DatabaseManager extends DatabaseConfig {
                     rset.getString("popis"),
                     rset.getBlob("soubor"),
                     rset.getString("pripona"),
-                    rset.getString("jmeno") + " " + rset.getString("prijmeni")
+                    rset.getString("jmeno") + " " + rset.getString("prijmeni"),
+                    rset.getInt("uzivatel_id")
             );
 
             s.setType(getAllTypesForStudyMaterial(s.getId()));
@@ -221,7 +253,8 @@ public class DatabaseManager extends DatabaseConfig {
                     rset.getInt("id_kviz"),
                     rset.getString("nazev"),
                     rset.getString("popis"),
-                    rset.getString("jmeno") + " " + rset.getString("prijmeni")
+                    rset.getString("jmeno") + " " + rset.getString("prijmeni"),
+                    rset.getInt("uzivatel_id")
             );
 
             data.add(s);
@@ -243,7 +276,8 @@ public class DatabaseManager extends DatabaseConfig {
                     rset.getString("odpoved"),
                     rset.getInt("body"),
                     new QuestionType(rset.getInt("id_druh_otazky"), rset.getString("nazev_druh_otazky"), rset.getString("zkratka_druh_otazky"), rset.getString("popis_druh_otazky")),
-                    rset.getString("jmeno") + " " + rset.getString("prijmeni")
+                    rset.getString("jmeno") + " " + rset.getString("prijmeni"),
+                    rset.getInt("uzivatel_id")
             );
             data.add(s);
         }
@@ -345,6 +379,31 @@ public class DatabaseManager extends DatabaseConfig {
                     rset.getString("nazev"),
                     rset.getString("zkratka"),
                     rset.getString("popis")
+            );
+
+            data.add(s);
+        }
+        return data;
+    }
+
+    public ArrayList<User> getAllUsers() throws SQLException {
+
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE");
+        ResultSet rset = stmt.executeQuery();
+
+        while (rset.next()) {
+            User s = new User(
+                    rset.getInt("id_uzivatel"),
+                    rset.getString("login"),
+                    Permission.valueOf(rset.getString("opravneni")),
+                    rset.getString("jmeno"),
+                    rset.getString("prijmeni"),
+                    null,
+                    null,
+                    null,
+                    null
             );
 
             data.add(s);
@@ -502,6 +561,30 @@ public class DatabaseManager extends DatabaseConfig {
         con.commit();
     }
 
+    public void createStudyMaterialType(String text, String shortcut, String description) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement in = con.prepareStatement("INSERT INTO kategorie_materialu(id_kategoriematerialu, nazev, zkratka, popis) VALUES(KATEGORIE_MATERIALU_SEQ.NEXTVAL, ?, ?, ?)");
+
+        in.setString(1, text);
+        in.setString(2, shortcut);
+        in.setString(3, description);
+
+        in.executeUpdate();
+        con.commit();
+    }
+
+    public void createQuestionType(String text, String shortcut, String description) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement in = con.prepareStatement("INSERT INTO druh_otazky(id_druhotazky, nazev, zkratka, popis) VALUES(DRUH_OTAZKY_SEQ.NEXTVAL, ?, ?, ?)");
+
+        in.setString(1, text);
+        in.setString(2, shortcut);
+        in.setString(3, description);
+
+        in.executeUpdate();
+        con.commit();
+    }
+
     /*
     
     REMOVE DATA
@@ -570,6 +653,24 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
 
         PreparedStatement del = con.prepareStatement("DELETE FROM kategorizace_materialu WHERE studijni_material_id = '" + id + "' AND kategorie_materialu_id = '" + type.getId() + "'");
+
+        del.executeUpdate();
+        con.commit();
+    }
+
+    public void deleteStudyMaterialType(StudyMaterialType s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        PreparedStatement del = con.prepareStatement("DELETE FROM kategorie_materialu WHERE id_kategoriematerialu = '" + s.getId() + "'");
+
+        del.executeUpdate();
+        con.commit();
+    }
+
+    public void deleteQuestionType(QuestionType s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        PreparedStatement del = con.prepareStatement("DELETE FROM druh_otazky WHERE id_druhotazky = '" + s.getId() + "'");
 
         del.executeUpdate();
         con.commit();
@@ -779,6 +880,30 @@ public class DatabaseManager extends DatabaseConfig {
         up.setString(1, text);
 
         up.executeUpdate();
+        con.commit();
+    }
+
+    public void editStudyMaterialType(Integer id, String text, String shortcut, String description) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement in = con.prepareStatement("UPDATE kategorie_materialu SET nazev = ?, zkratka = ?, popis = ? WHERE id_kategoriematerialu = '" + id + "'");
+
+        in.setString(1, text);
+        in.setString(2, shortcut);
+        in.setString(3, description);
+
+        in.executeUpdate();
+        con.commit();
+    }
+
+    public void editQuestionType(Integer id, String text, String shortcut, String description) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement in = con.prepareStatement("UPDATE druh_otazky SET nazev = ?, zkratka = ?, popis = ? WHERE id_druhotazky = '" + id + "'");
+
+        in.setString(1, text);
+        in.setString(2, shortcut);
+        in.setString(3, description);
+
+        in.executeUpdate();
         con.commit();
     }
 

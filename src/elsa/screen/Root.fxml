@@ -59,9 +59,45 @@
                      </font>
                   </JFXButton>
                   <Separator opacity="0.1" prefWidth="200.0" />
+                  <VBox fx:id="adminZone">
+                     <children>
+                        <Separator opacity="0.1" prefWidth="200.0" />
+                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#administration" styleClass="hover-effect-15" text="Administrace" textFill="#ffffffcc">
+                           <padding>
+                              <Insets bottom="10.0" left="24.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.1" prefWidth="200.0" />
+                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#questionTypes" styleClass="hover-effect-15" text="Druhy otázek" textFill="#ffffffcc">
+                           <padding>
+                              <Insets bottom="10.0" left="24.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.1" prefWidth="200.0" />
+                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#materialTypes" styleClass="hover-effect-15" text="Kategorie materiálů" textFill="#ffffffcc">
+                           <padding>
+                              <Insets bottom="10.0" left="24.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.1" prefWidth="200.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </VBox>
                </children>
             </VBox>
-            <JFXButton focusTraversable="false" onAction="#logout" styleClass="hover-effect-15" text="Odhlásit" textFill="WHITE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Separator opacity="0.3" prefWidth="200.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXButton focusTraversable="false" onAction="#logout" styleClass="hover-effect-15" text="Odhlásit" textFill="WHITE" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

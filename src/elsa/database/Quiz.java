@@ -12,14 +12,16 @@ public class Quiz {
     private String title;
     private String description;
     private String createdBy;
+     private Integer createdById;
 
     private ArrayList<Question> questions;
 
-    public Quiz(Integer id, String title, String description, String createdBy) {
+    public Quiz(Integer id, String title, String description, String createdBy, Integer createdById) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.createdBy = createdBy;
+        this.createdById = createdById;
     }
 
     public Integer getId() {
@@ -46,6 +48,22 @@ public class Quiz {
         this.description = description;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Integer getCreatedById() {
+        return createdById;
+    }
+
+    public void setCreatedById(Integer createdById) {
+        this.createdById = createdById;
+    }
+
     public ArrayList<Question> getQuestions() {
         return questions;
     }
@@ -54,12 +72,6 @@ public class Quiz {
         this.questions = questions;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+    
 
 }
