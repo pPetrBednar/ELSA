@@ -2,10 +2,8 @@ package elsa.screen.module;
 
 import com.jfoenix.controls.JFXButton;
 import elsa.database.DatabaseManager;
-import elsa.database.Permission;
-import elsa.database.Subject;
 import elsa.database.User;
-import elsa.screen.AddSubject;
+import elsa.screen.ChangePermission;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -59,7 +56,7 @@ public class Administration extends Module<Administration, Root> implements Init
         ap.setPrefHeight(70);
         ap.setStyle("-fx-border-color: rgba(0, 0, 0, 0.2);");
 
-        Label l2 = new Label(s.getFirstName() + " " + s.getLastName() + "(" + s.getLogin() + ")\nOprávnění: " + s.getPermission().name());
+        Label l2 = new Label(s.getFirstName() + " " + s.getLastName() + "(" + s.getLogin().trim() + ")\nOprávnění: " + s.getPermission().getText());
         l2.setAlignment(Pos.CENTER_LEFT);
         l2.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
         l2.getStyleClass().add("hover-effect-15");
@@ -68,7 +65,7 @@ public class Administration extends Module<Administration, Root> implements Init
         AnchorPane.setLeftAnchor(l2, 0.0);
         AnchorPane.setBottomAnchor(l2, 0.0);
         AnchorPane.setRightAnchor(l2, 150.0);
-        
+
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
                 openUser(s);
@@ -111,7 +108,7 @@ public class Administration extends Module<Administration, Root> implements Init
 
         return ap;
     }
-    
+
     private void openUser(User s) {
         db.setSelectedPublicProfile(s);
         callback.compose(ViewType.PUBLIC_PROFILE);
@@ -119,29 +116,29 @@ public class Administration extends Module<Administration, Root> implements Init
 
     private void editUser(User s) {
 
-        /*  try {
-            ScreenLoader<AddSubject> add = new ScreenLoader<>("AddSubject");
-            add.setupStage("Úprava předmětu", callback.getStage(), Modality.WINDOW_MODAL);
+        try {
+            ScreenLoader<ChangePermission> add = new ScreenLoader<>("ChangePermission");
+            add.setupStage("Úprava oprávnění", callback.getStage(), Modality.WINDOW_MODAL);
             add.setTransparent(true);
             add.getController().setDb(db);
             add.getController().load(s);
             add.getStage().showAndWait();
 
-            callback.compose(ViewType.ALL_SUBJECTS);
+            callback.compose(ViewType.ADMINISTRATION);
         } catch (IOException ex) {
             Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     private void removeUser(User s) {
 
-        /*  try {
-            db.removeSubject(s);
+        try {
+            db.removeUser(s);
         } catch (SQLException ex) {
             Logger.getLogger(SubjectView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        callback.compose(ViewType.ALL_SUBJECTS);*/
+        callback.compose(ViewType.ADMINISTRATION);
     }
 
     public void load() {

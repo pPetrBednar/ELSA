@@ -157,7 +157,7 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
 
         return ap;
     }
-    
+
     private void openUser(Integer s) {
         db.setSelectedPublicProfile(new User(s));
         callback.compose(ViewType.PUBLIC_PROFILE);
@@ -166,7 +166,14 @@ public class StudyMaterialView extends Module<StudyMaterialView, Root> implement
     private Label createTypeLabel(StudyMaterialType t) {
 
         Label l = new Label(t.getText());
-        l.setStyle("-fx-text-fill: #ffffffe5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 4px 16px 4px 16px; -fx-background-color: rgba(0, 0, 0, 0.5)");
+        l.setStyle("-fx-text-fill: #ffffffe5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 4px 16px 4px 16px;");
+        l.getStyleClass().add("tag");
+
+        l.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                Information.display(t.getDescription());
+            }
+        });
 
         return l;
     }

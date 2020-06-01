@@ -4,11 +4,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
 import elsa.database.User;
+import elsa.screen.Confirmation;
 import elsa.screen.EditProfile;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.tools.Information;
+import elsa.screen.tools.ViewType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -177,5 +179,20 @@ public class Profile extends Module<Profile, Root> implements Initializable {
         ch.getController().setDb(db);
         ch.getController().load();
         ch.getStage().showAndWait();
+    }
+
+    @FXML
+    private void deleteAccount(ActionEvent event) throws SQLException, IOException {
+
+        ScreenLoader<Confirmation> ch = new ScreenLoader<>("Confirmation");
+        ch.setupStage("Potvrzení", callback.getStage(), Modality.WINDOW_MODAL);
+        ch.setTransparent(true);
+        ch.getController().setText("Opravdu chcete odstranit účet?");
+        ch.getStage().showAndWait();
+
+        if (ch.getController().getResult()) {
+            db.removeUser(db.getUser());
+            callback.compose(ViewType.LOGIN);
+        }
     }
 }

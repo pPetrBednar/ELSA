@@ -100,7 +100,7 @@ SCROLL PANE
 */
 
 .scroll-pane {
-  -fx-background:  rgb(185, 210, 250);
+    -fx-background:  rgb(185, 210, 250);
 }
 
 /*
@@ -141,4 +141,13 @@ SCROLL PANE
     -fx-background-color: rgba(0, 0, 0, 0.3);
     -fx-background-radius: 50px;
     -fx-cursor: hand;
+}
+
+.tag {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-cursor: hand;
+}
+
+.tag:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
 }

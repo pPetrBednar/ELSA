@@ -65,7 +65,7 @@ public class AddQuestion extends Screen<AddQuestion> implements Initializable {
         try {
             types = db.getAllQuestionTypes();
             type.setItems(FXCollections.observableArrayList(types));
-            type.getSelectionModel().select(1);
+            type.getSelectionModel().select(0);
         } catch (SQLException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         }

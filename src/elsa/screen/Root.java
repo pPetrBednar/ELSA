@@ -51,11 +51,14 @@ import javafx.stage.Modality;
  */
 public class Root extends Screen<Root> implements Initializable {
 
+    // Testing mode, automatic admin login
     private final boolean TESTING = true;
 
+    private DatabaseManager db;
     private Compositor compositor;
     private ScreenLoader<Login> login;
 
+    // Main screen components
     private ModuleLoader<Main, Root> main;
     private ModuleLoader<Profile, Root> profile;
     private ModuleLoader<AllSubjects, Root> allSubjects;
@@ -64,14 +67,11 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<StudyMaterialView, Root> studyMaterialView;
     private ModuleLoader<QuizView, Root> quizView;
     private ModuleLoader<Comments, Root> comments;
-
     private ModuleLoader<Administration, Root> administration;
     private ModuleLoader<QuestionTypes, Root> questionTypes;
     private ModuleLoader<MaterialTypes, Root> materialTypes;
-
     private ModuleLoader<PublicProfile, Root> publicProfile;
 
-    private DatabaseManager db;
     @FXML
     private BorderPane box;
     @FXML
@@ -157,10 +157,18 @@ public class Root extends Screen<Root> implements Initializable {
         compositor.compose();
     }
 
+    /**
+     * Assembler for creating different views
+     */
     private class Compositor implements ICompositor {
 
         ViewType viewType;
 
+        /**
+         * FXML Loading
+         *
+         * @throws IOException
+         */
         @Override
         public void load() throws IOException {
             login = new ScreenLoader<>("Login");
@@ -172,14 +180,15 @@ public class Root extends Screen<Root> implements Initializable {
             studyMaterialView = new ModuleLoader<>("StudyMaterialView");
             quizView = new ModuleLoader<>("QuizView");
             comments = new ModuleLoader<>("Comments");
-
             administration = new ModuleLoader<>("Administration");
             questionTypes = new ModuleLoader<>("QuestionTypes");
             materialTypes = new ModuleLoader<>("MaterialTypes");
-
             publicProfile = new ModuleLoader<>("PublicProfile");
         }
 
+        /**
+         * Setup of db controllers and distribution of root controllers
+         */
         @Override
         public void setup() {
             login.setupStage("Login", stage, Modality.WINDOW_MODAL);
@@ -223,6 +232,9 @@ public class Root extends Screen<Root> implements Initializable {
             publicProfile.getController().setDb(db);
         }
 
+        /**
+         * Compositor
+         */
         @Override
         public void compose() {
             decompose();
@@ -505,6 +517,11 @@ public class Root extends Screen<Root> implements Initializable {
 
     }
 
+    /**
+     * Displays selected view type on main window
+     *
+     * @param viewType
+     */
     public void compose(ViewType viewType) {
         compositor.viewType = viewType;
         compositor.compose();

@@ -31,21 +31,13 @@ public class DatabaseManager extends DatabaseConfig {
     private Quiz selectedQuiz;
     private User selectedPublicProfile;
 
-    private String getFileExtension(String fileName) {
-        int lastIndexOf = fileName.lastIndexOf(".");
-        if (lastIndexOf == -1) {
-            return null; // empty extension
-        }
-        return fileName.substring(lastIndexOf + 1);
-    }
-
-    /*
-    
-    Přihlašovací údaje k databázi jsou skryty ve zkompilovaném kódu
-    
+    /**
+     * DB Connection
+     *
+     * @throws SQLException
      */
     public DatabaseManager() throws SQLException {
-        OracleConnector.setUpConnection("fei-sql1.upceucebny.cz", 1521, "IDAS", getLogin(), getPassword());
+        OracleConnector.setUpConnection("fei-sql1.upceucebny.cz", 1521, "IDAS", DatabaseConfig.LOGIN, DatabaseConfig.PASSWORD);
     }
 
     private String encryptPassword(String pass) {
@@ -122,7 +114,6 @@ public class DatabaseManager extends DatabaseConfig {
 
     private void login(String login) throws SQLException, IOException {
         Connection con = OracleConnector.getConnection();
-        //PreparedStatement stmt = con.prepareStatement("SELECT id_uzivatel, jmeno, prijmeni, email, telefon, adresa, image, opravneni FROM uzivatel INNER JOIN role ON uzivatel.role_id = role.id_role WHERE uzivatel.login = '" + login + "'");
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE WHERE login = '" + login + "'");
         ResultSet rset = stmt.executeQuery();
 
@@ -181,7 +172,6 @@ public class DatabaseManager extends DatabaseConfig {
 
     private void loadUsersSubjects() throws SQLException {
         Connection con = OracleConnector.getConnection();
-        //PreparedStatement stmt = con.prepareStatement("SELECT * FROM predmety_uzivatele INNER JOIN predmet ON predmety_uzivatele.predmet_id = predmet.id_predmet WHERE uzivatel_id = '" + user.getId() + "'");
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM odebirane_predmety WHERE uzivatel_id = '" + user.getId() + "'");
         ResultSet rset = stmt.executeQuery();
         user.setSubjects(new ArrayList<>());
@@ -219,7 +209,6 @@ public class DatabaseManager extends DatabaseConfig {
     public ArrayList<StudyMaterial> getAllMaterialsForSubject(Subject subject) throws SQLException {
         ArrayList<StudyMaterial> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
-        //PreparedStatement stmt = con.prepareStatement("SELECT * FROM studijni_material INNER JOIN uzivatel ON studijni_material.uzivatel_id = uzivatel.id_uzivatel WHERE studijni_material.predmet_id = '" + subject.getId() + "' ORDER BY studijni_material.datumvytvoreni ASC");
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM studijni_materialy WHERE predmet_id = '" + subject.getId() + "' ORDER BY datumvytvoreni ASC");
         ResultSet rset = stmt.executeQuery();
         while (rset.next()) {
@@ -676,6 +665,15 @@ public class DatabaseManager extends DatabaseConfig {
         con.commit();
     }
 
+    public void removeUser(User s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        PreparedStatement del = con.prepareStatement("DELETE FROM uzivatel WHERE id_uzivatel = '" + s.getId() + "'");
+
+        del.executeUpdate();
+        con.commit();
+    }
+
     /*
     
     UPDATE DATA
@@ -905,6 +903,39 @@ public class DatabaseManager extends DatabaseConfig {
 
         in.executeUpdate();
         con.commit();
+    }
+
+    public void changePermission(User u, Permission permit) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        PreparedStatement up = con.prepareStatement("UPDATE uzivatel SET role_id = ? WHERE id_uzivatel = '" + u.getId() + "'");
+
+        switch (permit) {
+            case ADMINISTRATOR:
+                up.setInt(1, 1);
+                break;
+            case TEACHER:
+                up.setInt(1, 2);
+                break;
+            case STUDENT:
+                up.setInt(1, 3);
+                break;
+        }
+
+        up.executeUpdate();
+        con.commit();
+    }
+
+    /*
+    
+    TOOLS
+    
+     */
+    private String getFileExtension(String fileName) {
+        int lastIndexOf = fileName.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return null; // empty extension
+        }
+        return fileName.substring(lastIndexOf + 1);
     }
 
 }
