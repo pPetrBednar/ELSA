@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>KATEGORIE_MATERIALU_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>KATEGORIE_MATERIALU_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="007DE490-2E9D-F6B8-E39D-8EA497C4618E">
 <createdBy>petrb</createdBy>

@@ -86,7 +86,7 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
         AnchorPane.setBottomAnchor(l2, 0.0);
         AnchorPane.setRightAnchor(l2, 400.0);
 
-        Label l3 = new Label("Přidal: " + s.getCreatedBy());
+        Label l3 = new Label(s.getCreatedBy());
         l3.setAlignment(Pos.CENTER);
         l3.setPrefWidth(250);
         l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");

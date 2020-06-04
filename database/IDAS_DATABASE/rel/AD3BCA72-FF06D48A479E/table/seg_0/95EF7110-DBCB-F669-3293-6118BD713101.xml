@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>KVIZ_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>KVIZ_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="70B18E4A-5D60-F6E0-A23E-FE63FB191993">
 <createdBy>petrb</createdBy>

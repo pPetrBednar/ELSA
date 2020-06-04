@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>UZIVATEL_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>UZIVATEL_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="login" id="FA042A22-7A98-D421-936D-4F95F0AAA5F1">
 <createdBy>petrb</createdBy>

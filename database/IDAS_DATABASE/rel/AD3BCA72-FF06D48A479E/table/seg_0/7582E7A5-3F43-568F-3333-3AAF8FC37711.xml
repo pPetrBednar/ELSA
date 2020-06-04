@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>ROLE_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>ROLE_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="68DDD2CE-0E63-436B-A505-BC542839912B">
 <createdBy>petrb</createdBy>

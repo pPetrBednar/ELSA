@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>KOMENTAR_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>KOMENTAR_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="text" id="361D3148-1F6A-A8A0-FCAB-112A70283DBD">
 <createdBy>petrb</createdBy>

@@ -5,7 +5,7 @@
 <generatorID>5B01151C-AA09-1F5E-C868-9AFE04164024</generatorID>
 <ownerDesignName>IDAS_DATABASE</ownerDesignName>
 <referredTableLongName>STUDIJNI_MATERIAL</referredTableLongName>
-<deleteRule>NO ACTION</deleteRule>
+<deleteRule>CASCADE</deleteRule>
 <referredTableID>445A2D13-8D38-CA68-13C8-1BD627EE871D</referredTableID>
 <keyObject>051BC3EE-401F-2F7F-33B6-EED33DCBCC7C</keyObject>
 <referredKeyID>051BC3EE-401F-2F7F-33B6-EED33DCBCC7C</referredKeyID>

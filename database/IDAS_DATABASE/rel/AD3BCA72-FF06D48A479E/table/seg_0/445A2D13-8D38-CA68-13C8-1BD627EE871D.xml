@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>STUDIJNI_MATERIAL_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>STUDIJNI_MATERIAL_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="85CD5D63-8BAF-8415-5996-49A6571E65BB">
 <createdBy>petrb</createdBy>

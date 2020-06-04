@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>OTAZKA_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>OTAZKA_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="10B46080-9DE5-F780-0F8F-5C950F9FFDFB">
 <createdBy>petrb</createdBy>

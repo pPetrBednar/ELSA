@@ -71,14 +71,13 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
         AnchorPane ap = new AnchorPane();
         ap.setPrefHeight(600);
 
-        JFXTextArea tq = new JFXTextArea();
+        Label tq = new Label();
         AnchorPane.setTopAnchor(tq, 90.0);
         AnchorPane.setLeftAnchor(tq, 16.0);
         AnchorPane.setBottomAnchor(tq, 300.0);
         AnchorPane.setRightAnchor(tq, 16.0);
         tq.setText(s.getQ());
-        tq.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
-        tq.setEditable(false);
+        tq.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 17px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 16px 16px 16px 16px;");
 
         Label lq = new Label("Otázka:");
         lq.setAlignment(Pos.CENTER_LEFT);
@@ -123,16 +122,16 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
             }
         });
 
-        Label l3 = new Label("Přidal: " + s.getCreatedBy());
+        Label l3 = new Label(s.getCreatedBy());
         l3.setAlignment(Pos.CENTER);
         l3.setPrefWidth(250);
         l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
-         l3.getStyleClass().add("hover-effect-15");
+        l3.getStyleClass().add("hover-effect-15");
 
         AnchorPane.setTopAnchor(l3, 0.0);
         AnchorPane.setBottomAnchor(l3, 550.0);
         AnchorPane.setRightAnchor(l3, 0.0);
-        
+
         l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
                 openUser(s.getCreatedById());
@@ -180,7 +179,7 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
 
         return ap;
     }
-    
+
     private void openUser(Integer s) {
         db.setSelectedPublicProfile(new User(s));
         callback.compose(ViewType.PUBLIC_PROFILE);

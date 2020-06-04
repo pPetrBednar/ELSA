@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>PREDMET_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>PREDMET_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="7ECF6F4C-E5F6-FC24-BC3E-850EC48D109C">
 <createdBy>petrb</createdBy>

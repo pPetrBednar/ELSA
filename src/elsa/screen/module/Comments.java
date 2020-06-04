@@ -70,13 +70,13 @@ public class Comments extends Module<Comments, Root> implements Initializable {
 
         Label l1 = new Label(s.getText());
         l1.setAlignment(Pos.CENTER);
-        l1.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 16px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        l1.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 16px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 16px 0px 16px;");
         AnchorPane.setTopAnchor(l1, 0.0);
         AnchorPane.setLeftAnchor(l1, 0.0);
         AnchorPane.setBottomAnchor(l1, 0.0);
         AnchorPane.setRightAnchor(l1, 300.0);
 
-        Label l6 = new Label("Přidal: " + s.getCreatedBy());
+        Label l6 = new Label(s.getCreatedBy());
         l6.setAlignment(Pos.CENTER);
         l6.setPrefWidth(150);
         l6.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
@@ -85,7 +85,7 @@ public class Comments extends Module<Comments, Root> implements Initializable {
         AnchorPane.setTopAnchor(l6, 0.0);
         AnchorPane.setBottomAnchor(l6, 100.0);
         AnchorPane.setRightAnchor(l6, 0.0);
-        
+
         l6.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
                 openUser(s.getCreatedById());
@@ -102,7 +102,7 @@ public class Comments extends Module<Comments, Root> implements Initializable {
         AnchorPane.setBottomAnchor(l7, 50.0);
         AnchorPane.setRightAnchor(l7, 0.0);
 
-        Label l8 = new Label("Změněno: " + StudyMaterial.DATE_FORMAT.format(s.getChanged()));
+        Label l8 = new Label("Upraveno: " + StudyMaterial.DATE_FORMAT.format(s.getChanged()));
         l8.setAlignment(Pos.CENTER);
         l8.setPrefWidth(300);
         l8.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
@@ -175,7 +175,7 @@ public class Comments extends Module<Comments, Root> implements Initializable {
 
         return ap;
     }
-    
+
     private void openUser(Integer s) {
         db.setSelectedPublicProfile(new User(s));
         callback.compose(ViewType.PUBLIC_PROFILE);

@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>UPRAVA_MATERIALU_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>UPRAVA_MATERIALU_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="datum" id="38B3228C-FCC8-0E18-AFC4-BDBC51AF4D06">
 <createdBy>petrb</createdBy>

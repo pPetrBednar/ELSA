@@ -20,6 +20,7 @@
 <autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <autoIncrementSequenceName>DRUH_OTAZKY_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>DRUH_OTAZKY_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="01835491-9497-1A90-C469-427556C949EF">
 <createdBy>petrb</createdBy>

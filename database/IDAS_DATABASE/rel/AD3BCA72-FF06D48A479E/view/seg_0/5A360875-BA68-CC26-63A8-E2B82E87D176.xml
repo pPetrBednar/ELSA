@@ -1,0 +1,128 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="5A360875-BA68-CC26-63A8-E2B82E87D176" name="HISTORIE_UPRAV">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:21:22 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<ordsAlias>view_9</ordsAlias>
+<userDefined>true</userDefined>
+<userDefinedSQL><![CDATA[SELECT
+    uzivatel.jmeno,
+    uzivatel.prijmeni,
+    uprava_materialu.*
+FROM
+         uprava_materialu
+    INNER JOIN uzivatel ON uzivatel.id_uzivatel = uprava_materialu.uzivatel_id]]></userDefinedSQL>
+<parsed>true</parsed>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="jmeno" id="018C10AB-9384-F30F-7BFE-9A134A707FF2">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:22:15 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (64)</dataType>
+<headerAlias>jmeno</headerAlias>
+<reference>false</reference>
+<referencedColumn>8AA39AC4-9AF9-17BF-BEEE-8D05C6BA9A97</referencedColumn>
+<table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="prijmeni" id="F233EBA9-1654-070A-6656-92A94ADA7F42">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:22:15 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (64)</dataType>
+<headerAlias>prijmeni</headerAlias>
+<reference>false</reference>
+<referencedColumn>2DABF6F1-0503-5D73-E174-D2B977C18442</referencedColumn>
+<table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="id_upravaMaterialu" id="91FFE8F2-9DA2-A344-B1B0-9747C8B21A8E">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:22:15 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>id_upravaMaterialu</headerAlias>
+<reference>false</reference>
+<referencedColumn>429EB80A-0F93-CB56-43AF-FD66B4701F99</referencedColumn>
+<table>13E9CE51-9B20-3C37-EC11-A882C0F424BF</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="datum" id="9A2D0772-908C-9BA1-6B14-015C8708CFC9">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:22:15 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>DATE</dataType>
+<headerAlias>datum</headerAlias>
+<reference>false</reference>
+<referencedColumn>38B3228C-FCC8-0E18-AFC4-BDBC51AF4D06</referencedColumn>
+<table>13E9CE51-9B20-3C37-EC11-A882C0F424BF</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="UZIVATEL_ID" id="4FC198E9-7E20-EE8D-2D93-B9653CE0EC77">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:22:15 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>UZIVATEL_ID</headerAlias>
+<reference>false</reference>
+<referencedColumn>6AEFCC64-F812-E98B-EE57-8DC4C20ADC69</referencedColumn>
+<table>13E9CE51-9B20-3C37-EC11-A882C0F424BF</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="STUDIJNI_MATERIAL_ID" id="38D1C2E0-0EA8-EDCF-7CBB-1BCD88C6DD53">
+<createdBy>petrb</createdBy>
+<createdTime>2020-06-04 16:22:15 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>STUDIJNI_MATERIAL_ID</headerAlias>
+<reference>false</reference>
+<referencedColumn>EFB4A8C6-5067-18D4-1168-6F384714871B</referencedColumn>
+<table>13E9CE51-9B20-3C37-EC11-A882C0F424BF</table>
+</viewElement>
+</viewElements>
+<usedObjects>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="13E9CE51-9B20-3C37-EC11-A882C0F424BF">
+<container>true</container>
+<tableName>UPRAVA_MATERIALU</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="375FD076-880A-0AAE-A4B9-289AA9208B7F">
+<container>true</container>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="8AA39AC4-9AF9-17BF-BEEE-8D05C6BA9A97">
+<columnName>jmeno</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="2DABF6F1-0503-5D73-E174-D2B977C18442">
+<columnName>prijmeni</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="429EB80A-0F93-CB56-43AF-FD66B4701F99">
+<columnName>id_upravaMaterialu</columnName>
+<tableName>UPRAVA_MATERIALU</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="38B3228C-FCC8-0E18-AFC4-BDBC51AF4D06">
+<columnName>datum</columnName>
+<tableName>UPRAVA_MATERIALU</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="6AEFCC64-F812-E98B-EE57-8DC4C20ADC69">
+<columnName>UZIVATEL_ID</columnName>
+<tableName>UPRAVA_MATERIALU</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="EFB4A8C6-5067-18D4-1168-6F384714871B">
+<columnName>STUDIJNI_MATERIAL_ID</columnName>
+<tableName>UPRAVA_MATERIALU</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="9B83E909-1620-9A67-8239-61698E216E06">
+<columnName>id_uzivatel</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+</usedObjects>
+</TableView>

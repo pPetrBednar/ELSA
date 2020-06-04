@@ -32,6 +32,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -93,7 +94,10 @@ public class Root extends Screen<Root> implements Initializable {
         try {
             db = new DatabaseManager();
         } catch (SQLException ex) {
-            Information.display("Nelze připojit k databázi.");
+
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Nelze připojit k databázi.");
+            a.showAndWait();
             System.exit(0);
         }
 
