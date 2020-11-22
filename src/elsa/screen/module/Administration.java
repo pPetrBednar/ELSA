@@ -7,6 +7,7 @@ import elsa.screen.ChangePermission;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
 import java.io.IOException;
 import java.net.URL;
@@ -72,6 +73,22 @@ public class Administration extends Module<Administration, Root> implements Init
             }
         });
 
+        Label l3 = new Label("Emulovat");
+        l3.setAlignment(Pos.CENTER);
+        l3.setPrefWidth(75);
+        l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        l3.getStyleClass().add("hover-effect-15");
+
+        AnchorPane.setTopAnchor(l3, 0.0);
+        AnchorPane.setBottomAnchor(l3, 0.0);
+        AnchorPane.setRightAnchor(l3, 150.0);
+
+        l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                emulateUser(s);
+            }
+        });
+
         Label l4 = new Label("Upravit");
         l4.setAlignment(Pos.CENTER);
         l4.setPrefWidth(75);
@@ -104,7 +121,7 @@ public class Administration extends Module<Administration, Root> implements Init
             }
         });
 
-        ap.getChildren().addAll(l2, l4, l5);
+        ap.getChildren().addAll(l2, l3, l4, l5);
 
         return ap;
     }
@@ -112,6 +129,21 @@ public class Administration extends Module<Administration, Root> implements Init
     private void openUser(User s) {
         db.setSelectedPublicProfile(s);
         callback.compose(ViewType.PUBLIC_PROFILE);
+    }
+
+    private void emulateUser(User s) {
+
+        try {
+            ScreenLoader<Root> root = new ScreenLoader<>("Root");
+            root.setupStage("eELSA", callback.getStage(), Modality.WINDOW_MODAL);
+            root.setTransparent(false);
+            root.getController().setEmulatedUser(s);
+            // root.getController().compose(ViewType.EMULATOR);
+            root.getStage().show();
+        } catch (IOException ex) {
+            Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     private void editUser(User s) {

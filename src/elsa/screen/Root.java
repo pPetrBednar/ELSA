@@ -3,6 +3,7 @@ package elsa.screen;
 import elsa.database.DBException;
 import elsa.database.DatabaseManager;
 import elsa.database.Permission;
+import elsa.database.User;
 import elsa.screen.handlers.ICompositor;
 import elsa.screen.handlers.ModuleLoader;
 import elsa.screen.handlers.Screen;
@@ -10,6 +11,8 @@ import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.module.Administration;
 import elsa.screen.module.AllSubjects;
 import elsa.screen.module.Comments;
+import elsa.screen.module.Communications;
+import elsa.screen.module.Finder;
 import elsa.screen.module.Main;
 import elsa.screen.module.MaterialTypes;
 import elsa.screen.module.MySubjects;
@@ -54,6 +57,7 @@ public class Root extends Screen<Root> implements Initializable {
 
     // Testing mode, automatic admin login
     private final boolean TESTING = true;
+    private User emulatedUser = null;
 
     private DatabaseManager db;
     private Compositor compositor;
@@ -72,6 +76,8 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<QuestionTypes, Root> questionTypes;
     private ModuleLoader<MaterialTypes, Root> materialTypes;
     private ModuleLoader<PublicProfile, Root> publicProfile;
+    private ModuleLoader<Communications, Root> communications;
+    private ModuleLoader<Finder, Root> finder;
 
     @FXML
     private BorderPane box;
@@ -140,6 +146,10 @@ public class Root extends Screen<Root> implements Initializable {
         db.setSelectedSubject(null);
         db.setSelectedStudyMaterial(null);
 
+        if (emulatedUser != null) {
+            stage.close();
+        }
+
         compositor.compose();
     }
 
@@ -158,6 +168,18 @@ public class Root extends Screen<Root> implements Initializable {
     @FXML
     private void materialTypes(ActionEvent event) {
         compositor.viewType = ViewType.MATERIAL_TYPES;
+        compositor.compose();
+    }
+
+    @FXML
+    private void communications(ActionEvent event) {
+        compositor.viewType = ViewType.COMMUNICATIONS;
+        compositor.compose();
+    }
+
+    @FXML
+    private void finder(ActionEvent event) {
+        compositor.viewType = ViewType.FINDER;
         compositor.compose();
     }
 
@@ -188,6 +210,8 @@ public class Root extends Screen<Root> implements Initializable {
             questionTypes = new ModuleLoader<>("QuestionTypes");
             materialTypes = new ModuleLoader<>("MaterialTypes");
             publicProfile = new ModuleLoader<>("PublicProfile");
+            communications = new ModuleLoader<>("Communications");
+            finder = new ModuleLoader<>("Finder");
         }
 
         /**
@@ -234,6 +258,12 @@ public class Root extends Screen<Root> implements Initializable {
 
             publicProfile.setCallback(controller);
             publicProfile.getController().setDb(db);
+
+            communications.setCallback(controller);
+            communications.getController().setDb(db);
+
+            finder.setCallback(controller);
+            finder.getController().setDb(db);
         }
 
         /**
@@ -282,6 +312,15 @@ public class Root extends Screen<Root> implements Initializable {
                 case PUBLIC_PROFILE:
                     composePublicProfile();
                     break;
+                case COMMUNICATIONS:
+                    composeCommunications();
+                    break;
+                case FINDER:
+                    composeFinder();
+                    break;
+                case EMULATOR:
+                    composeEmulator();
+                    break;
             }
         }
 
@@ -308,6 +347,50 @@ public class Root extends Screen<Root> implements Initializable {
                     Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DBException ex) {
                     System.out.println("User not found.");
+                }
+            } else {
+                login.getStage().showAndWait();
+            }
+
+            if (db.getUser() == null) {
+                System.exit(0);
+            }
+
+            if (db.getUser().getPermission() == Permission.ADMINISTRATOR) {
+                adminZone.setVisible(true);
+            }
+
+            statusLabel.setText("Uživatel:");
+            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + " (" + db.getUser().getLogin() + ")");
+
+            compositor.viewType = ViewType.MAIN;
+            compositor.compose();
+        }
+
+        private void composeEmulator() {
+
+            adminZone.setVisible(false);
+            location.getChildren().clear();
+            Label l = new Label("Přihlášení");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            Pane p = new Pane();
+            p.setBackground(new Background(new BackgroundFill(Color.rgb(120, 120, 120), CornerRadii.EMPTY, Insets.EMPTY)));
+            box.setCenter(p);
+
+            statusLabel.setText("Autor:");
+            statusContent.setText("Petr Bednář (st58214)");
+
+            db.setUser(null);
+            db.setSelectedSubject(null);
+            db.setSelectedStudyMaterial(null);
+
+            if (emulatedUser != null) {
+                try {
+                    db.loginAs(emulatedUser);
+                } catch (SQLException | IOException ex) {
+                    Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 login.getStage().showAndWait();
@@ -514,6 +597,26 @@ public class Root extends Screen<Root> implements Initializable {
             box.setCenter(publicProfile.getContent());
         }
 
+        private void composeCommunications() {
+            location.getChildren().clear();
+            Label l = new Label("Komunikace");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            communications.getController().load();
+            box.setCenter(communications.getContent());
+        }
+
+        private void composeFinder() {
+            location.getChildren().clear();
+            Label l = new Label("Vyhledávač");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            finder.getController().load();
+            box.setCenter(finder.getContent());
+        }
+
         @Override
         public void decompose() {
             box.setCenter(null);
@@ -529,6 +632,19 @@ public class Root extends Screen<Root> implements Initializable {
     public void compose(ViewType viewType) {
         compositor.viewType = viewType;
         compositor.compose();
+    }
+
+    /**
+     * Sets up emulated user to load
+     *
+     * @param u
+     */
+    public void setEmulatedUser(User u) {
+        Platform.runLater(() -> {
+            emulatedUser = u;
+            compositor.viewType = ViewType.EMULATOR;
+            compositor.compose();
+        });
     }
 
     public HBox getLocation() {

@@ -18,7 +18,10 @@ public enum ViewType {
     ADMINISTRATION,
     QUESTION_TYPES,
     MATERIAL_TYPES,
-    PUBLIC_PROFILE;
+    PUBLIC_PROFILE,
+    COMMUNICATIONS,
+    FINDER,
+    EMULATOR;
 
     private ViewType() {
     }
