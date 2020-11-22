@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
+import static oracle.jdbc.OracleTypes.CURSOR;
 
 /**
  *
@@ -160,6 +161,41 @@ public class DatabaseManager extends DatabaseConfig {
                 user = new User(
                         rset.getInt("id_uzivatel"),
                         login,
+                        Permission.valueOf(rset.getString("opravneni")),
+                        rset.getString("jmeno"),
+                        rset.getString("prijmeni"),
+                        rset.getString("email"),
+                        rset.getString("telefon"),
+                        rset.getString("adresa"),
+                        getImageFromBlob(rset.getBlob("image"))
+                );
+            }
+        }
+
+        loadUsersSubjects();
+    }
+
+    /**
+     * Loads information about selected user
+     *
+     * @param login
+     * @throws SQLException
+     * @throws IOException
+     */
+    public void loginAs(User u) throws SQLException, IOException {
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE WHERE login = '" + u.getLogin() + "'")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+
+                if (user != null) {
+                    break;
+                }
+
+                user = new User(
+                        rset.getInt("id_uzivatel"),
+                        u.getLogin(),
                         Permission.valueOf(rset.getString("opravneni")),
                         rset.getString("jmeno"),
                         rset.getString("prijmeni"),
@@ -512,6 +548,38 @@ public class DatabaseManager extends DatabaseConfig {
         ArrayList<User> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                User s = new User(
+                        rset.getInt("id_uzivatel"),
+                        rset.getString("login"),
+                        Permission.valueOf(rset.getString("opravneni")),
+                        rset.getString("jmeno"),
+                        rset.getString("prijmeni"),
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
+                data.add(s);
+            }
+        }
+        return data;
+    }
+
+    /**
+     * Loads list of all teachers in database
+     *
+     * @return ArrayList<User>
+     * @throws SQLException
+     */
+    public ArrayList<User> getAllTeachers() throws SQLException {
+
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE WHERE role_id = 2")) {
             ResultSet rset = stmt.executeQuery();
 
             while (rset.next()) {
@@ -1338,6 +1406,38 @@ public class DatabaseManager extends DatabaseConfig {
             call.executeUpdate();
             con.commit();
         }
+    }
+
+    public ArrayList<StudyMaterial> find(String title, Subject subject, User teacher) throws SQLException {
+        ArrayList<StudyMaterial> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.find(?, ?, ?, ?)")) {
+
+            call.setString(1, title);
+            call.setInt(2, subject.getId());
+            call.setInt(3, teacher.getId());
+            call.registerOutParameter(4, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(4);
+
+            while (rs.next()) {
+                data.add(new StudyMaterial(
+                        rs.getInt("id_studijnimaterial"),
+                        rs.getString("nazev"),
+                        rs.getInt("stran"),
+                        rs.getDate("datumvytvoreni"),
+                        rs.getDate("datumzmeny"),
+                        rs.getString("nazev_predmet"),
+                        null,
+                        null,
+                        rs.getString("jmeno") + " " + rs.getString("prijmeni"),
+                        rs.getInt("predmet_id")
+                ));
+            }
+
+        }
+        return data;
     }
 
     /*

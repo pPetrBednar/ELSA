@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="517.0" prefWidth="1162.0" stylesheets="@../style/AllSubjects.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.module.Finder">
+   <children>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="100.0" style="-fx-background-color: rgba(27,38,52, 1);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label style="-fx-text-fill: #f3f3f3;" text="Název materiálu:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </Label>
+            <JFXTextField fx:id="title" alignment="CENTER" focusColor="#ffffff80" focusTraversable="false" prefWidth="150.0" styleClass="jfx-white-text" text="\%">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </JFXTextField>
+            <Label style="-fx-text-fill: #f3f3f3;" text="Předmět:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </Label>
+            <JFXComboBox fx:id="subject" focusColor="#ffffff80" focusTraversable="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="150.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="c-box" />
+                  <String fx:value="jfx-white-text" />
+               </styleClass>
+            </JFXComboBox>
+            <Label style="-fx-text-fill: #f3f3f3;" text="Nahrál:" textFill="#ffffffb2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </Label>
+            <JFXComboBox fx:id="teacher" focusColor="#ffffff80" focusTraversable="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="150.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <styleClass>
+                  <String fx:value="c-box" />
+                  <String fx:value="jfx-white-text" />
+               </styleClass>
+            </JFXComboBox>
+            <JFXButton focusTraversable="false" onAction="#search" style="-fx-background-color: white;" text="Vyhledat">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+      <ScrollPane fitToWidth="true" layoutX="-142.0" prefHeight="417.0" prefWidth="1131.0" styleClass="edge-to-edge" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <content>
+            <VBox fx:id="list" alignment="TOP_CENTER" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

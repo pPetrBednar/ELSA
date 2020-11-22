@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Sobota-listopadu-21-2020   
+--  File created - Nedìle-listopadu-22-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package ELSA
@@ -178,6 +178,12 @@ p_id_druhotazky IN druh_otazky.id_druhotazky%TYPE
 PROCEDURE changePermission(
 p_role_id IN uzivatel.role_id%TYPE,
 p_id_uzivatel IN uzivatel.id_uzivatel%TYPE
+);
+PROCEDURE find(
+p_title IN studijni_material.nazev%TYPE,
+p_predmet_id IN studijni_material.predmet_id%TYPE,
+p_uzivatel_id IN studijni_material.uzivatel_id%TYPE,
+p_data OUT SYS_REFCURSOR
 );
 END ELSA;
 
