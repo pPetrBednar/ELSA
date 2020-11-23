@@ -1,0 +1,54 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="E82D2C7D-B6C0-C4E9-48A6-F654923F0991" name="NEVHODNA_SLOVA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:12:39 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<ordsAlias>view_17</ordsAlias>
+<userDefined>true</userDefined>
+<userDefinedSQL><![CDATA[SELECT
+    nevhodne_slovo.id_nevhodne_slovo,
+    nevhodne_slovo.text
+FROM
+    nevhodne_slovo]]></userDefinedSQL>
+<parsed>true</parsed>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="id_nevhodne_slovo" id="205DAB68-BF76-6719-A6D4-637B250F0833">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:13:00 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>id_nevhodne_slovo</headerAlias>
+<reference>false</reference>
+<referencedColumn>106D378D-CF26-2C1B-7BF5-4F105D014834</referencedColumn>
+<table>FFEB1060-CDA2-A9D5-E56E-51A5F9807AAB</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="text" id="58670394-F341-FF8E-73EE-79D0DD467DD9">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:13:00 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (32)</dataType>
+<headerAlias>text</headerAlias>
+<reference>false</reference>
+<referencedColumn>8C9FFED3-EBA6-7FE2-A0C2-AA39AEEE2327</referencedColumn>
+<table>FFEB1060-CDA2-A9D5-E56E-51A5F9807AAB</table>
+</viewElement>
+</viewElements>
+<usedObjects>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="FFEB1060-CDA2-A9D5-E56E-51A5F9807AAB">
+<container>true</container>
+<tableName>NEVHODNE_SLOVO</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="106D378D-CF26-2C1B-7BF5-4F105D014834">
+<columnName>id_nevhodne_slovo</columnName>
+<tableName>NEVHODNE_SLOVO</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="8C9FFED3-EBA6-7FE2-A0C2-AA39AEEE2327">
+<columnName>text</columnName>
+<tableName>NEVHODNE_SLOVO</tableName>
+</UsedObject>
+</usedObjects>
+</TableView>

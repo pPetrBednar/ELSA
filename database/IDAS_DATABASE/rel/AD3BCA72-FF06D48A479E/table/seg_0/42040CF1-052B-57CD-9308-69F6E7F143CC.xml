@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="42040CF1-052B-57CD-9308-69F6E7F143CC" name="UZIVATELE_SKUPINY">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="UZIVATEL_ID" id="6F40B715-DB93-D510-F9EF-86D3D78D038B">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="640E161D-B3AC-8A4F-2929-439562977FDD" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+<Column name="SKUPINA_ID" id="41F85B36-1BF3-E783-F5FD-1DF31C4B0D97">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E4B12606-A48E-16C5-C9C2-4598783DA018" referredColumn="DEBECDD4-6BF6-87BD-A89D-B051109DF1DA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="36744801-5066-BDF8-4A7F-1D86C7959FDA" name="UZIVATELE_SKUPINY_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6F40B715-DB93-D510-F9EF-86D3D78D038B"/>
+<colUsage columnID="41F85B36-1BF3-E783-F5FD-1DF31C4B0D97"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5F1DFED8-2EF4-8579-F5DB-36C32C8D556D" name="UZIVATELE_SKUPINY_UZIVATEL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>AF1244FD-38DE-4A9F-E16A-175CDAF9B94C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6F40B715-DB93-D510-F9EF-86D3D78D038B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="87432F77-EB90-EA68-771A-1B144F82D7E5" name="UZIVATELE_SKUPINY_SKUPINA_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>AF1244FD-38DE-4A9F-E16A-175CDAF9B94C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="41F85B36-1BF3-E783-F5FD-1DF31C4B0D97"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="PREDMETY_SKUPINY" directorySegmentName="seg_0" id="ACD2B633-5B12-8D9A-BDF2-44B1E9BD47E7">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:00:26 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="AD3BCA72-8948-E176-906E-FF06D48A479E" value="false"/>
+</engineerTo>
+<identifying>false</identifying>
+<nameOnSource>má</nameOnSource>
+<nameOnTarget>patří</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>3270CBB1-F3EB-A4BD-FF89-40FA37B740CD</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>DA21AE45-45B2-5284-021B-26675D75D928</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,191 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableView class="oracle.dbtools.crest.model.design.relational.TableView" directorySegmentName="seg_0" id="17EFEB0F-D967-0D51-9D57-C82253889526" name="VYPLNENE_KVIZY">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:00:47 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<ordsAlias>view_11</ordsAlias>
+<userDefined>true</userDefined>
+<userDefinedSQL><![CDATA[SELECT
+    kviz.nazev,
+    kviz.studijni_material_id,
+    uzivatel.jmeno,
+    uzivatel.prijmeni,
+    vyplneny_kviz.id_vyplneny_kviz,
+    vyplneny_kviz.body,
+    vyplneny_kviz.max_body,
+    vyplneny_kviz.uzivatel_id,
+    vyplneny_kviz.kviz_id
+FROM
+         vyplneny_kviz
+    INNER JOIN uzivatel ON uzivatel.id_uzivatel = vyplneny_kviz.uzivatel_id
+    INNER JOIN kviz ON kviz.id_kviz = vyplneny_kviz.kviz_id]]></userDefinedSQL>
+<parsed>true</parsed>
+<viewElements>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="nazev" id="61D46B2E-BE55-CDCD-1B63-132E6CE99CFE">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (128)</dataType>
+<headerAlias>nazev</headerAlias>
+<reference>false</reference>
+<referencedColumn>70B18E4A-5D60-F6E0-A23E-FE63FB191993</referencedColumn>
+<table>95EF7110-DBCB-F669-3293-6118BD713101</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="studijni_material_id" id="4B732474-6444-05AC-BB9E-D63448C4B397">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>studijni_material_id</headerAlias>
+<reference>false</reference>
+<referencedColumn>967D5884-09A8-84A8-40C3-DA09DCB8701C</referencedColumn>
+<table>95EF7110-DBCB-F669-3293-6118BD713101</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="jmeno" id="7F84E498-610E-1C6A-8912-6AD12AED628C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (64)</dataType>
+<headerAlias>jmeno</headerAlias>
+<reference>false</reference>
+<referencedColumn>8AA39AC4-9AF9-17BF-BEEE-8D05C6BA9A97</referencedColumn>
+<table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="prijmeni" id="0B4FAB2B-5F1B-EB06-322E-2344E455AE75">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>VARCHAR2 (64)</dataType>
+<headerAlias>prijmeni</headerAlias>
+<reference>false</reference>
+<referencedColumn>2DABF6F1-0503-5D73-E174-D2B977C18442</referencedColumn>
+<table>375FD076-880A-0AAE-A4B9-289AA9208B7F</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="id_vyplneny_kviz" id="5ED34C00-5049-BE17-60FF-F231B6C91C00">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>id_vyplneny_kviz</headerAlias>
+<reference>false</reference>
+<referencedColumn>319BF125-CCAF-2742-A48D-29491F36A43C</referencedColumn>
+<table>90FC3E75-3169-8745-6FA1-C8E131F403CB</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="body" id="5D9958C6-9B4B-4AD0-91D3-BD27D2D7B809">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>body</headerAlias>
+<reference>false</reference>
+<referencedColumn>3CF8ECB0-2C88-00DB-24F4-442A98690C45</referencedColumn>
+<table>90FC3E75-3169-8745-6FA1-C8E131F403CB</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="max_body" id="543BA39B-0802-9191-A2F3-A647690149AF">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>max_body</headerAlias>
+<reference>false</reference>
+<referencedColumn>C3E2ED60-3A54-2598-3A7F-EC9B0FCD5867</referencedColumn>
+<table>90FC3E75-3169-8745-6FA1-C8E131F403CB</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="uzivatel_id" id="BD3BFA57-A266-5E3C-1282-8CF774A5E9F2">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>uzivatel_id</headerAlias>
+<reference>false</reference>
+<referencedColumn>0B890A1C-1FDC-909F-B291-0DE3A42225DA</referencedColumn>
+<table>90FC3E75-3169-8745-6FA1-C8E131F403CB</table>
+</viewElement>
+<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="kviz_id" id="9E85DCD4-63A6-CFE5-604C-6B14147DF8B3">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 16:02:56 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<dataType>INTEGER</dataType>
+<headerAlias>kviz_id</headerAlias>
+<reference>false</reference>
+<referencedColumn>17962262-7596-2EF3-6E0A-76788350B67B</referencedColumn>
+<table>90FC3E75-3169-8745-6FA1-C8E131F403CB</table>
+</viewElement>
+</viewElements>
+<usedObjects>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="90FC3E75-3169-8745-6FA1-C8E131F403CB">
+<container>true</container>
+<tableName>VYPLNENY_KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="375FD076-880A-0AAE-A4B9-289AA9208B7F">
+<container>true</container>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="95EF7110-DBCB-F669-3293-6118BD713101">
+<container>true</container>
+<tableName>KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="70B18E4A-5D60-F6E0-A23E-FE63FB191993">
+<columnName>nazev</columnName>
+<tableName>KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="967D5884-09A8-84A8-40C3-DA09DCB8701C">
+<columnName>STUDIJNI_MATERIAL_ID</columnName>
+<tableName>KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="8AA39AC4-9AF9-17BF-BEEE-8D05C6BA9A97">
+<columnName>jmeno</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="2DABF6F1-0503-5D73-E174-D2B977C18442">
+<columnName>prijmeni</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="319BF125-CCAF-2742-A48D-29491F36A43C">
+<columnName>id_vyplneny_kviz</columnName>
+<tableName>VYPLNENY_KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="3CF8ECB0-2C88-00DB-24F4-442A98690C45">
+<columnName>body</columnName>
+<tableName>VYPLNENY_KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="C3E2ED60-3A54-2598-3A7F-EC9B0FCD5867">
+<columnName>max_body</columnName>
+<tableName>VYPLNENY_KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="0B890A1C-1FDC-909F-B291-0DE3A42225DA">
+<columnName>UZIVATEL_ID</columnName>
+<tableName>VYPLNENY_KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="17962262-7596-2EF3-6E0A-76788350B67B">
+<columnName>KVIZ_ID</columnName>
+<tableName>VYPLNENY_KVIZ</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="9B83E909-1620-9A67-8239-61698E216E06">
+<columnName>id_uzivatel</columnName>
+<tableName>UZIVATEL</tableName>
+</UsedObject>
+<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="5ABF6B84-C05D-6834-F761-247AE3763536">
+<columnName>id_kviz</columnName>
+<tableName>KVIZ</tableName>
+</UsedObject>
+</usedObjects>
+</TableView>

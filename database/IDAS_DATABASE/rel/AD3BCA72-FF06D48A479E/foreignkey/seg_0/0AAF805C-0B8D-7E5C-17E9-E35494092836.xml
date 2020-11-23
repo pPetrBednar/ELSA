@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="0AAF805C-0B8D-7E5C-17E9-E35494092836" containerWithKeyObject="3B76AEFE-D891-57E5-4019-8527B809981E" localFKIndex="8C82F9C1-A884-D33C-2ED7-085C30B84C78" name="VYPLNENA_OTAZKA_OTAZKA_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>7A5ED4E4-4410-D60E-4314-25C326B4D03E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>OTAZKA</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>779444BB-54DE-020C-5115-4CC8BBF1CE65</referredTableID>
+<keyObject>33330377-461C-9729-9140-1F8F862F908C</keyObject>
+<referredKeyID>33330377-461C-9729-9140-1F8F862F908C</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_otazka</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

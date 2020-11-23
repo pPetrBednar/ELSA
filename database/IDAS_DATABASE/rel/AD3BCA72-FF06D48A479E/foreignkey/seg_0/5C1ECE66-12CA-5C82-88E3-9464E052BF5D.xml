@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="5C1ECE66-12CA-5C82-88E3-9464E052BF5D" containerWithKeyObject="3B76AEFE-D891-57E5-4019-8527B809981E" localFKIndex="A9F4EF78-6373-BCEC-A713-F11D7D66B98E" name="VYPLNENA_OTAZKA_V_K_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>3A3D7082-DE6A-9748-BA7B-E9A2F6382FA1</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>VYPLNENY_KVIZ</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>90FC3E75-3169-8745-6FA1-C8E131F403CB</referredTableID>
+<keyObject>487747C1-535C-F382-FEF7-6AB8DC416272</keyObject>
+<referredKeyID>487747C1-535C-F382-FEF7-6AB8DC416272</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_vyplneny_kviz</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3BD1CC07-F60A-550D-E8D9-C0926142F5BB" name="PREDMETY_SKUPINY">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="SKUPINA_ID" id="4F6F8FB7-F0CC-6008-1B68-02C305E036AA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E78A2B6D-DD74-4D43-012E-D7AE70E7BA07" referredColumn="DEBECDD4-6BF6-87BD-A89D-B051109DF1DA"/>
+</associations>
+</Column>
+<Column name="PREDMET_ID" id="63913D40-BE44-47CA-D955-D18F93954B58">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="06F2D9B2-C4AA-B915-5DC6-F30BE41A9EFE" referredColumn="2CC02096-ADC5-1F79-0A00-F0A2108103FD"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9D36E25C-41DE-478B-C382-A1D2581F95D1" name="PREDMETY_SKUPINY_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4F6F8FB7-F0CC-6008-1B68-02C305E036AA"/>
+<colUsage columnID="63913D40-BE44-47CA-D955-D18F93954B58"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C98730A6-6AC5-2FD2-ED59-49D1678C8031" name="PREDMETY_SKUPINY_SKUPINA_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>ACD2B633-5B12-8D9A-BDF2-44B1E9BD47E7</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4F6F8FB7-F0CC-6008-1B68-02C305E036AA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="87F429F1-BD0B-9326-3DDC-74F7CFCE942E" name="PREDMETY_SKUPINY_PREDMET_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>ACD2B633-5B12-8D9A-BDF2-44B1E9BD47E7</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="63913D40-BE44-47CA-D955-D18F93954B58"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

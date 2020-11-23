@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Nedìle-listopadu-22-2020   
+--  File created - Pondìlí-listopadu-23-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package Body ELSA
@@ -400,6 +400,100 @@ EXCEPTION WHEN OTHERS THEN
 ROLLBACK;
 RAISE;
 END find;
+
+
+PROCEDURE addMessage(
+p_text IN zprava.text%TYPE,
+p_sender_id IN zprava.odesilatel_id%TYPE,
+p_recipient_id IN zprava.prijemce_id%TYPE
+) AS
+
+e_id_not_found EXCEPTION;
+BEGIN
+    DECLARE
+    v_id uzivatel.id_uzivatel%TYPE;
+    BEGIN
+        SELECT id_uzivatel INTO v_id FROM uzivatel WHERE id_uzivatel = p_sender_id;
+        EXCEPTION WHEN NO_DATA_FOUND THEN
+        RAISE e_id_not_found;
+    END;
+    DECLARE
+    v_id uzivatel.id_uzivatel%TYPE;
+    BEGIN
+        SELECT id_uzivatel INTO v_id FROM uzivatel WHERE id_uzivatel = p_recipient_id;
+        EXCEPTION WHEN NO_DATA_FOUND THEN
+        RAISE e_id_not_found;
+    END;
+
+INSERT INTO zprava VALUES(ZPRAVA_SEQ.NEXTVAL, p_text, SYSDATE, p_sender_id, p_recipient_id);
+DBMS_OUTPUT.PUT_LINE('Zpráva zapsána');
+
+EXCEPTION
+WHEN e_id_not_found THEN
+DBMS_OUTPUT.PUT_LINE('Prijemce/odesilatel nenalezen');
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('Doslo k chybe');
+END addMessage;
+
+
+PROCEDURE getCommunications(
+p_uzivatel_id IN uzivatel.id_uzivatel%TYPE,
+p_mistnosti OUT SYS_REFCURSOR
+) AS
+e_user_not_found EXCEPTION;
+BEGIN
+DECLARE
+    v_id uzivatel.id_uzivatel%TYPE;
+BEGIN
+    SELECT id_uzivatel INTO v_id FROM uzivatel WHERE id_uzivatel = p_uzivatel_id;
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+    RAISE e_user_not_found;
+END;
+
+OPEN p_mistnosti FOR
+    SELECT uzivatel.jmeno, uzivatel.prijmeni, zprava.prijemce_id
+    FROM zprava INNER JOIN uzivatel ON uzivatel.id_uzivatel = prijemce_id 
+    WHERE zprava.odesilatel_id = p_uzivatel_id GROUP BY uzivatel.jmeno, uzivatel.prijmeni, zprava.prijemce_id
+    UNION
+    SELECT uzivatel.jmeno, uzivatel.prijmeni, zprava.odesilatel_id
+    FROM zprava INNER JOIN uzivatel ON uzivatel.id_uzivatel = odesilatel_id 
+    WHERE zprava.prijemce_id = p_uzivatel_id GROUP BY uzivatel.jmeno, uzivatel.prijmeni, zprava.odesilatel_id;
+    
+EXCEPTION
+    WHEN e_user_not_found THEN
+        DBMS_OUTPUT.PUT_LINE('Uzivatel nenalezen');
+        RAISE;
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Doslo k chybe');
+        RAISE;
+END getCommunications;
+
+
+PROCEDURE getCommunication(
+p_uzivatel_1 IN uzivatel.id_uzivatel%TYPE,
+p_uzivatel_2 IN uzivatel.id_uzivatel%TYPE,
+p_data OUT SYS_REFCURSOR
+) AS
+BEGIN
+
+OPEN p_data FOR
+SELECT u1.jmeno odesilatel_jmeno, u1.prijmeni odesilatel_prijmeni, u2.jmeno prijemce_jmeno, u2.prijmeni prijemce_prijmeni, id_zprava, text, datum, odesilatel_id, prijemce_id 
+FROM (SELECT * FROM zprava WHERE odesilatel_id = p_uzivatel_1 OR prijemce_id = p_uzivatel_1) 
+INNER JOIN uzivatel u1 ON u1.id_uzivatel = odesilatel_id
+INNER JOIN uzivatel u2 ON u2.id_uzivatel = prijemce_id
+WHERE odesilatel_id = p_uzivatel_2 OR prijemce_id = p_uzivatel_2 
+ORDER BY datum DESC;
+
+END getCommunication;
+
+
+
+PROCEDURE removeMessage(
+p_id_zprava IN zprava.id_zprava%TYPE
+) AS
+BEGIN
+DELETE FROM zprava WHERE id_zprava = p_id_zprava;
+END removeMessage;
 
 END ELSA;
 

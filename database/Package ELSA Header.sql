@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Nedìle-listopadu-22-2020   
+--  File created - Pondìlí-listopadu-23-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package ELSA
@@ -185,6 +185,26 @@ p_predmet_id IN studijni_material.predmet_id%TYPE,
 p_uzivatel_id IN studijni_material.uzivatel_id%TYPE,
 p_data OUT SYS_REFCURSOR
 );
+PROCEDURE addMessage(
+p_text IN zprava.text%TYPE,
+p_sender_id IN zprava.odesilatel_id%TYPE,
+p_recipient_id IN zprava.prijemce_id%TYPE
+);
+PROCEDURE getCommunications(
+p_uzivatel_id IN uzivatel.id_uzivatel%TYPE,
+p_mistnosti OUT SYS_REFCURSOR
+);
+
+PROCEDURE getCommunication(
+p_uzivatel_1 IN uzivatel.id_uzivatel%TYPE,
+p_uzivatel_2 IN uzivatel.id_uzivatel%TYPE,
+p_data OUT SYS_REFCURSOR
+);
+
+PROCEDURE removeMessage(
+p_id_zprava IN zprava.id_zprava%TYPE
+);
+
 END ELSA;
 
 /
