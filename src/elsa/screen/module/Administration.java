@@ -138,7 +138,6 @@ public class Administration extends Module<Administration, Root> implements Init
             root.setupStage("eELSA", callback.getStage(), Modality.WINDOW_MODAL);
             root.setTransparent(false);
             root.getController().setEmulatedUser(s);
-            // root.getController().compose(ViewType.EMULATOR);
             root.getStage().show();
         } catch (IOException ex) {
             Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);

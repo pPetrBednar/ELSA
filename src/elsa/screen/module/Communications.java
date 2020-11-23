@@ -5,6 +5,8 @@ import elsa.database.DatabaseManager;
 import elsa.database.Permission;
 import elsa.database.QuestionType;
 import elsa.database.Subject;
+import elsa.database.User;
+import elsa.screen.AddMessage;
 import elsa.screen.AddSubject;
 import elsa.screen.AddType;
 import elsa.screen.Root;
@@ -40,9 +42,6 @@ public class Communications extends Module<Communications, Root> implements Init
 
     @FXML
     private VBox list;
-    private JFXButton btnAddSubject;
-    @FXML
-    private JFXButton btnAddQuestionType;
 
     /**
      * Initializes the controller class.
@@ -56,100 +55,47 @@ public class Communications extends Module<Communications, Root> implements Init
         this.db = db;
     }
 
-    private AnchorPane createLabel(QuestionType s) {
+    private AnchorPane createLabel(User s) {
 
         AnchorPane ap = new AnchorPane();
-        ap.setPrefHeight(100);
+        ap.setPrefHeight(75);
         ap.setStyle("-fx-border-color: rgba(0, 0, 0, 0.2);");
 
-        Label l1 = new Label(s.getShortcut());
+        Label l1 = new Label(s.getFirstName() + " " + s.getLastName());
         l1.setAlignment(Pos.CENTER_LEFT);
         l1.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 16px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
-        l1.setPrefWidth(200);
+        l1.getStyleClass().add("hover-effect-15");
         AnchorPane.setTopAnchor(l1, 0.0);
         AnchorPane.setLeftAnchor(l1, 0.0);
-        AnchorPane.setBottomAnchor(l1, 50.0);
+        AnchorPane.setBottomAnchor(l1, 0.0);
+        AnchorPane.setRightAnchor(l1, 0.0);
 
-        Label l2 = new Label(s.getText());
-        l2.setAlignment(Pos.CENTER_LEFT);
-        l2.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
-
-        AnchorPane.setTopAnchor(l2, 0.0);
-        AnchorPane.setLeftAnchor(l2, 200.0);
-        AnchorPane.setBottomAnchor(l2, 50.0);
-        AnchorPane.setRightAnchor(l2, 150.0);
-
-        Label l3 = new Label(s.getDescription());
-        l3.setAlignment(Pos.CENTER_LEFT);
-        l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
-
-        AnchorPane.setTopAnchor(l3, 50.0);
-        AnchorPane.setLeftAnchor(l3, 0.0);
-        AnchorPane.setBottomAnchor(l3, 0.0);
-        AnchorPane.setRightAnchor(l3, 0.0);
-
-        Label l4 = new Label("Upravit");
-        l4.setAlignment(Pos.CENTER);
-        l4.setPrefWidth(75);
-        l4.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
-        l4.getStyleClass().add("hover-effect-15");
-
-        AnchorPane.setTopAnchor(l4, 0.0);
-        AnchorPane.setBottomAnchor(l4, 50.0);
-        AnchorPane.setRightAnchor(l4, 75.0);
-
-        Label l5 = new Label("Odebrat");
-        l5.setAlignment(Pos.CENTER);
-        l5.setPrefWidth(75);
-        l5.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
-        l5.getStyleClass().add("hover-effect-15");
-
-        AnchorPane.setTopAnchor(l5, 0.0);
-        AnchorPane.setBottomAnchor(l5, 50.0);
-        AnchorPane.setRightAnchor(l5, 0.0);
-
-        l4.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+        l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                editQuestionType(s);
+                openCommunication(s);
             }
         });
 
-        l5.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            if (e.getButton() == MouseButton.PRIMARY) {
-                removeQuestionType(s);
-            }
-        });
-
-        ap.getChildren().addAll(l1, l2, l3, l4, l5);
+        ap.getChildren().addAll(l1);
 
         return ap;
     }
 
-    private void editQuestionType(QuestionType s) {
+    private void openCommunication(User s) {
 
-        try {
-            ScreenLoader<AddType> add = new ScreenLoader<>("AddType");
-            add.setupStage("Úprava druhu otázky", callback.getStage(), Modality.WINDOW_MODAL);
-            add.setTransparent(true);
-            add.getController().setDb(db);
-            add.getController().load(s);
-            add.getStage().showAndWait();
-
-            callback.compose(ViewType.QUESTION_TYPES);
-        } catch (IOException ex) {
-            Logger.getLogger(QuestionTypes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        db.setSelectedCommunication(s);
+        callback.compose(ViewType.CHAT);
     }
 
-    private void removeQuestionType(QuestionType s) {
+    private void removeCommunication(User s) {
 
-        try {
+        /* try {
             db.deleteQuestionType(s);
         } catch (SQLException ex) {
             Logger.getLogger(QuestionTypes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        callback.compose(ViewType.QUESTION_TYPES);
+        callback.compose(ViewType.COMMUNICATIONS);*/
     }
 
     public void load() {
@@ -157,7 +103,7 @@ public class Communications extends Module<Communications, Root> implements Init
         list.getChildren().clear();
 
         try {
-            ArrayList<QuestionType> data = db.getAllQuestionTypes();
+            ArrayList<User> data = db.getCommunications();
 
             if (data != null && !data.isEmpty()) {
                 data.forEach((t) -> {
@@ -170,14 +116,13 @@ public class Communications extends Module<Communications, Root> implements Init
     }
 
     @FXML
-    private void addQuestionType(ActionEvent event) throws IOException {
-        ScreenLoader<AddType> add = new ScreenLoader<>("AddType");
-        add.setupStage("Vložení druhu otázky", callback.getStage(), Modality.WINDOW_MODAL);
+    private void addCommunication(ActionEvent event) throws IOException {
+        ScreenLoader<AddMessage> add = new ScreenLoader<>("AddMessage");
+        add.setupStage("Odeslání zprávy", callback.getStage(), Modality.WINDOW_MODAL);
         add.setTransparent(true);
         add.getController().setDb(db);
-        add.getController().load(1);
         add.getStage().showAndWait();
 
-        callback.compose(ViewType.QUESTION_TYPES);
+        callback.compose(ViewType.COMMUNICATIONS);
     }
 }

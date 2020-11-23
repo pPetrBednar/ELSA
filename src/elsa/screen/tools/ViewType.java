@@ -21,7 +21,10 @@ public enum ViewType {
     PUBLIC_PROFILE,
     COMMUNICATIONS,
     FINDER,
-    EMULATOR;
+    EMULATOR,
+    GROUPS,
+    CLOUD,
+    CHAT;
 
     private ViewType() {
     }

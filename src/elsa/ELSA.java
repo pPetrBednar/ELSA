@@ -17,6 +17,7 @@ public class ELSA extends Application {
         ScreenLoader<Root> root = new ScreenLoader<>("Root");
         root.setupRootStage("ELSA", stage);
         root.setTransparent(false);
+        root.setMinSize(1400, 900);
         Information.init(root.getStage());
         root.getStage().show();
     }

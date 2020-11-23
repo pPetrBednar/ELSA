@@ -33,6 +33,7 @@ public class DatabaseManager extends DatabaseConfig {
     private StudyMaterial selectedStudyMaterial;
     private Quiz selectedQuiz;
     private User selectedPublicProfile;
+    private User selectedCommunication;
 
     /**
      * DB Connection
@@ -102,6 +103,14 @@ public class DatabaseManager extends DatabaseConfig {
 
     public void setSelectedPublicProfile(User selectedPublicProfile) {
         this.selectedPublicProfile = selectedPublicProfile;
+    }
+
+    public User getSelectedCommunication() {
+        return selectedCommunication;
+    }
+
+    public void setSelectedCommunication(User selectedCommunication) {
+        this.selectedCommunication = selectedCommunication;
     }
 
     /*
@@ -1438,6 +1447,121 @@ public class DatabaseManager extends DatabaseConfig {
 
         }
         return data;
+    }
+
+    public ArrayList<User> getCommunications() throws SQLException {
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getCommunications(?, ?)")) {
+
+            call.setInt(1, user.getId());
+            call.registerOutParameter(2, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(2);
+
+            while (rs.next()) {
+                data.add(new User(
+                        rs.getInt("prijemce_id"),
+                        null,
+                        null,
+                        rs.getString("jmeno"),
+                        rs.getString("prijmeni"),
+                        null,
+                        null,
+                        null,
+                        null
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    /**
+     * Loads all Messages from database
+     *
+     * @return ArrayList<Message>
+     * @throws SQLException
+     */
+    public ArrayList<Message> getAllMessagesFromUser(User u) throws SQLException {
+
+        ArrayList<Message> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getCommunication(?, ?, ?)")) {
+
+            call.setInt(1, user.getId());
+            call.setInt(2, u.getId());
+            call.registerOutParameter(3, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(3);
+
+            while (rs.next()) {
+                data.add(new Message(
+                        rs.getInt("id_zprava"),
+                        rs.getString("text"),
+                        rs.getDate("datum"),
+                        new User(
+                                rs.getInt("odesilatel_id"),
+                                null,
+                                null,
+                                rs.getString("odesilatel_jmeno"),
+                                rs.getString("odesilatel_prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        ),
+                        new User(
+                                rs.getInt("prijemce_id"),
+                                null,
+                                null,
+                                rs.getString("prijemce_jmeno"),
+                                rs.getString("prijemce_prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        )
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    /**
+     * Sends Message to selected user
+     *
+     * @throws SQLException
+     */
+    public void addMessage(User recipient, String text) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.addMessage(?, ?, ?)")) {
+            call.setString(1, text);
+            call.setInt(2, user.getId());
+            call.setInt(3, recipient.getId());
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    /**
+     * Removes selected Message from database
+     *
+     * @param s Selected Message
+     * @throws SQLException
+     */
+    public void removeMessage(Message s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeMessage(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
     }
 
     /*

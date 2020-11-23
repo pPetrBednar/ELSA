@@ -10,6 +10,7 @@ import elsa.screen.handlers.Screen;
 import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.module.Administration;
 import elsa.screen.module.AllSubjects;
+import elsa.screen.module.Chat;
 import elsa.screen.module.Comments;
 import elsa.screen.module.Communications;
 import elsa.screen.module.Finder;
@@ -78,6 +79,7 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<PublicProfile, Root> publicProfile;
     private ModuleLoader<Communications, Root> communications;
     private ModuleLoader<Finder, Root> finder;
+    private ModuleLoader<Chat, Root> chat;
 
     @FXML
     private BorderPane box;
@@ -183,6 +185,18 @@ public class Root extends Screen<Root> implements Initializable {
         compositor.compose();
     }
 
+    @FXML
+    private void groups(ActionEvent event) {
+        compositor.viewType = ViewType.GROUPS;
+        compositor.compose();
+    }
+
+    @FXML
+    private void cloud(ActionEvent event) {
+        compositor.viewType = ViewType.CLOUD;
+        compositor.compose();
+    }
+
     /**
      * Assembler for creating different views
      */
@@ -212,6 +226,7 @@ public class Root extends Screen<Root> implements Initializable {
             publicProfile = new ModuleLoader<>("PublicProfile");
             communications = new ModuleLoader<>("Communications");
             finder = new ModuleLoader<>("Finder");
+            chat = new ModuleLoader<>("Chat");
         }
 
         /**
@@ -264,6 +279,9 @@ public class Root extends Screen<Root> implements Initializable {
 
             finder.setCallback(controller);
             finder.getController().setDb(db);
+
+            chat.setCallback(controller);
+            chat.getController().setDb(db);
         }
 
         /**
@@ -320,6 +338,13 @@ public class Root extends Screen<Root> implements Initializable {
                     break;
                 case EMULATOR:
                     composeEmulator();
+                    break;
+                case GROUPS:
+                    break;
+                case CLOUD:
+                    break;
+                case CHAT:
+                    composeChat();
                     break;
             }
         }
@@ -615,6 +640,27 @@ public class Root extends Screen<Root> implements Initializable {
 
             finder.getController().load();
             box.setCenter(finder.getContent());
+        }
+
+        private void composeChat() {
+            location.getChildren().clear();
+            Label l1 = new Label("Komunikace");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.COMMUNICATIONS;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedCommunication().getFirstName() + " " + db.getSelectedCommunication().getLastName());
+            l2.getStyleClass().add("location-label");
+            location.getChildren().addAll(l1, arrow1, l2);
+
+            chat.getController().load(db.getSelectedCommunication());
+            box.setCenter(chat.getContent());
         }
 
         @Override

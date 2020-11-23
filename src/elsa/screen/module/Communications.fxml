@@ -17,7 +17,7 @@
             <VBox fx:id="list" alignment="TOP_CENTER" />
          </content>
       </ScrollPane>
-      <JFXButton fx:id="btnAddQuestionType" alignment="CENTER" focusTraversable="false" onAction="#addQuestionType" prefHeight="50.0" prefWidth="50.0" styleClass="btn-add" text="+" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="50.0">
+      <JFXButton alignment="CENTER" focusTraversable="false" onAction="#addCommunication" prefHeight="50.0" prefWidth="50.0" styleClass="btn-add" text="+" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
