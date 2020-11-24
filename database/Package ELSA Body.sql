@@ -572,6 +572,64 @@ BEGIN
 INSERT INTO nevhodne_slovo (id_nevhodne_slovo, text) VALUES (NEVHODNE_SLOVO_SEQ.NEXTVAL, p_text);
 END addForbiddenWord;
 
+
+PROCEDURE addGroup(
+p_rok_studia IN skupina.rok_studia%TYPE,
+p_obor IN skupina.obor%TYPE
+) AS
+BEGIN
+INSERT INTO skupina (id_skupina, rok_studia, obor) VALUES (SKUPINA_SEQ.NEXTVAL, p_rok_studia, p_obor);
+END addGroup;
+
+PROCEDURE editGroup(
+p_rok_studia IN skupina.rok_studia%TYPE,
+p_obor IN skupina.obor%TYPE,
+p_id_skupina IN skupina.id_skupina%TYPE
+) AS
+BEGIN
+UPDATE skupina SET rok_studia = p_rok_studia, obor = p_obor WHERE id_skupina = p_id_skupina;
+END editGroup;
+
+PROCEDURE removeGroup(
+p_id_skupina IN skupina.id_skupina%TYPE
+) AS
+BEGIN
+DELETE FROM skupina WHERE id_skupina = p_id_skupina;
+END removeGroup;
+
+
+PROCEDURE addUserToGroup(
+p_uzivatel_id IN uzivatele_skupiny.uzivatel_id%TYPE,
+p_skupina_id IN uzivatele_skupiny.skupina_id%TYPE
+) AS
+BEGIN
+INSERT INTO uzivatele_skupiny (uzivatel_id, skupina_id) VALUES (p_uzivatel_id, p_skupina_id);
+END addUserToGroup;
+
+PROCEDURE removeUserFromGroup(
+p_uzivatel_id IN uzivatele_skupiny.uzivatel_id%TYPE,
+p_skupina_id IN uzivatele_skupiny.skupina_id%TYPE
+) AS
+BEGIN
+DELETE FROM uzivatele_skupiny WHERE uzivatel_id = p_uzivatel_id AND skupina_id = p_skupina_id;
+END removeUserFromGroup;
+
+PROCEDURE addSubjectToGroup(
+p_predmet_id IN predmety_skupiny.predmet_id%TYPE,
+p_skupina_id IN predmety_skupiny.skupina_id%TYPE
+) AS
+BEGIN
+INSERT INTO predmety_skupiny (skupina_id, predmet_id) VALUES (p_skupina_id, p_predmet_id);
+END addSubjectToGroup;
+
+PROCEDURE removeSubjectFromGroup(
+p_predmet_id IN predmety_skupiny.predmet_id%TYPE,
+p_skupina_id IN predmety_skupiny.skupina_id%TYPE
+) AS
+BEGIN
+DELETE FROM predmety_skupiny WHERE skupina_id = p_skupina_id AND predmet_id = p_predmet_id;
+END removeSubjectFromGroup;
+
 END ELSA;
 
 /

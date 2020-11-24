@@ -57,7 +57,7 @@ public class Administration extends Module<Administration, Root> implements Init
         ap.setPrefHeight(70);
         ap.setStyle("-fx-border-color: rgba(0, 0, 0, 0.2);");
 
-        Label l2 = new Label(s.getFirstName() + " " + s.getLastName() + "(" + s.getLogin().trim() + ")\nOprávnění: " + s.getPermission().getText());
+        Label l2 = new Label(s.getFirstName() + " " + s.getLastName() + " (" + s.getLogin().trim() + ")\nOprávnění: " + s.getPermission().getText());
         l2.setAlignment(Pos.CENTER_LEFT);
         l2.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
         l2.getStyleClass().add("hover-effect-15");
@@ -65,7 +65,7 @@ public class Administration extends Module<Administration, Root> implements Init
         AnchorPane.setTopAnchor(l2, 0.0);
         AnchorPane.setLeftAnchor(l2, 0.0);
         AnchorPane.setBottomAnchor(l2, 0.0);
-        AnchorPane.setRightAnchor(l2, 150.0);
+        AnchorPane.setRightAnchor(l2, 225.0);
 
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {

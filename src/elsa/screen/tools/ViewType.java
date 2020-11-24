@@ -23,7 +23,8 @@ public enum ViewType {
     FINDER,
     EMULATOR,
     GROUPS,
-    MY_GROUPS,
+    GROUP_SUBJECTS,
+    GROUP_USERS,
     CLOUD,
     CHAT,
     FORBIDDEN_WORDS;

@@ -237,6 +237,41 @@ PROCEDURE addForbiddenWord(
 p_text IN nevhodne_slovo.text%TYPE
 );
 
+PROCEDURE addGroup(
+p_rok_studia IN skupina.rok_studia%TYPE,
+p_obor IN skupina.obor%TYPE
+);
+
+PROCEDURE editGroup(
+p_rok_studia IN skupina.rok_studia%TYPE,
+p_obor IN skupina.obor%TYPE,
+p_id_skupina IN skupina.id_skupina%TYPE
+);
+
+PROCEDURE removeGroup(
+p_id_skupina IN skupina.id_skupina%TYPE
+);
+
+PROCEDURE addUserToGroup(
+p_uzivatel_id IN uzivatele_skupiny.uzivatel_id%TYPE,
+p_skupina_id IN uzivatele_skupiny.skupina_id%TYPE
+);
+
+PROCEDURE removeUserFromGroup(
+p_uzivatel_id IN uzivatele_skupiny.uzivatel_id%TYPE,
+p_skupina_id IN uzivatele_skupiny.skupina_id%TYPE
+);
+
+PROCEDURE addSubjectToGroup(
+p_predmet_id IN predmety_skupiny.predmet_id%TYPE,
+p_skupina_id IN predmety_skupiny.skupina_id%TYPE
+);
+
+PROCEDURE removeSubjectFromGroup(
+p_predmet_id IN predmety_skupiny.predmet_id%TYPE,
+p_skupina_id IN predmety_skupiny.skupina_id%TYPE
+);
+
 END ELSA;
 
 /

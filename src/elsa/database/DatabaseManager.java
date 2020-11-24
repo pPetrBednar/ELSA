@@ -35,6 +35,7 @@ public class DatabaseManager extends DatabaseConfig {
     private Quiz selectedQuiz;
     private User selectedPublicProfile;
     private User selectedCommunication;
+    private Group selectedGroup;
 
     /**
      * DB Connection
@@ -112,6 +113,14 @@ public class DatabaseManager extends DatabaseConfig {
 
     public void setSelectedCommunication(User selectedCommunication) {
         this.selectedCommunication = selectedCommunication;
+    }
+
+    public Group getSelectedGroup() {
+        return selectedGroup;
+    }
+
+    public void setSelectedGroup(Group selectedGroup) {
+        this.selectedGroup = selectedGroup;
     }
 
     /*
@@ -1689,6 +1698,162 @@ public class DatabaseManager extends DatabaseConfig {
 
         try (CallableStatement call = con.prepareCall("call ELSA.addForbiddenWord(?)")) {
             call.setString(1, text);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<Group> getAllGroups() throws SQLException {
+
+        ArrayList<Group> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM SKUPINY")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new Group(
+                        rset.getInt("id_skupina"),
+                        rset.getString("rok_studia"),
+                        rset.getString("obor")
+                ));
+            }
+        }
+        return data;
+    }
+
+    public ArrayList<Group> getAllGroupsOfUser() throws SQLException {
+
+        ArrayList<Group> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE_SKUPIN WHERE uzivatel_id = " + user.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new Group(
+                        rset.getInt("skupina_id"),
+                        rset.getString("rok_studia"),
+                        rset.getString("obor")
+                ));
+            }
+        }
+        return data;
+    }
+
+    public void removeGroup(Group s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeGroup(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void addGroup(String year, String title) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addGroup(?, ?)")) {
+            call.setString(1, year);
+            call.setString(2, title);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void editGroup(Integer id, String year, String title) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.editGroup(?, ?, ?)")) {
+            call.setString(1, year);
+            call.setString(2, title);
+            call.setInt(3, id);
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<Subject> getAllSubjectsOfGroup(Group g) throws SQLException {
+
+        ArrayList<Subject> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM PREDMETY_SKUPIN WHERE skupina_id = " + g.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new Subject(
+                        rset.getInt("predmet_id"),
+                        rset.getString("nazev"),
+                        rset.getString("zkratka"),
+                        null
+                ));
+            }
+        }
+        return data;
+    }
+
+    public ArrayList<User> getAllUsersOfGroup(Group g) throws SQLException {
+
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE_SKUPIN WHERE skupina_id = " + g.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new User(
+                        rset.getInt("uzivatel_id"),
+                        null,
+                        null,
+                        rset.getString("jmeno"),
+                        rset.getString("prijmeni"),
+                        null,
+                        null,
+                        null,
+                        null
+                ));
+            }
+        }
+        return data;
+    }
+
+    public void addUserToGroup(Group g, User u) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addUserToGroup(?, ?)")) {
+            call.setInt(1, u.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void addSubjectToGroup(Group g, Subject s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addSubjectToGroup(?, ?)")) {
+            call.setInt(1, s.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void removeUserFromGroup(Group g, User u) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeUserFromGroup(?, ?)")) {
+            call.setInt(1, u.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void removeSubjectFromGroup(Group g, Subject s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeSubjectFromGroup(?, ?)")) {
+            call.setInt(1, s.getId());
+            call.setInt(2, g.getId());
             call.executeUpdate();
             con.commit();
         }

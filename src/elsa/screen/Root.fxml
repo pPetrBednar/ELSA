@@ -50,7 +50,7 @@
                      </font>
                   </JFXButton>
                   <Separator opacity="0.1" prefWidth="200.0" />
-                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#myGroups" styleClass="hover-effect-15" text="Moje skupiny" textFill="#ffffffcc">
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#groups" styleClass="hover-effect-15" text="Skupiny" textFill="#ffffffcc">
                      <padding>
                         <Insets bottom="10.0" left="24.0" top="10.0" />
                      </padding>
@@ -117,15 +117,6 @@
                         </JFXButton>
                         <Separator opacity="0.1" prefWidth="200.0" />
                         <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#materialTypes" styleClass="hover-effect-15" text="Kategorie materiálů" textFill="#ffffffcc">
-                           <padding>
-                              <Insets bottom="10.0" left="24.0" top="10.0" />
-                           </padding>
-                           <font>
-                              <Font name="System Bold" size="17.0" />
-                           </font>
-                        </JFXButton>
-                        <Separator opacity="0.1" prefWidth="200.0" />
-                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#groups" styleClass="hover-effect-15" text="Skupiny" textFill="#ffffffcc">
                            <padding>
                               <Insets bottom="10.0" left="24.0" top="10.0" />
                            </padding>

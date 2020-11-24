@@ -100,7 +100,7 @@ SCROLL PANE
 */
 
 .scroll-pane {
-    -fx-background:  rgb(185, 210, 250);
+    -fx-background: linear-gradient(to right, #cfdef3, #e2e2e2);
 }
 
 /*

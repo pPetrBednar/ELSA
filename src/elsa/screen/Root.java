@@ -16,6 +16,9 @@ import elsa.screen.module.Comments;
 import elsa.screen.module.Communications;
 import elsa.screen.module.Finder;
 import elsa.screen.module.ForbiddenWords;
+import elsa.screen.module.GroupSubjects;
+import elsa.screen.module.GroupUsers;
+import elsa.screen.module.Groups;
 import elsa.screen.module.Main;
 import elsa.screen.module.MaterialTypes;
 import elsa.screen.module.MySubjects;
@@ -84,6 +87,9 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<Chat, Root> chat;
     private ModuleLoader<Cloud, Root> cloud;
     private ModuleLoader<ForbiddenWords, Root> forbiddenWords;
+    private ModuleLoader<Groups, Root> groups;
+    private ModuleLoader<GroupSubjects, Root> groupSubjects;
+    private ModuleLoader<GroupUsers, Root> groupUsers;
 
     @FXML
     private BorderPane box;
@@ -202,12 +208,6 @@ public class Root extends Screen<Root> implements Initializable {
     }
 
     @FXML
-    private void myGroups(ActionEvent event) {
-        compositor.viewType = ViewType.MY_GROUPS;
-        compositor.compose();
-    }
-
-    @FXML
     private void forbiddenWords(ActionEvent event) {
         compositor.viewType = ViewType.FORBIDDEN_WORDS;
         compositor.compose();
@@ -245,6 +245,9 @@ public class Root extends Screen<Root> implements Initializable {
             chat = new ModuleLoader<>("Chat");
             cloud = new ModuleLoader<>("Cloud");
             forbiddenWords = new ModuleLoader<>("ForbiddenWords");
+            groups = new ModuleLoader<>("Groups");
+            groupSubjects = new ModuleLoader<>("GroupSubjects");
+            groupUsers = new ModuleLoader<>("GroupUsers");
         }
 
         /**
@@ -306,6 +309,15 @@ public class Root extends Screen<Root> implements Initializable {
 
             forbiddenWords.setCallback(controller);
             forbiddenWords.getController().setDb(db);
+
+            groups.setCallback(controller);
+            groups.getController().setDb(db);
+
+            groupSubjects.setCallback(controller);
+            groupSubjects.getController().setDb(db);
+
+            groupUsers.setCallback(controller);
+            groupUsers.getController().setDb(db);
         }
 
         /**
@@ -364,6 +376,13 @@ public class Root extends Screen<Root> implements Initializable {
                     composeEmulator();
                     break;
                 case GROUPS:
+                    composeGroups();
+                    break;
+                case GROUP_SUBJECTS:
+                    composeGroupSubjects();
+                    break;
+                case GROUP_USERS:
+                    composeGroupUsers();
                     break;
                 case CLOUD:
                     composeCloud();
@@ -688,6 +707,72 @@ public class Root extends Screen<Root> implements Initializable {
 
             forbiddenWords.getController().load();
             box.setCenter(forbiddenWords.getContent());
+        }
+
+        private void composeGroups() {
+            location.getChildren().clear();
+            Label l = new Label("Skupiny");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            groups.getController().load();
+            box.setCenter(groups.getContent());
+        }
+
+        private void composeGroupUsers() {
+            location.getChildren().clear();
+            Label l1 = new Label("Skupiny");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.GROUPS;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedGroup().getTitle() + " (" + db.getSelectedGroup().getYear() + ")");
+            l2.getStyleClass().add("location-label");
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label("Uživatelé");
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            groupUsers.getController().load(db.getSelectedGroup());
+            box.setCenter(groupUsers.getContent());
+        }
+
+        private void composeGroupSubjects() {
+            location.getChildren().clear();
+            Label l1 = new Label("Skupiny");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.GROUPS;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedGroup().getTitle() + " (" + db.getSelectedGroup().getYear() + ")");
+            l2.getStyleClass().add("location-label");
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label("Předměty");
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            groupSubjects.getController().load(db.getSelectedGroup());
+            box.setCenter(groupSubjects.getContent());
         }
 
         private void composeChat() {
