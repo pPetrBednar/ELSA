@@ -17,7 +17,10 @@
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SOUBOR_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>SOUBOR_TRG</autoIncrementTriggerName>
 </Column>
 <Column name="nazev" id="D355A4B0-2BD2-0C33-0E93-F441A04E40A0">
 <createdBy>petrb</createdBy>

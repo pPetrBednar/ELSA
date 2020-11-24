@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Pondìlí-listopadu-23-2020   
+--  File created - Úterý-listopadu-24-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package Body ELSA
@@ -494,6 +494,48 @@ p_id_zprava IN zprava.id_zprava%TYPE
 BEGIN
 DELETE FROM zprava WHERE id_zprava = p_id_zprava;
 END removeMessage;
+
+
+PROCEDURE addCloudFile (
+p_nazev IN soubor.nazev%TYPE,
+p_soubor IN soubor.soubor%TYPE,
+p_pripona IN soubor.pripona%TYPE,
+p_uzivatel_id IN soubor.uzivatel_id%TYPE
+) AS 
+BEGIN
+INSERT INTO soubor (id_soubor, nazev, soubor, pripona, nahrano, upraveno, uzivatel_id)
+VALUES (SOUBOR_SEQ.NEXTVAL, p_nazev, p_soubor, p_pripona, SYSDATE, SYSDATE, p_uzivatel_id);
+
+EXCEPTION WHEN OTHERS THEN
+ROLLBACK;
+RAISE;
+END addCloudFile;
+
+
+PROCEDURE editCloudFile (
+p_nazev IN soubor.nazev%TYPE,
+p_id_soubor IN soubor.id_soubor%TYPE
+) AS
+BEGIN
+UPDATE soubor SET nazev = p_nazev WHERE id_soubor = p_id_soubor;
+END editCloudFile;
+
+
+PROCEDURE getFileFromCloudFile(
+p_id_soubor IN soubor.id_soubor%TYPE,
+p_soubor OUT soubor.soubor%TYPE
+) AS
+BEGIN
+SELECT soubor INTO p_soubor FROM soubor WHERE id_soubor = p_id_soubor;
+END getFileFromCloudFile;
+
+PROCEDURE removeCloudFile(
+p_id_soubor IN soubor.id_soubor%TYPE
+) AS
+BEGIN
+DELETE FROM soubor WHERE id_soubor = p_id_soubor;
+END removeCloudFile;
+
 
 END ELSA;
 

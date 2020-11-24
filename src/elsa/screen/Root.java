@@ -11,6 +11,7 @@ import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.module.Administration;
 import elsa.screen.module.AllSubjects;
 import elsa.screen.module.Chat;
+import elsa.screen.module.Cloud;
 import elsa.screen.module.Comments;
 import elsa.screen.module.Communications;
 import elsa.screen.module.Finder;
@@ -80,6 +81,7 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<Communications, Root> communications;
     private ModuleLoader<Finder, Root> finder;
     private ModuleLoader<Chat, Root> chat;
+    private ModuleLoader<Cloud, Root> cloud;
 
     @FXML
     private BorderPane box;
@@ -227,6 +229,7 @@ public class Root extends Screen<Root> implements Initializable {
             communications = new ModuleLoader<>("Communications");
             finder = new ModuleLoader<>("Finder");
             chat = new ModuleLoader<>("Chat");
+            cloud = new ModuleLoader<>("Cloud");
         }
 
         /**
@@ -282,6 +285,9 @@ public class Root extends Screen<Root> implements Initializable {
 
             chat.setCallback(controller);
             chat.getController().setDb(db);
+
+            cloud.setCallback(controller);
+            cloud.getController().setDb(db);
         }
 
         /**
@@ -342,6 +348,7 @@ public class Root extends Screen<Root> implements Initializable {
                 case GROUPS:
                     break;
                 case CLOUD:
+                    composeCloud();
                     break;
                 case CHAT:
                     composeChat();
@@ -640,6 +647,16 @@ public class Root extends Screen<Root> implements Initializable {
 
             finder.getController().load();
             box.setCenter(finder.getContent());
+        }
+
+        private void composeCloud() {
+            location.getChildren().clear();
+            Label l = new Label("Cloud");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            cloud.getController().load();
+            box.setCenter(cloud.getContent());
         }
 
         private void composeChat() {

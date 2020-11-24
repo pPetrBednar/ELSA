@@ -10,7 +10,6 @@
     uzivatel.prijmeni,
     soubor.id_soubor,
     soubor.nazev,
-    soubor.soubor,
     soubor.pripona,
     soubor.nahrano,
     soubor.upraveno,
@@ -66,18 +65,6 @@ FROM
 <headerAlias>nazev</headerAlias>
 <reference>false</reference>
 <referencedColumn>D355A4B0-2BD2-0C33-0E93-F441A04E40A0</referencedColumn>
-<table>31447238-DC6E-68A9-1073-00F4947CAA58</table>
-</viewElement>
-<viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="soubor" id="FCB41135-F1F1-14D0-DBE1-AB62735CAEFF">
-<createdBy>petrb</createdBy>
-<createdTime>2020-11-23 16:00:36 UTC</createdTime>
-<ownerDesignName>IDAS_DATABASE</ownerDesignName>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<dataType>BLOB</dataType>
-<headerAlias>soubor</headerAlias>
-<reference>false</reference>
-<referencedColumn>8530231D-6A36-D18A-85ED-66249DEFACDE</referencedColumn>
 <table>31447238-DC6E-68A9-1073-00F4947CAA58</table>
 </viewElement>
 <viewElement class="oracle.dbtools.crest.model.design.relational.ColumnView" name="pripona" id="9F6AB738-2A95-5992-932A-009CE870039C">
@@ -152,10 +139,6 @@ FROM
 </UsedObject>
 <UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="D355A4B0-2BD2-0C33-0E93-F441A04E40A0">
 <columnName>nazev</columnName>
-<tableName>SOUBOR</tableName>
-</UsedObject>
-<UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="8530231D-6A36-D18A-85ED-66249DEFACDE">
-<columnName>soubor</columnName>
 <tableName>SOUBOR</tableName>
 </UsedObject>
 <UsedObject class="oracle.dbtools.crest.swingui.editor.viewbuilder.SQLNameHelper" id="46E552AA-0E89-75B7-699A-2F1A5D1CB3A4">

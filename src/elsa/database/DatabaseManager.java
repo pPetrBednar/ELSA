@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static java.sql.Types.BLOB;
 import static java.sql.Types.VARCHAR;
 import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
@@ -1558,6 +1559,98 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
 
         try (CallableStatement call = con.prepareCall("call ELSA.removeMessage(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    /**
+     * Loads all Files in database
+     *
+     * @return ArrayList<CloudFile>
+     * @throws SQLException
+     */
+    public ArrayList<CloudFile> getAllCloudFiles() throws SQLException {
+
+        ArrayList<CloudFile> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM SOUBORY_UZIVATELU WHERE uzivatel_id = " + user.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new CloudFile(
+                        rset.getInt("id_soubor"),
+                        rset.getString("nazev"),
+                        null,
+                        rset.getString("pripona"),
+                        rset.getDate("nahrano"),
+                        rset.getDate("upraveno")
+                ));
+            }
+        }
+        return data;
+    }
+
+    /**
+     * Updates information about selected Cloud File
+     *
+     * @param id Selected CoudFile
+     * @param title
+     * @throws SQLException
+     */
+    public void editCloudFile(Integer id, String title) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.editCloudFile(?, ?)")) {
+            call.setString(1, title);
+            call.setInt(2, id);
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    /**
+     * Adds new CloudFile
+     *
+     * @param
+     * @throws SQLException
+     */
+    public void addCloudFile(String title, File file) throws SQLException, FileNotFoundException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.addCloudFile(?, ?, ?, ?)")) {
+            call.setString(1, title);
+
+            if (file == null) {
+                return;
+            } else {
+                call.setBinaryStream(2, new FileInputStream(file));
+                call.setString(3, getFileExtension(file.getName()));
+            }
+
+            call.setInt(4, user.getId());
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public Blob getFileFromCloudFile(Integer id) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getFileFromCloudFile(?, ?)")) {
+
+            call.setInt(1, id);
+            call.registerOutParameter(2, BLOB);
+            call.executeUpdate();
+
+            return (Blob) call.getObject(2);
+        }
+    }
+
+    public void removeCloudFile(CloudFile s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeCloudFile(?)")) {
             call.setInt(1, s.getId());
             call.executeUpdate();
             con.commit();

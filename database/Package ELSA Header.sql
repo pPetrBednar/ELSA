@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Pondìlí-listopadu-23-2020   
+--  File created - Úterý-listopadu-24-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package ELSA
@@ -203,6 +203,27 @@ p_data OUT SYS_REFCURSOR
 
 PROCEDURE removeMessage(
 p_id_zprava IN zprava.id_zprava%TYPE
+);
+
+PROCEDURE addCloudFile (
+p_nazev IN soubor.nazev%TYPE,
+p_soubor IN soubor.soubor%TYPE,
+p_pripona IN soubor.pripona%TYPE,
+p_uzivatel_id IN soubor.uzivatel_id%TYPE
+);
+
+PROCEDURE editCloudFile (
+p_nazev IN soubor.nazev%TYPE,
+p_id_soubor IN soubor.id_soubor%TYPE
+);
+
+PROCEDURE getFileFromCloudFile(
+p_id_soubor IN soubor.id_soubor%TYPE,
+p_soubor OUT soubor.soubor%TYPE
+);
+
+PROCEDURE removeCloudFile(
+p_id_soubor IN soubor.id_soubor%TYPE
 );
 
 END ELSA;
