@@ -1657,6 +1657,43 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    public ArrayList<ForbiddenWord> getAllForbiddenWords() throws SQLException {
+
+        ArrayList<ForbiddenWord> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM NEVHODNA_SLOVA")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new ForbiddenWord(
+                        rset.getInt("id_nevhodne_slovo"),
+                        rset.getString("text")
+                ));
+            }
+        }
+        return data;
+    }
+
+    public void removeForbiddenWord(ForbiddenWord s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeForbiddenWord(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void addForbiddenWord(String text) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addForbiddenWord(?)")) {
+            call.setString(1, text);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
     /*
     
     TOOLS

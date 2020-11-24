@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="box" prefHeight="800.0" prefWidth="1200.0" stylesheets="@style/Root.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.Root">
+<BorderPane fx:id="box" prefHeight="912.0" prefWidth="1200.0" stylesheets="@style/Root.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.Root">
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="250.0" styleClass="box" BorderPane.alignment="CENTER">
          <children>
@@ -50,7 +50,7 @@
                      </font>
                   </JFXButton>
                   <Separator opacity="0.1" prefWidth="200.0" />
-                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#groups" styleClass="hover-effect-15" text="Skupiny" textFill="#ffffffcc">
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#myGroups" styleClass="hover-effect-15" text="Moje skupiny" textFill="#ffffffcc">
                      <padding>
                         <Insets bottom="10.0" left="24.0" top="10.0" />
                      </padding>
@@ -117,6 +117,24 @@
                         </JFXButton>
                         <Separator opacity="0.1" prefWidth="200.0" />
                         <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#materialTypes" styleClass="hover-effect-15" text="Kategorie materiálů" textFill="#ffffffcc">
+                           <padding>
+                              <Insets bottom="10.0" left="24.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.1" prefWidth="200.0" />
+                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#groups" styleClass="hover-effect-15" text="Skupiny" textFill="#ffffffcc">
+                           <padding>
+                              <Insets bottom="10.0" left="24.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.1" prefWidth="200.0" />
+                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#forbiddenWords" styleClass="hover-effect-15" text="Nevhodná slova" textFill="#ffffffcc">
                            <padding>
                               <Insets bottom="10.0" left="24.0" top="10.0" />
                            </padding>

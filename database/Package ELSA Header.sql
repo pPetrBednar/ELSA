@@ -9,6 +9,9 @@
 FUNCTION getPassword(
 p_login IN uzivatel.login%TYPE
 ) RETURN uzivatel.heslo%TYPE;
+
+FUNCTION isStringValid(p_string VARCHAR2) RETURN BOOLEAN;
+
 PROCEDURE register(
 p_login IN uzivatel.login%TYPE,
 p_heslo IN uzivatel.heslo%TYPE,
@@ -224,6 +227,14 @@ p_soubor OUT soubor.soubor%TYPE
 
 PROCEDURE removeCloudFile(
 p_id_soubor IN soubor.id_soubor%TYPE
+);
+
+PROCEDURE removeForbiddenWord(
+p_id_nevhodne_slovo IN nevhodne_slovo.id_nevhodne_slovo%TYPE
+);
+
+PROCEDURE addForbiddenWord(
+p_text IN nevhodne_slovo.text%TYPE
 );
 
 END ELSA;

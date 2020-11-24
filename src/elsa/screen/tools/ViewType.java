@@ -23,8 +23,10 @@ public enum ViewType {
     FINDER,
     EMULATOR,
     GROUPS,
+    MY_GROUPS,
     CLOUD,
-    CHAT;
+    CHAT,
+    FORBIDDEN_WORDS;
 
     private ViewType() {
     }

@@ -15,6 +15,7 @@ import elsa.screen.module.Cloud;
 import elsa.screen.module.Comments;
 import elsa.screen.module.Communications;
 import elsa.screen.module.Finder;
+import elsa.screen.module.ForbiddenWords;
 import elsa.screen.module.Main;
 import elsa.screen.module.MaterialTypes;
 import elsa.screen.module.MySubjects;
@@ -82,6 +83,7 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<Finder, Root> finder;
     private ModuleLoader<Chat, Root> chat;
     private ModuleLoader<Cloud, Root> cloud;
+    private ModuleLoader<ForbiddenWords, Root> forbiddenWords;
 
     @FXML
     private BorderPane box;
@@ -199,6 +201,18 @@ public class Root extends Screen<Root> implements Initializable {
         compositor.compose();
     }
 
+    @FXML
+    private void myGroups(ActionEvent event) {
+        compositor.viewType = ViewType.MY_GROUPS;
+        compositor.compose();
+    }
+
+    @FXML
+    private void forbiddenWords(ActionEvent event) {
+        compositor.viewType = ViewType.FORBIDDEN_WORDS;
+        compositor.compose();
+    }
+
     /**
      * Assembler for creating different views
      */
@@ -230,6 +244,7 @@ public class Root extends Screen<Root> implements Initializable {
             finder = new ModuleLoader<>("Finder");
             chat = new ModuleLoader<>("Chat");
             cloud = new ModuleLoader<>("Cloud");
+            forbiddenWords = new ModuleLoader<>("ForbiddenWords");
         }
 
         /**
@@ -288,6 +303,9 @@ public class Root extends Screen<Root> implements Initializable {
 
             cloud.setCallback(controller);
             cloud.getController().setDb(db);
+
+            forbiddenWords.setCallback(controller);
+            forbiddenWords.getController().setDb(db);
         }
 
         /**
@@ -352,6 +370,9 @@ public class Root extends Screen<Root> implements Initializable {
                     break;
                 case CHAT:
                     composeChat();
+                    break;
+                case FORBIDDEN_WORDS:
+                    composeForbiddenWords();
                     break;
             }
         }
@@ -657,6 +678,16 @@ public class Root extends Screen<Root> implements Initializable {
 
             cloud.getController().load();
             box.setCenter(cloud.getContent());
+        }
+
+        private void composeForbiddenWords() {
+            location.getChildren().clear();
+            Label l = new Label("Nevhodná slova");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            forbiddenWords.getController().load();
+            box.setCenter(forbiddenWords.getContent());
         }
 
         private void composeChat() {

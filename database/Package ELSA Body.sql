@@ -15,6 +15,26 @@ RETURN v_password;
 END getPassword;
 
 
+FUNCTION isStringValid(p_string VARCHAR2) RETURN BOOLEAN AS
+CURSOR c_data IS SELECT text FROM nevhodne_slovo;
+v_count NUMBER := 0;
+e_violation EXCEPTION;
+BEGIN
+    FOR item IN c_data LOOP
+        SELECT REGEXP_COUNT(p_string, item.text) INTO v_count FROM DUAL;
+        IF v_count > 0 THEN
+            DBMS_OUTPUT.PUT_LINE(item.text);
+            RAISE e_violation;
+        END IF;
+    END LOOP;
+    
+    RETURN TRUE;
+    
+    EXCEPTION WHEN e_violation THEN
+        RETURN FALSE;
+END isStringValid;
+
+
 PROCEDURE register(
 p_login IN uzivatel.login%TYPE,
 p_heslo IN uzivatel.heslo%TYPE,
@@ -536,6 +556,21 @@ BEGIN
 DELETE FROM soubor WHERE id_soubor = p_id_soubor;
 END removeCloudFile;
 
+
+PROCEDURE removeForbiddenWord(
+p_id_nevhodne_slovo IN nevhodne_slovo.id_nevhodne_slovo%TYPE
+) AS
+BEGIN
+DELETE FROM nevhodne_slovo WHERE id_nevhodne_slovo = p_id_nevhodne_slovo;
+END removeForbiddenWord;
+
+
+PROCEDURE addForbiddenWord(
+p_text IN nevhodne_slovo.text%TYPE
+) AS
+BEGIN
+INSERT INTO nevhodne_slovo (id_nevhodne_slovo, text) VALUES (NEVHODNE_SLOVO_SEQ.NEXTVAL, p_text);
+END addForbiddenWord;
 
 END ELSA;
 
