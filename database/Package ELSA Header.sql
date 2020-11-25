@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Úterý-listopadu-24-2020   
+--  File created - Støeda-listopadu-25-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package ELSA
@@ -185,6 +185,7 @@ p_id_uzivatel IN uzivatel.id_uzivatel%TYPE
 PROCEDURE find(
 p_title IN studijni_material.nazev%TYPE,
 p_predmet_id IN studijni_material.predmet_id%TYPE,
+p_kategorie_materialu_id IN NUMBER,
 p_uzivatel_id IN studijni_material.uzivatel_id%TYPE,
 p_data OUT SYS_REFCURSOR
 );

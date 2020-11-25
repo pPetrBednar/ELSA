@@ -1427,18 +1427,19 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
-    public ArrayList<StudyMaterial> find(String title, Subject subject, User teacher) throws SQLException {
+    public ArrayList<StudyMaterial> find(String title, Subject subject, StudyMaterialType type, User teacher) throws SQLException {
         ArrayList<StudyMaterial> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
-        try (CallableStatement call = con.prepareCall("call ELSA.find(?, ?, ?, ?)")) {
+        try (CallableStatement call = con.prepareCall("call ELSA.find(?, ?, ?, ?, ?)")) {
 
             call.setString(1, title);
             call.setInt(2, subject.getId());
-            call.setInt(3, teacher.getId());
-            call.registerOutParameter(4, CURSOR);
+            call.setInt(3, type.getId());
+            call.setInt(4, teacher.getId());
+            call.registerOutParameter(5, CURSOR);
             call.executeUpdate();
 
-            ResultSet rs = (ResultSet) call.getObject(4);
+            ResultSet rs = (ResultSet) call.getObject(5);
 
             while (rs.next()) {
                 data.add(new StudyMaterial(
@@ -1857,6 +1858,33 @@ public class DatabaseManager extends DatabaseConfig {
             call.executeUpdate();
             con.commit();
         }
+    }
+
+    public StudyMaterial getStudyMateria(Integer id) throws SQLException {
+
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM studijni_materialy WHERE id_studijnimaterial = '" + id + "' ORDER BY datumvytvoreni ASC")) {
+            ResultSet rset = stmt.executeQuery();
+            while (rset.next()) {
+                StudyMaterial s = new StudyMaterial(
+                        rset.getInt("id_studijniMaterial"),
+                        rset.getString("nazev"),
+                        rset.getInt("stran"),
+                        rset.getDate("datumVytvoreni"),
+                        rset.getDate("datumZmeny"),
+                        rset.getString("popis"),
+                        rset.getBlob("soubor"),
+                        rset.getString("pripona"),
+                        rset.getString("jmeno") + " " + rset.getString("prijmeni"),
+                        rset.getInt("uzivatel_id")
+                );
+
+                s.setType(getAllTypesForStudyMaterial(s.getId()));
+
+                return s;
+            }
+        }
+        return null;
     }
 
     /*

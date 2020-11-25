@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Úterý-listopadu-24-2020   
+--  File created - Støeda-listopadu-25-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package Body ELSA
@@ -390,35 +390,72 @@ END changePermission;
 PROCEDURE find(
 p_title IN studijni_material.nazev%TYPE,
 p_predmet_id IN studijni_material.predmet_id%TYPE,
+p_kategorie_materialu_id IN NUMBER,
 p_uzivatel_id IN studijni_material.uzivatel_id%TYPE,
 p_data OUT SYS_REFCURSOR
 ) AS
 BEGIN
-IF p_title = '%' THEN
-    IF p_predmet_id != 0 AND p_uzivatel_id != 0 THEN
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE uzivatel_id = p_uzivatel_id AND predmet_id = p_predmet_id;
-    ELSIF p_predmet_id = 0 AND p_uzivatel_id != 0 THEN
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE uzivatel_id = p_uzivatel_id;
-    ELSIF p_uzivatel_id = 0 AND p_predmet_id != 0 THEN
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE predmet_id = p_predmet_id;
+IF p_kategorie_materialu_id = 0 THEN
+    IF p_title = '%' THEN
+        IF p_predmet_id != 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE uzivatel_id = p_uzivatel_id AND predmet_id = p_predmet_id;
+        ELSIF p_predmet_id = 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE uzivatel_id = p_uzivatel_id;
+        ELSIF p_uzivatel_id = 0 AND p_predmet_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE predmet_id = p_predmet_id;
+        ELSE
+            OPEN p_data FOR SELECT * FROM studijni_materialy;
+        END IF;
     ELSE
-        OPEN p_data FOR SELECT * FROM studijni_materialy;
+        IF p_predmet_id != 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%' AND uzivatel_id = p_uzivatel_id AND predmet_id = p_predmet_id;
+        ELSIF p_predmet_id = 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%' AND uzivatel_id = p_uzivatel_id;
+        ELSIF p_uzivatel_id = 0 AND p_predmet_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%' AND predmet_id = p_predmet_id;
+        ELSE
+            OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%';
+        END IF;
     END IF;
 ELSE
-    IF p_predmet_id != 0 AND p_uzivatel_id != 0 THEN
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%' AND uzivatel_id = p_uzivatel_id AND predmet_id = p_predmet_id;
-    ELSIF p_predmet_id = 0 AND p_uzivatel_id != 0 THEN
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%' AND uzivatel_id = p_uzivatel_id;
-    ELSIF p_uzivatel_id = 0 AND p_predmet_id != 0 THEN
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%' AND predmet_id = p_predmet_id;
+    IF p_title = '%' THEN
+        IF p_predmet_id != 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND uzivatel_id = p_uzivatel_id AND predmet_id = p_predmet_id;
+        ELSIF p_predmet_id = 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND uzivatel_id = p_uzivatel_id;
+        ELSIF p_uzivatel_id = 0 AND p_predmet_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND predmet_id = p_predmet_id;
+        ELSE
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id;
+        END IF;
     ELSE
-        OPEN p_data FOR SELECT * FROM studijni_materialy WHERE nazev LIKE '%' || p_title || '%';
+        IF p_predmet_id != 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND nazev LIKE '%' || p_title || '%' AND uzivatel_id = p_uzivatel_id AND predmet_id = p_predmet_id;
+        ELSIF p_predmet_id = 0 AND p_uzivatel_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND nazev LIKE '%' || p_title || '%' AND uzivatel_id = p_uzivatel_id;
+        ELSIF p_uzivatel_id = 0 AND p_predmet_id != 0 THEN
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND nazev LIKE '%' || p_title || '%' AND predmet_id = p_predmet_id;
+        ELSE
+            OPEN p_data FOR SELECT * FROM kategorizace_materialu 
+            INNER JOIN studijni_materialy ON kategorizace_materialu.studijni_material_id = studijni_materialy.id_studijnimaterial 
+            WHERE kategorie_materialu_id = p_kategorie_materialu_id AND nazev LIKE '%' || p_title || '%';
+        END IF;
     END IF;
 END IF;
-
-EXCEPTION WHEN OTHERS THEN
-ROLLBACK;
-RAISE;
 END find;
 
 

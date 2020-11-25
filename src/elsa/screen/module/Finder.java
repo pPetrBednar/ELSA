@@ -48,6 +48,7 @@ public class Finder extends Module<Finder, Root> implements Initializable {
 
     private ArrayList<Subject> subjects;
     private ArrayList<User> teachers;
+    private ArrayList<StudyMaterialType> types;
 
     @FXML
     private VBox list;
@@ -57,6 +58,8 @@ public class Finder extends Module<Finder, Root> implements Initializable {
     private JFXComboBox<Subject> subject;
     @FXML
     private JFXComboBox<User> teacher;
+    @FXML
+    private JFXComboBox<StudyMaterialType> type;
 
     /**
      * Initializes the controller class.
@@ -70,10 +73,36 @@ public class Finder extends Module<Finder, Root> implements Initializable {
         this.db = db;
 
         try {
+            types = db.getAllStudyMaterialTypes();
+            types.add(0, new StudyMaterialType(0, "%", null, null));
+            type.setItems(FXCollections.observableArrayList(types));
+            type.getSelectionModel().selectFirst();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        type.setConverter(new StringConverter<StudyMaterialType>() {
+            @Override
+            public String toString(StudyMaterialType object) {
+                return object.getText();
+            }
+
+            @Override
+            public StudyMaterialType fromString(String string) {
+                for (StudyMaterialType t : types) {
+                    if (t.getText().equals(string)) {
+                        return t;
+                    }
+                }
+                return null;
+            }
+        });
+
+        try {
             subjects = db.getAllSubjects();
             subjects.add(0, new Subject(0, "", "%", ""));
             subject.setItems(FXCollections.observableArrayList(subjects));
-            subject.getSelectionModel().select(0);
+            subject.getSelectionModel().selectFirst();
         } catch (SQLException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,7 +129,7 @@ public class Finder extends Module<Finder, Root> implements Initializable {
             teachers.add(0, new User(0));
             teachers.get(0).setLastName("%");
             teacher.setItems(FXCollections.observableArrayList(teachers));
-            teacher.getSelectionModel().select(0);
+            teacher.getSelectionModel().selectFirst();
         } catch (SQLException ex) {
             Logger.getLogger(AddQuestion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -196,9 +225,14 @@ public class Finder extends Module<Finder, Root> implements Initializable {
                 }
             }
 
-            db.setSelectedStudyMaterial(s);
-            callback.compose(ViewType.STUDY_MATERIAL_VIEW);
+            StudyMaterial sm = db.getStudyMateria(s.getId());
 
+            if (sm != null) {
+                db.setSelectedStudyMaterial(sm);
+                callback.compose(ViewType.STUDY_MATERIAL_VIEW);
+            } else {
+                return;
+            }
         } catch (SQLException e) {
             Logger.getLogger(MaterialTypes.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -217,9 +251,10 @@ public class Finder extends Module<Finder, Root> implements Initializable {
         String t = title.getText();
         Subject s = subject.getValue();
         User u = teacher.getValue();
+        StudyMaterialType m = type.getValue();
 
         try {
-            ArrayList<StudyMaterial> data = db.find(t, s, u);
+            ArrayList<StudyMaterial> data = db.find(t, s, m, u);
 
             if (data != null && !data.isEmpty()) {
                 data.forEach((res) -> {
