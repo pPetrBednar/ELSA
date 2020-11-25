@@ -72,5 +72,5 @@ Group system - total control.
 All procedures, functions and types packed in ELSA package.
 Every communication from app using views, procedures, functions.
 
-**Database tables and columns currently in Czech**
+**Database tables and columns currently in Czech.**
 **Potential DB rework in future**
