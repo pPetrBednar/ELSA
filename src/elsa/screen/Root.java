@@ -14,6 +14,9 @@ import elsa.screen.module.Chat;
 import elsa.screen.module.Cloud;
 import elsa.screen.module.Comments;
 import elsa.screen.module.Communications;
+import elsa.screen.module.EvaluatedQuiz;
+import elsa.screen.module.EvaluatedQuizes;
+import elsa.screen.module.Evaluation;
 import elsa.screen.module.Finder;
 import elsa.screen.module.ForbiddenWords;
 import elsa.screen.module.GroupSubjects;
@@ -90,6 +93,9 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<Groups, Root> groups;
     private ModuleLoader<GroupSubjects, Root> groupSubjects;
     private ModuleLoader<GroupUsers, Root> groupUsers;
+    private ModuleLoader<Evaluation, Root> evaluation;
+    private ModuleLoader<EvaluatedQuizes, Root> evaluatedQuizes;
+    private ModuleLoader<EvaluatedQuiz, Root> evaluatedQuiz;
 
     @FXML
     private BorderPane box;
@@ -248,6 +254,9 @@ public class Root extends Screen<Root> implements Initializable {
             groups = new ModuleLoader<>("Groups");
             groupSubjects = new ModuleLoader<>("GroupSubjects");
             groupUsers = new ModuleLoader<>("GroupUsers");
+            evaluation = new ModuleLoader<>("Evaluation");
+            evaluatedQuizes = new ModuleLoader<>("EvaluatedQuizes");
+            evaluatedQuiz = new ModuleLoader<>("EvaluatedQuiz");
         }
 
         /**
@@ -318,6 +327,15 @@ public class Root extends Screen<Root> implements Initializable {
 
             groupUsers.setCallback(controller);
             groupUsers.getController().setDb(db);
+
+            evaluation.setCallback(controller);
+            evaluation.getController().setDb(db);
+
+            evaluatedQuizes.setCallback(controller);
+            evaluatedQuizes.getController().setDb(db);
+
+            evaluatedQuiz.setCallback(controller);
+            evaluatedQuiz.getController().setDb(db);
         }
 
         /**
@@ -393,6 +411,15 @@ public class Root extends Screen<Root> implements Initializable {
                 case FORBIDDEN_WORDS:
                     composeForbiddenWords();
                     break;
+                case EVALUATION:
+                    composeEvaluation();
+                    break;
+                case EVALUATED_QUIZES:
+                    composeEvaluatedQuizes();
+                    break;
+                case EVALUATED_QUIZ:
+                    composeEvaluatedQuiz();
+                    break;
             }
         }
 
@@ -433,7 +460,7 @@ public class Root extends Screen<Root> implements Initializable {
             }
 
             statusLabel.setText("Uživatel:");
-            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + " (" + db.getUser().getLogin() + ")");
+            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + "\n(" + db.getUser().getLogin().trim() + ")");
 
             compositor.viewType = ViewType.MAIN;
             compositor.compose();
@@ -477,7 +504,7 @@ public class Root extends Screen<Root> implements Initializable {
             }
 
             statusLabel.setText("Uživatel:");
-            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + " (" + db.getUser().getLogin() + ")");
+            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + "\n(" + db.getUser().getLogin().trim() + ")");
 
             compositor.viewType = ViewType.MAIN;
             compositor.compose();
@@ -717,6 +744,104 @@ public class Root extends Screen<Root> implements Initializable {
 
             groups.getController().load();
             box.setCenter(groups.getContent());
+        }
+
+        private void composeEvaluation() {
+            location.getChildren().clear();
+            Label l1 = new Label(db.getSelectedSubject().getTitle() + " (" + db.getSelectedSubject().getShortcut() + ")");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label("Klasifikace");
+            l2.getStyleClass().add("location-label");
+            location.getChildren().addAll(l1, arrow1, l2);
+
+            evaluation.getController().load(db.getSelectedSubject());
+            box.setCenter(evaluation.getContent());
+        }
+
+        private void composeEvaluatedQuizes() {
+            location.getChildren().clear();
+            Label l1 = new Label(db.getSelectedSubject().getTitle() + " (" + db.getSelectedSubject().getShortcut() + ")");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label("Klasifikace");
+            l2.getStyleClass().add("location-label");
+
+            l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.EVALUATION;
+                compose();
+            });
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label(db.getSelectedEvaluationUser().getFirstName() + " " + db.getSelectedEvaluationUser().getLastName());
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            evaluatedQuizes.getController().load(db.getSelectedEvaluationUser());
+            box.setCenter(evaluatedQuizes.getContent());
+        }
+
+        private void composeEvaluatedQuiz() {
+            location.getChildren().clear();
+            Label l1 = new Label(db.getSelectedSubject().getTitle() + " (" + db.getSelectedSubject().getShortcut() + ")");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label("Klasifikace");
+            l2.getStyleClass().add("location-label");
+
+            l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.EVALUATION;
+                compose();
+            });
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label(db.getSelectedEvaluationUser().getFirstName() + " " + db.getSelectedEvaluationUser().getLastName());
+            l3.getStyleClass().add("location-label");
+
+            l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.EVALUATED_QUIZES;
+                compose();
+            });
+
+            Label arrow3 = new Label("🡺");
+            arrow3.getStyleClass().add("location-arrow");
+
+            Label l4 = new Label(db.getSelectedEvaluationQuiz().getTitle() + " (" + db.getSelectedEvaluationQuiz().getPoints() + "/" + db.getSelectedEvaluationQuiz().getMaxPoints() + ") (" + (int) (db.getSelectedEvaluationQuiz().getPoints().doubleValue() / db.getSelectedEvaluationQuiz().getMaxPoints().doubleValue() * 100.0) + "%)");
+            l4.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3, arrow3, l4);
+
+            evaluatedQuiz.getController().load(db.getSelectedEvaluationQuiz());
+            box.setCenter(evaluatedQuiz.getContent());
         }
 
         private void composeGroupUsers() {

@@ -27,7 +27,10 @@ public enum ViewType {
     GROUP_USERS,
     CLOUD,
     CHAT,
-    FORBIDDEN_WORDS;
+    FORBIDDEN_WORDS,
+    EVALUATION,
+    EVALUATED_QUIZES,
+    EVALUATED_QUIZ;
 
     private ViewType() {
     }

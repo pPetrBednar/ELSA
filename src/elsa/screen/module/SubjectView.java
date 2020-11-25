@@ -84,7 +84,12 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
         AnchorPane.setTopAnchor(l2, 0.0);
         AnchorPane.setLeftAnchor(l2, 0.0);
         AnchorPane.setBottomAnchor(l2, 0.0);
-        AnchorPane.setRightAnchor(l2, 400.0);
+
+        if (db.getUser().getPermission() == Permission.STUDENT) {
+            AnchorPane.setRightAnchor(l2, 250.0);
+        } else {
+            AnchorPane.setRightAnchor(l2, 400.0);
+        }
 
         Label l3 = new Label(s.getCreatedBy());
         l3.setAlignment(Pos.CENTER);
@@ -293,5 +298,10 @@ public class SubjectView extends Module<SubjectView, Root> implements Initializa
         add.getStage().showAndWait();
 
         callback.compose(ViewType.SUBJECT_VIEW);
+    }
+
+    @FXML
+    private void openEvaluation(ActionEvent event) {
+        callback.compose(ViewType.EVALUATION);
     }
 }

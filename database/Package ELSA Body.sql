@@ -1,12 +1,11 @@
 --------------------------------------------------------
---  File created - Støeda-listopadu-25-2020   
+--  File created - Ètvrtek-listopadu-26-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package Body ELSA
 --------------------------------------------------------
 
   CREATE OR REPLACE EDITIONABLE PACKAGE BODY "ST58214"."ELSA" AS
-
 
 FUNCTION getPassword(p_login IN uzivatel.login%TYPE) RETURN uzivatel.heslo%TYPE AS v_password uzivatel.heslo%TYPE;
 BEGIN
@@ -666,6 +665,110 @@ p_skupina_id IN predmety_skupiny.skupina_id%TYPE
 BEGIN
 DELETE FROM predmety_skupiny WHERE skupina_id = p_skupina_id AND predmet_id = p_predmet_id;
 END removeSubjectFromGroup;
+
+PROCEDURE submitQuiz(
+    p_uzivatel_id vyplneny_kviz.uzivatel_id%TYPE,
+    p_kviz_id vyplneny_kviz.kviz_id%TYPE,
+    p_body vyplneny_kviz.kviz_id%TYPE,
+    p_odpoved ELSA.STRING_ARRAY,
+    p_otazka_id ELSA.STRING_ARRAY
+) AS
+    e_error EXCEPTION;
+    v_max_body otazka.body%TYPE;
+    v_vyplneny_kviz_id vyplneny_kviz.id_vyplneny_kviz%TYPE;
+BEGIN
+    SELECT SUM(body) INTO v_max_body FROM otazka WHERE kviz_id = p_kviz_id;
+
+    INSERT INTO vyplneny_kviz(id_vyplneny_kviz, body, max_body, uzivatel_id, kviz_id) 
+    VALUES(VYPLNENY_KVIZ_SEQ.NEXTVAL, p_body, v_max_body, p_uzivatel_id, p_kviz_id);
+    v_vyplneny_kviz_id := VYPLNENY_KVIZ_SEQ.CURRVAL;
+
+    IF p_otazka_id.COUNT <> p_odpoved.COUNT THEN
+        RAISE e_error;
+    END IF;
+
+    FOR i IN 1..p_otazka_id.COUNT
+    LOOP
+        INSERT INTO vyplnena_otazka(id_vyplnena_otazka, odpoved, otazka_id, vyplneny_kviz_id)
+        VALUES(VYPLNENA_OTAZKA_SEQ.NEXTVAL, p_odpoved(i), TO_NUMBER(p_otazka_id(i)), v_vyplneny_kviz_id);
+    END LOOP;
+
+    EXCEPTION WHEN e_error THEN
+        ROLLBACK;
+        RAISE;
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END submitQuiz;
+
+
+PROCEDURE getUsersEvaluationOnSubject(
+    p_predmet_id IN studijni_material.predmet_id%TYPE,
+    p_uzivatele OUT SYS_REFCURSOR
+) AS
+    v_sum_body NUMBER;
+    v_count_kvizy NUMBER;
+BEGIN
+
+    SELECT SUM(body) INTO v_sum_body FROM otazka 
+    INNER JOIN kviz ON otazka.kviz_id = kviz.id_kviz 
+    INNER JOIN studijni_material ON kviz.studijni_material_id = studijni_material.id_studijnimaterial 
+    WHERE studijni_material.predmet_id = p_predmet_id;
+
+    SELECT COUNT(id_kviz) INTO v_count_kvizy FROM kviz
+    INNER JOIN studijni_material ON kviz.studijni_material_id = studijni_material.id_studijnimaterial 
+    WHERE studijni_material.predmet_id = p_predmet_id;
+
+    OPEN p_uzivatele FOR 
+        SELECT uzivatel_id, jmeno, prijmeni, 
+        SUM(VYPLNENE_KVIZY.body) AS "ziskano_bodu", 
+        COUNT(VYPLNENE_KVIZY.body) AS "splnenych_kvizu",
+        v_sum_body AS "max_body",
+        v_count_kvizy AS "max_kvizu"
+        FROM VYPLNENE_KVIZY 
+        WHERE predmet_id = p_predmet_id 
+        GROUP BY uzivatel_id, jmeno, prijmeni;
+
+    EXCEPTION WHEN TOO_MANY_ROWS THEN
+        ROLLBACK;
+        RAISE;
+
+END getUsersEvaluationOnSubject;
+
+
+PROCEDURE getUserEvaluationOnSubject(
+    p_predmet_id IN studijni_material.predmet_id%TYPE,
+    p_uzivatel_id IN vyplneny_kviz.uzivatel_id%TYPE,
+    p_uzivatele OUT SYS_REFCURSOR
+) AS
+    v_sum_body NUMBER;
+    v_count_kvizy NUMBER;
+BEGIN
+
+    SELECT SUM(body) INTO v_sum_body FROM otazka 
+    INNER JOIN kviz ON otazka.kviz_id = kviz.id_kviz 
+    INNER JOIN studijni_material ON kviz.studijni_material_id = studijni_material.id_studijnimaterial 
+    WHERE studijni_material.predmet_id = p_predmet_id;
+
+    SELECT COUNT(id_kviz) INTO v_count_kvizy FROM kviz
+    INNER JOIN studijni_material ON kviz.studijni_material_id = studijni_material.id_studijnimaterial 
+    WHERE studijni_material.predmet_id = p_predmet_id;
+
+    OPEN p_uzivatele FOR 
+        SELECT uzivatel_id, jmeno, prijmeni, 
+        SUM(VYPLNENE_KVIZY.body) AS "ziskano_bodu", 
+        COUNT(VYPLNENE_KVIZY.body) AS "splnenych_kvizu",
+        v_sum_body AS "max_body",
+        v_count_kvizy AS "max_kvizu"
+        FROM VYPLNENE_KVIZY 
+        WHERE predmet_id = p_predmet_id AND uzivatel_id = p_uzivatel_id
+        GROUP BY uzivatel_id, jmeno, prijmeni;
+
+    EXCEPTION WHEN TOO_MANY_ROWS THEN
+        ROLLBACK;
+        RAISE;
+
+END getUserEvaluationOnSubject;
 
 END ELSA;
 

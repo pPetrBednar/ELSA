@@ -1,11 +1,14 @@
 --------------------------------------------------------
---  File created - Støeda-listopadu-25-2020   
+--  File created - Ètvrtek-listopadu-26-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package ELSA
 --------------------------------------------------------
 
   CREATE OR REPLACE EDITIONABLE PACKAGE "ST58214"."ELSA" AS
+
+TYPE STRING_ARRAY IS TABLE OF VARCHAR2(1024);
+
 FUNCTION getPassword(
 p_login IN uzivatel.login%TYPE
 ) RETURN uzivatel.heslo%TYPE;
@@ -271,6 +274,25 @@ p_skupina_id IN predmety_skupiny.skupina_id%TYPE
 PROCEDURE removeSubjectFromGroup(
 p_predmet_id IN predmety_skupiny.predmet_id%TYPE,
 p_skupina_id IN predmety_skupiny.skupina_id%TYPE
+);
+
+PROCEDURE submitQuiz(
+    p_uzivatel_id vyplneny_kviz.uzivatel_id%TYPE,
+    p_kviz_id vyplneny_kviz.kviz_id%TYPE,
+    p_body vyplneny_kviz.kviz_id%TYPE,
+    p_odpoved ELSA.STRING_ARRAY,
+    p_otazka_id ELSA.STRING_ARRAY
+);
+
+PROCEDURE getUsersEvaluationOnSubject(
+    p_predmet_id IN studijni_material.predmet_id%TYPE,
+    p_uzivatele OUT SYS_REFCURSOR
+);
+
+PROCEDURE getUserEvaluationOnSubject(
+    p_predmet_id IN studijni_material.predmet_id%TYPE,
+    p_uzivatel_id IN vyplneny_kviz.uzivatel_id%TYPE,
+    p_uzivatele OUT SYS_REFCURSOR
 );
 
 END ELSA;

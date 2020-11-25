@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -18,10 +19,13 @@ import java.sql.SQLException;
 import static java.sql.Types.BLOB;
 import static java.sql.Types.VARCHAR;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
+import oracle.jdbc.OracleConnection;
 import static oracle.jdbc.OracleTypes.CURSOR;
+import oracle.sql.ARRAY;
 
 /**
  *
@@ -36,6 +40,9 @@ public class DatabaseManager extends DatabaseConfig {
     private User selectedPublicProfile;
     private User selectedCommunication;
     private Group selectedGroup;
+
+    private User selectedEvaluationUser;
+    private EvaluatedQuizData selectedEvaluationQuiz;
 
     /**
      * DB Connection
@@ -121,6 +128,22 @@ public class DatabaseManager extends DatabaseConfig {
 
     public void setSelectedGroup(Group selectedGroup) {
         this.selectedGroup = selectedGroup;
+    }
+
+    public User getSelectedEvaluationUser() {
+        return selectedEvaluationUser;
+    }
+
+    public void setSelectedEvaluationUser(User selectedEvaluationUser) {
+        this.selectedEvaluationUser = selectedEvaluationUser;
+    }
+
+    public EvaluatedQuizData getSelectedEvaluationQuiz() {
+        return selectedEvaluationQuiz;
+    }
+
+    public void setSelectedEvaluationQuiz(EvaluatedQuizData selectedEvaluationQuiz) {
+        this.selectedEvaluationQuiz = selectedEvaluationQuiz;
     }
 
     /*
@@ -1885,6 +1908,173 @@ public class DatabaseManager extends DatabaseConfig {
             }
         }
         return null;
+    }
+
+    public void submitAnswers(Integer quizId, int points, HashMap<Integer, String> answers) throws SQLException {
+
+        // Holder
+        String[] keys = new String[answers.keySet().size()];
+        String[] answ = new String[answers.keySet().size()];
+
+        // Moving data
+        int i = 0;
+        for (Integer key : answers.keySet()) {
+            keys[i] = key.toString();
+            answ[i] = answers.get(key);
+            i++;
+        }
+
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.submitQuiz(?, ?, ?, ?, ?)")) {
+
+            OracleConnection oraConn = con.unwrap(OracleConnection.class);
+
+            Array k = oraConn.createARRAY("ELSA.STRING_ARRAY", keys);
+            Array a = oraConn.createARRAY("ELSA.STRING_ARRAY", answ);
+
+            call.setInt(1, user.getId());
+            call.setInt(2, quizId);
+            call.setInt(3, points);
+            call.setArray(4, a);
+            call.setArray(5, k);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<EvaluationData> getUsersEvaluationOnSubject(Subject s) throws SQLException {
+        ArrayList<EvaluationData> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getUsersEvaluationOnSubject(?, ?)")) {
+
+            call.setInt(1, s.getId());
+            call.registerOutParameter(2, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(2);
+
+            while (rs.next()) {
+                data.add(new EvaluationData(
+                        new User(
+                                rs.getInt("uzivatel_id"),
+                                null,
+                                null,
+                                rs.getString("jmeno"),
+                                rs.getString("prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        ),
+                        rs.getInt("splnenych_kvizu"),
+                        rs.getInt("max_kvizu"),
+                        rs.getInt("ziskano_bodu"),
+                        rs.getInt("max_body")
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    public ArrayList<EvaluationData> getUserEvaluationOnSubject(Subject s) throws SQLException {
+        ArrayList<EvaluationData> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getUserEvaluationOnSubject(?, ?, ?)")) {
+
+            call.setInt(1, s.getId());
+            call.setInt(2, user.getId());
+            call.registerOutParameter(3, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(3);
+
+            while (rs.next()) {
+                data.add(new EvaluationData(
+                        new User(
+                                rs.getInt("uzivatel_id"),
+                                null,
+                                null,
+                                rs.getString("jmeno"),
+                                rs.getString("prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        ),
+                        rs.getInt("splnenych_kvizu"),
+                        rs.getInt("max_kvizu"),
+                        rs.getInt("ziskano_bodu"),
+                        rs.getInt("max_body")
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    public ArrayList<EvaluatedQuizData> getEvaluatedQuizesOfUserFromSubject(User u, Subject s) throws SQLException {
+        ArrayList<EvaluatedQuizData> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM VYPLNENE_KVIZY WHERE uzivatel_id = " + u.getId() + " AND predmet_id = " + s.getId() + " ORDER BY nazev ASC")) {
+            ResultSet rset = stmt.executeQuery();
+            while (rset.next()) {
+                data.add(new EvaluatedQuizData(
+                        rset.getInt("id_vyplneny_kviz"),
+                        rset.getString("nazev"),
+                        rset.getInt("body"),
+                        rset.getInt("max_body"),
+                        null
+                ));
+            }
+        }
+        return data;
+    }
+
+    public EvaluatedQuizData getEvaluatedQuestionsOfQuiz(EvaluatedQuizData d) throws SQLException {
+        d.setQuestions(new ArrayList<>());
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM VYPLNENE_OTAZKY WHERE vyplneny_kviz_id = " + d.getId() + " ORDER BY poradi ASC")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                d.getQuestions().add(new EvaluatedQuestionData(
+                        rset.getInt("id_vyplnena_otazka"),
+                        rset.getInt("poradi"),
+                        rset.getString("nazev"),
+                        rset.getString("otazka"),
+                        rset.getString("odpoved"),
+                        rset.getString("odpoved_puvodni"),
+                        rset.getInt("body"),
+                        new QuestionType(
+                                0,
+                                rset.getString("druh_otazky_nazev"),
+                                rset.getString("druh_otazky_zkratka"),
+                                rset.getString("druh_otazky_popis"))
+                ));
+            }
+        }
+        return d;
+    }
+
+    /**
+     * Checks if Quiz was already completed
+     *
+     * @param q Selected Quiz
+     * @return
+     * @throws SQLException
+     */
+    public boolean checkIfQuizCompleted(Quiz q) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM VYPLNENE_KVIZY WHERE kviz_id = " + q.getId() + " AND uzivatel_id = " + user.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*

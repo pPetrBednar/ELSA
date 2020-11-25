@@ -137,6 +137,7 @@ public class Administration extends Module<Administration, Root> implements Init
             ScreenLoader<Root> root = new ScreenLoader<>("Root");
             root.setupStage("eELSA", callback.getStage(), Modality.WINDOW_MODAL);
             root.setTransparent(false);
+            root.setMinSize(1400, 1000);
             root.getController().setEmulatedUser(s);
             root.getStage().show();
         } catch (IOException ex) {

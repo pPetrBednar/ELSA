@@ -49,6 +49,11 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <JFXButton focusTraversable="false" layoutX="658.0" layoutY="145.0" onAction="#openEvaluation" styleClass="btn-open" stylesheets="@../style/StudyMaterialView.css" text="Klasifikace" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="145.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </JFXButton>
                         <Label layoutX="36.0" layoutY="483.0" text="Studijní materiály:" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="483.0">
                            <font>
                               <Font name="System Bold" size="19.0" />
