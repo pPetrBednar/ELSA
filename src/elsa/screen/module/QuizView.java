@@ -17,12 +17,15 @@ import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,9 +33,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
@@ -44,6 +49,8 @@ import javafx.stage.Modality;
 public class QuizView extends Module<QuizView, Root> implements Initializable {
 
     private DatabaseManager db;
+    private HashMap<Integer, String> answers = new HashMap<>();
+    private Quiz selectedQuiz;
 
     @FXML
     private Label title;
@@ -53,6 +60,8 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
     private VBox materialsList;
     @FXML
     private JFXButton btnAddQuestion;
+    @FXML
+    private ScrollPane scrollPane;
 
     /**
      * Initializes the controller class.
@@ -66,55 +75,48 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
         this.db = db;
     }
 
-    private AnchorPane createLabel(Question s) {
+    private VBox createLabel(Question s) {
 
-        AnchorPane ap = new AnchorPane();
-        ap.setPrefHeight(600);
+        VBox vb = new VBox();
+        vb.setFillWidth(true);
+
+        HBox hb = new HBox();
+        hb.setAlignment(Pos.CENTER_RIGHT);
 
         Label tq = new Label();
-        AnchorPane.setTopAnchor(tq, 90.0);
-        AnchorPane.setLeftAnchor(tq, 16.0);
-        AnchorPane.setBottomAnchor(tq, 300.0);
-        AnchorPane.setRightAnchor(tq, 16.0);
-        tq.setText(s.getQ());
-        tq.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 17px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 16px 16px 16px 16px;");
+        if (db.getUser().getPermission() == Permission.ADMINISTRATOR || db.getUser().getPermission() == Permission.TEACHER) {
+            tq.setText(s.getQ() + "\n\nSprávná odpověď:\n" + s.getA());
+        } else {
+            tq.setText(s.getQ());
+        }
+
+        tq.setStyle("-fx-background-color: rgba(0, 0, 0, 0.1); -fx-text-fill: #000000e5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 16px 16px 16px 16px;");
+        tq.setMaxWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        tq.setFocusTraversable(false);
 
         Label lq = new Label("Otázka:");
         lq.setAlignment(Pos.CENTER_LEFT);
-        lq.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
+        lq.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 16px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
         lq.setUnderline(true);
 
-        AnchorPane.setTopAnchor(lq, 60.0);
-        AnchorPane.setLeftAnchor(lq, 0.0);
-
         JFXTextArea ta = new JFXTextArea();
-        AnchorPane.setTopAnchor(ta, 350.0);
-        AnchorPane.setLeftAnchor(ta, 16.0);
-        AnchorPane.setBottomAnchor(ta, 60.0);
-        AnchorPane.setRightAnchor(ta, 16.0);
-        ta.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        ta.setStyle("-fx-background: rgba(0, 0, 0, 0.1); -fx-text-fill: #000000e5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 16px 16px 16px 16px;");
 
-        if (db.getUser().getPermission() == Permission.ADMINISTRATOR || db.getUser().getPermission() == Permission.TEACHER) {
-            ta.setText(s.getA());
-        }
+        ta.textProperty().addListener((observable, oldValue, newValue) -> {
+            answers.put(s.getId(), newValue);
+        });
+        ta.setMaxWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        ta.setFocusTraversable(false);
 
         Label la = new Label("Odpověď:");
         la.setAlignment(Pos.CENTER_LEFT);
-        la.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
+        la.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 16px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
         la.setUnderline(true);
-
-        AnchorPane.setTopAnchor(la, 320.0);
-        AnchorPane.setLeftAnchor(la, 0.0);
 
         Label l2 = new Label(s.getTitle());
         l2.setAlignment(Pos.CENTER_LEFT);
-        l2.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 16px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
+        l2.setStyle("-fx-text-fill: #000000e5; -fx-font-size: 17px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
         l2.getStyleClass().add("hover-effect-15");
-
-        AnchorPane.setTopAnchor(l2, 0.0);
-        AnchorPane.setLeftAnchor(l2, 0.0);
-        AnchorPane.setBottomAnchor(l2, 550.0);
-        AnchorPane.setRightAnchor(l2, 400.0);
 
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
@@ -125,12 +127,8 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
         Label l3 = new Label(s.getCreatedBy());
         l3.setAlignment(Pos.CENTER);
         l3.setPrefWidth(250);
-        l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 4px 8px 4px 8px;");
         l3.getStyleClass().add("hover-effect-15");
-
-        AnchorPane.setTopAnchor(l3, 0.0);
-        AnchorPane.setBottomAnchor(l3, 550.0);
-        AnchorPane.setRightAnchor(l3, 0.0);
 
         l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
@@ -138,27 +136,22 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
             }
         });
 
+        Label l6 = new Label();
+        l6.setPrefHeight(30);
+
         if (db.getUser().getPermission() == Permission.ADMINISTRATOR || (db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
 
             Label l4 = new Label("Upravit");
             l4.setAlignment(Pos.CENTER);
             l4.setPrefWidth(75);
-            l4.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+            l4.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 4px 8px 4px 8px;");
             l4.getStyleClass().add("hover-effect-15");
-
-            AnchorPane.setTopAnchor(l4, 0.0);
-            AnchorPane.setBottomAnchor(l4, 550.0);
-            AnchorPane.setRightAnchor(l4, 325.0);
 
             Label l5 = new Label("Odebrat");
             l5.setAlignment(Pos.CENTER);
             l5.setPrefWidth(75);
-            l5.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+            l5.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 4px 8px 4px 8px;");
             l5.getStyleClass().add("hover-effect-15");
-
-            AnchorPane.setTopAnchor(l5, 0.0);
-            AnchorPane.setBottomAnchor(l5, 550.0);
-            AnchorPane.setRightAnchor(l5, 250.0);
 
             l4.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
                 if (e.getButton() == MouseButton.PRIMARY) {
@@ -171,13 +164,14 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
                     removeQuestion(s);
                 }
             });
-
-            ap.getChildren().addAll(l2, l3, l4, l5, lq, tq, la, ta);
+            hb.getChildren().addAll(l3, l4, l5);
+            vb.getChildren().addAll(l2, hb, lq, tq, la, ta, l6);
         } else {
-            ap.getChildren().addAll(l2, l3, lq, tq, la, ta);
+            hb.getChildren().addAll(l3);
+            vb.getChildren().addAll(l2, hb, lq, tq, la, ta, l6);
         }
 
-        return ap;
+        return vb;
     }
 
     private void openUser(Integer s) {
@@ -212,12 +206,32 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
     }
 
     private void submitAnswers() {
-        Information.display("Nic nebylo odesláno.");
+
+        int points = 0;
+        for (Question t : selectedQuiz.getQuestions()) {
+            if (answers.get(t.getId()).equals(t.getA())) {
+                points += t.getPoints();
+            }
+        }
+
+        try {
+            db.submitAnswers(selectedQuiz.getId(), points, answers);
+            Information.display("Odpovědi odeslány.\nHodnocení můžete naleznout v sekci zobrazení předmětu pomocí tlačítka klasifikace.");
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectView.class.getName()).log(Level.SEVERE, null, ex);
+            Information.display("Nastala chyba při odesílání.");
+        }
+
+        callback.compose(ViewType.STUDY_MATERIAL_VIEW);
     }
 
     public void load(Quiz s) {
 
+        selectedQuiz = null;
         materialsList.getChildren().clear();
+        answers.clear();
+
+        selectedQuiz = s;
 
         if (db.getUser().getPermission() == Permission.ADMINISTRATOR || (db.getUser().getPermission() == Permission.TEACHER && db.getUser().ownsSubject(db.getSelectedSubject()))) {
             btnAddQuestion.setVisible(true);
@@ -225,46 +239,71 @@ public class QuizView extends Module<QuizView, Root> implements Initializable {
             btnAddQuestion.setVisible(false);
         }
 
-        title.setText(s.getTitle());
-        description.setText(s.getDescription());
+        title.setText(selectedQuiz.getTitle());
+        description.setText(selectedQuiz.getDescription());
 
         try {
-            s.setQuestions(db.getAllQuestionsForQuiz(s));
+            selectedQuiz.setQuestions(db.getAllQuestionsForQuiz(selectedQuiz));
         } catch (SQLException ex) {
             Logger.getLogger(QuizView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (s.getQuestions() != null) {
-            s.getQuestions().forEach((t) -> {
+        if (selectedQuiz.getQuestions() != null) {
+            selectedQuiz.getQuestions().forEach((t) -> {
+                answers.put(t.getId(), "");
                 materialsList.getChildren().add(createLabel(t));
             });
 
             if (s.getQuestions().size() > 0) {
 
-                AnchorPane ap = new AnchorPane();
-                ap.prefHeight(100);
+                boolean completed = true;
+                try {
+                    completed = db.checkIfQuizCompleted(s);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QuizView.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-                JFXButton submit = new JFXButton("Odeslat");
-                submit.setFocusTraversable(false);
-                submit.setPrefSize(200, 50);
-                submit.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
-                submit.getStyleClass().add("btn-submit-quiz");
+                if (!completed) {
+                    JFXButton submit = new JFXButton("Odeslat");
+                    submit.setAlignment(Pos.CENTER);
+                    submit.setFocusTraversable(false);
+                    submit.setPrefSize(200, 50);
+                    submit.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 16px 0px 16px 0px;");
+                    submit.getStyleClass().add("btn-submit-quiz");
+                    submit.setMaxWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
-                AnchorPane.setTopAnchor(submit, 30.0);
-                AnchorPane.setBottomAnchor(submit, 30.0);
-                AnchorPane.setRightAnchor(submit, 16.0);
-                AnchorPane.setLeftAnchor(submit, 16.0);
+                    submit.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+                        if (e.getButton() == MouseButton.PRIMARY) {
+                            submitAnswers();
+                        }
+                    });
+                    materialsList.getChildren().add(submit);
+                } else {
+                    JFXButton submit = new JFXButton("Řešení již odesláno, kliknutím přejdete do klasifikace.");
+                    submit.setAlignment(Pos.CENTER);
+                    submit.setFocusTraversable(false);
+                    submit.setPrefSize(200, 50);
+                    submit.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 16px 0px 16px 0px;");
+                    submit.getStyleClass().add("btn-submit-quiz");
+                    submit.setMaxWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
-                submit.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-                    if (e.getButton() == MouseButton.PRIMARY) {
-                        submitAnswers();
-                    }
-                });
-                ap.getChildren().add(submit);
-                materialsList.getChildren().add(ap);
+                    submit.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+                        if (e.getButton() == MouseButton.PRIMARY) {
+                            openEvaluation();
+                        }
+                    });
+                    materialsList.getChildren().add(submit);
+                }
             }
         }
 
+        scrollPane.setVvalue(0);
+
+    }
+
+    private void openEvaluation() {
+        db.setSelectedEvaluationUser(db.getUser());
+        callback.compose(ViewType.EVALUATED_QUIZES);
     }
 
     @FXML

@@ -9,15 +9,23 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Array;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static java.sql.Types.BLOB;
+import static java.sql.Types.VARCHAR;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
+import oracle.jdbc.OracleConnection;
+import static oracle.jdbc.OracleTypes.CURSOR;
+import oracle.sql.ARRAY;
 
 /**
  *
@@ -30,6 +38,11 @@ public class DatabaseManager extends DatabaseConfig {
     private StudyMaterial selectedStudyMaterial;
     private Quiz selectedQuiz;
     private User selectedPublicProfile;
+    private User selectedCommunication;
+    private Group selectedGroup;
+
+    private User selectedEvaluationUser;
+    private EvaluatedQuizData selectedEvaluationQuiz;
 
     /**
      * DB Connection
@@ -101,6 +114,38 @@ public class DatabaseManager extends DatabaseConfig {
         this.selectedPublicProfile = selectedPublicProfile;
     }
 
+    public User getSelectedCommunication() {
+        return selectedCommunication;
+    }
+
+    public void setSelectedCommunication(User selectedCommunication) {
+        this.selectedCommunication = selectedCommunication;
+    }
+
+    public Group getSelectedGroup() {
+        return selectedGroup;
+    }
+
+    public void setSelectedGroup(Group selectedGroup) {
+        this.selectedGroup = selectedGroup;
+    }
+
+    public User getSelectedEvaluationUser() {
+        return selectedEvaluationUser;
+    }
+
+    public void setSelectedEvaluationUser(User selectedEvaluationUser) {
+        this.selectedEvaluationUser = selectedEvaluationUser;
+    }
+
+    public EvaluatedQuizData getSelectedEvaluationQuiz() {
+        return selectedEvaluationQuiz;
+    }
+
+    public void setSelectedEvaluationQuiz(EvaluatedQuizData selectedEvaluationQuiz) {
+        this.selectedEvaluationQuiz = selectedEvaluationQuiz;
+    }
+
     /*
     
     LOGIN / REGISTER
@@ -117,21 +162,24 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void login(String login, String password) throws SQLException, DBException, IOException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement stmt = con.prepareStatement("SELECT heslo FROM UZIVATEL WHERE login = '" + login + "'")) {
-            ResultSet rset = stmt.executeQuery();
+        CallableStatement call = con.prepareCall("{? = call ELSA.getPassword(?)}");
+        call.registerOutParameter(1, VARCHAR);
+        call.setString(2, login);
 
-            while (rset.next()) {
-                String pass = rset.getString("heslo");
+        try {
+            call.executeUpdate();
+            String pass = call.getString(1);
+            call.close();
 
-                if (checkPassword(password, pass)) {
-                    login(login);
-                    return;
-                } else {
-                    throw new DBException("Špatné heslo");
-                }
+            if (checkPassword(password, pass)) {
+                login(login);
+                return;
+            } else {
+                throw new DBException("Špatné heslo");
             }
+        } catch (SQLException e) {
+            throw new DBException("Uživatel nenalezen");
         }
-        throw new DBException("Uživatel nenalezen");
     }
 
     /**
@@ -155,6 +203,41 @@ public class DatabaseManager extends DatabaseConfig {
                 user = new User(
                         rset.getInt("id_uzivatel"),
                         login,
+                        Permission.valueOf(rset.getString("opravneni")),
+                        rset.getString("jmeno"),
+                        rset.getString("prijmeni"),
+                        rset.getString("email"),
+                        rset.getString("telefon"),
+                        rset.getString("adresa"),
+                        getImageFromBlob(rset.getBlob("image"))
+                );
+            }
+        }
+
+        loadUsersSubjects();
+    }
+
+    /**
+     * Loads information about selected user
+     *
+     * @param login
+     * @throws SQLException
+     * @throws IOException
+     */
+    public void loginAs(User u) throws SQLException, IOException {
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE WHERE login = '" + u.getLogin() + "'")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+
+                if (user != null) {
+                    break;
+                }
+
+                user = new User(
+                        rset.getInt("id_uzivatel"),
+                        u.getLogin(),
                         Permission.valueOf(rset.getString("opravneni")),
                         rset.getString("jmeno"),
                         rset.getString("prijmeni"),
@@ -291,9 +374,9 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("jmeno") + " " + rset.getString("prijmeni"),
                         rset.getInt("uzivatel_id")
                 );
-                
+
                 s.setType(getAllTypesForStudyMaterial(s.getId()));
-                
+
                 data.add(s);
             }
         }
@@ -320,7 +403,7 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("jmeno") + " " + rset.getString("prijmeni"),
                         rset.getInt("uzivatel_id")
                 );
-                
+
                 data.add(s);
             }
         }
@@ -369,7 +452,7 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM PREDMET")) {
             ResultSet rset = stmt.executeQuery();
-            
+
             while (rset.next()) {
                 Subject s = new Subject(
                         rset.getInt("id_predmet"),
@@ -377,7 +460,7 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("zkratka"),
                         rset.getString("popis")
                 );
-                
+
                 data.add(s);
             }
         }
@@ -397,7 +480,7 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM komentare WHERE studijni_material_id = '" + id + "' ORDER BY datumpridani DESC")) {
             ResultSet rset = stmt.executeQuery();
-            
+
             while (rset.next()) {
                 Comment s = new Comment(
                         rset.getInt("id_komentar"),
@@ -407,7 +490,7 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("jmeno") + " " + rset.getString("prijmeni"),
                         rset.getInt("uzivatel_id")
                 );
-                
+
                 data.add(s);
             }
         }
@@ -426,7 +509,7 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM druh_otazky")) {
             ResultSet rset = stmt.executeQuery();
-            
+
             while (rset.next()) {
                 QuestionType s = new QuestionType(
                         rset.getInt("id_druhotazky"),
@@ -434,7 +517,7 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("zkratka"),
                         rset.getString("popis")
                 );
-                
+
                 data.add(s);
             }
         }
@@ -453,7 +536,7 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM kategorie_materialu")) {
             ResultSet rset = stmt.executeQuery();
-            
+
             while (rset.next()) {
                 StudyMaterialType s = new StudyMaterialType(
                         rset.getInt("id_kategoriematerialu"),
@@ -461,7 +544,7 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("zkratka"),
                         rset.getString("popis")
                 );
-                
+
                 data.add(s);
             }
         }
@@ -481,7 +564,7 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM kategorie_studijniho_materialu WHERE studijni_material_id = '" + id + "' ORDER BY nazev DESC")) {
             ResultSet rset = stmt.executeQuery();
-            
+
             while (rset.next()) {
                 StudyMaterialType s = new StudyMaterialType(
                         rset.getInt("id_kategoriematerialu"),
@@ -489,7 +572,7 @@ public class DatabaseManager extends DatabaseConfig {
                         rset.getString("zkratka"),
                         rset.getString("popis")
                 );
-                
+
                 data.add(s);
             }
         }
@@ -508,7 +591,7 @@ public class DatabaseManager extends DatabaseConfig {
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE")) {
             ResultSet rset = stmt.executeQuery();
-            
+
             while (rset.next()) {
                 User s = new User(
                         rset.getInt("id_uzivatel"),
@@ -521,7 +604,39 @@ public class DatabaseManager extends DatabaseConfig {
                         null,
                         null
                 );
-                
+
+                data.add(s);
+            }
+        }
+        return data;
+    }
+
+    /**
+     * Loads list of all teachers in database
+     *
+     * @return ArrayList<User>
+     * @throws SQLException
+     */
+    public ArrayList<User> getAllTeachers() throws SQLException {
+
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE WHERE role_id = 2")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                User s = new User(
+                        rset.getInt("id_uzivatel"),
+                        rset.getString("login"),
+                        Permission.valueOf(rset.getString("opravneni")),
+                        rset.getString("jmeno"),
+                        rset.getString("prijmeni"),
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
                 data.add(s);
             }
         }
@@ -549,8 +664,11 @@ public class DatabaseManager extends DatabaseConfig {
         }
 
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement add = con.prepareStatement("INSERT INTO predmety_uzivatele(uzivatel_id, predmet_id) VALUES('" + user.getId() + "', '" + s.getId() + "')")) {
-            add.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.subscribeSubject(?, ?)")) {
+            call.setInt(1, user.getId());
+            call.setInt(2, s.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -577,8 +695,11 @@ public class DatabaseManager extends DatabaseConfig {
         }
 
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM predmety_uzivatele WHERE predmet_id = '" + s.getId() + "' AND uzivatel_id = '" + user.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.unsubscribeSubject(?, ?)")) {
+            call.setInt(1, user.getId());
+            call.setInt(2, s.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -598,12 +719,12 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void addSubject(String title, String shortcut, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO predmet(id_predmet, nazev, zkratka, popis) VALUES(PREDMET_SEQ.NEXTVAL, ?, ?, ?)")) {
-            in.setString(1, title);
-            in.setString(2, shortcut.toUpperCase());
-            in.setString(3, description);
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addSubject(?, ?, ?)")) {
+            call.setString(1, title);
+            call.setString(2, shortcut.toUpperCase());
+            call.setString(3, description);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -621,23 +742,23 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void addStudyMaterial(String title, Integer pages, String description, File file, ArrayList<StudyMaterialType> types) throws SQLException, FileNotFoundException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO studijni_material(id_studijniMaterial, nazev, stran, datumvytvoreni, datumzmeny, popis, soubor, pripona, predmet_id, uzivatel_id) VALUES(STUDIJNI_MATERIAL_SEQ.NEXTVAL, ?, ?, SYSDATE, SYSDATE, ?, ?, ?, ?, ?)")) {
-            in.setString(1, title);
-            in.setInt(2, pages);
-            in.setString(3, description);
-            
+        try (CallableStatement call = con.prepareCall("call ELSA.addStudyMaterial(?, ?, ?, ?, ?, ?, ?)")) {
+            call.setString(1, title);
+            call.setInt(2, pages);
+            call.setString(3, description);
+
             if (file == null) {
-                in.setNull(4, 0);
-                in.setString(5, null);
+                call.setNull(4, 0);
+                call.setString(5, null);
             } else {
-                in.setBinaryStream(4, new FileInputStream(file));
-                in.setString(5, getFileExtension(file.getName()));
+                call.setBinaryStream(4, new FileInputStream(file));
+                call.setString(5, getFileExtension(file.getName()));
             }
-            
-            in.setInt(6, selectedSubject.getId());
-            in.setInt(7, user.getId());
-            
-            in.executeUpdate();
+
+            call.setInt(6, selectedSubject.getId());
+            call.setInt(7, user.getId());
+
+            call.executeUpdate();
             con.commit();
         }
 
@@ -648,11 +769,11 @@ public class DatabaseManager extends DatabaseConfig {
         try (PreparedStatement get = con.prepareStatement("SELECT STUDIJNI_MATERIAL_SEQ.CURRVAL AS id FROM studijni_material")) {
             ResultSet rset = get.executeQuery();
             Integer id = null;
-            
+
             while (rset.next() && id == null) {
                 id = rset.getInt("id");
             }
-            
+
             for (StudyMaterialType t : types) {
                 addStudyMaterialType(id, t);
             }
@@ -668,11 +789,11 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void addStudyMaterialType(Integer id, StudyMaterialType type) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO kategorizace_materialu(studijni_material_id, kategorie_materialu_id) VALUES(?, ?)")) {
-            in.setInt(1, id);
-            in.setInt(2, type.getId());
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addStudyMaterialType(?, ?)")) {
+            call.setInt(1, id);
+            call.setInt(2, type.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -686,13 +807,13 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void addQuiz(String title, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO KVIZ(id_kviz, nazev, popis, studijni_material_id, uzivatel_id) VALUES(KVIZ_SEQ.NEXTVAL, ?, ?, ?, ?)")) {
-            in.setString(1, title);
-            in.setString(2, description);
-            in.setInt(3, selectedStudyMaterial.getId());
-            in.setInt(4, user.getId());
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addQuiz(?, ?, ?, ?)")) {
+            call.setString(1, title);
+            call.setString(2, description);
+            call.setInt(3, selectedStudyMaterial.getId());
+            call.setInt(4, user.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -710,17 +831,17 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void addQuestion(String title, String question, String answer, Integer points, Integer index, QuestionType type) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO OTAZKA(id_otazka, nazev, otazka, odpoved, body, poradi, kviz_id, druh_otazky_id, uzivatel_id) VALUES(OTAZKA_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ? , ?)")) {
-            in.setString(1, title);
-            in.setString(2, question);
-            in.setString(3, answer);
-            in.setInt(4, points);
-            in.setInt(5, index);
-            in.setInt(6, selectedQuiz.getId());
-            in.setInt(7, type.getId());
-            in.setInt(8, user.getId());
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addQuestion(?, ?, ?, ?, ?, ?, ?, ?)")) {
+            call.setString(1, title);
+            call.setString(2, question);
+            call.setString(3, answer);
+            call.setInt(4, points);
+            call.setInt(5, index);
+            call.setInt(6, selectedQuiz.getId());
+            call.setInt(7, type.getId());
+            call.setInt(8, user.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -733,12 +854,12 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void addComment(String text) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO komentar(id_komentar, text, datumpridani, datumzmeny, studijni_material_id, uzivatel_id) VALUES(KOMENTAR_SEQ.NEXTVAL, ?, SYSDATE, SYSDATE, ?, ?)")) {
-            in.setString(1, text);
-            in.setInt(2, selectedStudyMaterial.getId());
-            in.setInt(3, user.getId());
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addComment(?, ?, ?)")) {
+            call.setString(1, text);
+            call.setInt(2, selectedStudyMaterial.getId());
+            call.setInt(3, user.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -753,12 +874,12 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void createStudyMaterialType(String text, String shortcut, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO kategorie_materialu(id_kategoriematerialu, nazev, zkratka, popis) VALUES(KATEGORIE_MATERIALU_SEQ.NEXTVAL, ?, ?, ?)")) {
-            in.setString(1, text);
-            in.setString(2, shortcut);
-            in.setString(3, description);
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.createStudyMaterialType(?, ?, ?)")) {
+            call.setString(1, text);
+            call.setString(2, shortcut);
+            call.setString(3, description);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -773,12 +894,12 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void createQuestionType(String text, String shortcut, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("INSERT INTO druh_otazky(id_druhotazky, nazev, zkratka, popis) VALUES(DRUH_OTAZKY_SEQ.NEXTVAL, ?, ?, ?)")) {
-            in.setString(1, text);
-            in.setString(2, shortcut);
-            in.setString(3, description);
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.createQuestionType(?, ?, ?)")) {
+            call.setString(1, text);
+            call.setString(2, shortcut);
+            call.setString(3, description);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -797,8 +918,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeSubject(Subject s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM predmet WHERE id_predmet = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeSubject(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
 
@@ -826,8 +948,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeStudyMaterial(StudyMaterial s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM studijni_material WHERE id_studijniMaterial = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeStudyMaterial(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -841,8 +964,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeQuiz(Quiz s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM kviz WHERE id_kviz = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeQuiz(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -856,8 +980,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeQuestion(Question s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM otazka WHERE id_otazka = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeQuestion(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -871,8 +996,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeComment(Comment s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM komentar WHERE id_komentar = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeComment(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -887,8 +1013,10 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeStudyMaterialType(Integer id, StudyMaterialType type) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM kategorizace_materialu WHERE studijni_material_id = '" + id + "' AND kategorie_materialu_id = '" + type.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeStudyMaterialType(?, ?)")) {
+            call.setInt(1, id);
+            call.setInt(2, type.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -902,8 +1030,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void deleteStudyMaterialType(StudyMaterialType s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM kategorie_materialu WHERE id_kategoriematerialu = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.deleteStudyMaterialType(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -917,8 +1046,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void deleteQuestionType(QuestionType s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM druh_otazky WHERE id_druhotazky = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.deleteQuestionType(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -932,8 +1062,9 @@ public class DatabaseManager extends DatabaseConfig {
     public void removeUser(User s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
-        try (PreparedStatement del = con.prepareStatement("DELETE FROM uzivatel WHERE id_uzivatel = '" + s.getId() + "'")) {
-            del.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.removeUser(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -954,12 +1085,13 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editSubject(Integer id, String title, String shortcut, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE predmet SET nazev = ?, zkratka = ?, popis = ? WHERE id_predmet = '" + id + "'")) {
-            up.setString(1, title);
-            up.setString(2, shortcut.toUpperCase());
-            up.setString(3, description);
-            
-            up.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.editSubject(?, ?, ?, ?)")) {
+            call.setString(1, title);
+            call.setString(2, shortcut.toUpperCase());
+            call.setString(3, description);
+            call.setInt(4, id);
+
+            call.executeUpdate();
             con.commit();
         }
 
@@ -991,27 +1123,29 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editStudyMaterial(Integer id, String title, Integer pages, String description, File file, ArrayList<StudyMaterialType> types) throws SQLException, FileNotFoundException {
         Connection con = OracleConnector.getConnection();
-        PreparedStatement up;
         if (file == null) {
-            up = con.prepareStatement("UPDATE studijni_material SET nazev = ?, stran = ?, datumzmeny = SYSDATE, popis = ? WHERE id_studijnimaterial = '" + id + "'");
+            try (CallableStatement call = con.prepareCall("call ELSA.editStudyMaterial(?, ?, ?, ?)")) {
+                call.setString(1, title);
+                call.setInt(2, pages);
+                call.setString(3, description);
+                call.setInt(4, id);
+
+                call.executeUpdate();
+                con.commit();
+            }
         } else {
-            up = con.prepareStatement("UPDATE studijni_material SET nazev = ?, stran = ?, datumzmeny = SYSDATE, popis = ?, soubor = ?, pripona = ? WHERE id_studijnimaterial = '" + id + "'");
+            try (CallableStatement call = con.prepareCall("call ELSA.editStudyMaterialFile(?, ?, ?, ?, ?, ?)")) {
+                call.setString(1, title);
+                call.setInt(2, pages);
+                call.setString(3, description);
+                call.setBinaryStream(4, new FileInputStream(file));
+                call.setString(5, getFileExtension(file.getName()));
+                call.setInt(6, id);
+
+                call.executeUpdate();
+                con.commit();
+            }
         }
-
-        up.setString(1, title);
-        up.setInt(2, pages);
-        up.setString(3, description);
-
-        if (file == null) {
-
-        } else {
-            up.setBinaryStream(4, new FileInputStream(file));
-            up.setString(5, getFileExtension(file.getName()));
-        }
-
-        up.executeUpdate();
-        con.commit();
-        up.close();
 
         addStudyMaterialChange(id);
         studyMaterialTypeEdit(id, types);
@@ -1082,11 +1216,11 @@ public class DatabaseManager extends DatabaseConfig {
      */
     private void addStudyMaterialChange(Integer id) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("INSERT INTO uprava_materialu(id_upravamaterialu, datum, uzivatel_id, studijni_material_id) VALUES(UPRAVA_MATERIALU_SEQ.NEXTVAL, SYSDATE, ?, ?)")) {
-            up.setInt(1, user.getId());
-            up.setInt(2, id);
-            
-            up.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addStudyMaterialChange(?, ?)")) {
+            call.setInt(1, user.getId());
+            call.setInt(2, id);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1101,11 +1235,12 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editQuiz(Integer id, String title, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE kviz SET nazev = ?, popis = ? WHERE id_kviz = '" + id + "'")) {
-            up.setString(1, title);
-            up.setString(2, description);
-            
-            up.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.addStudyMaterialChange(?, ?, ?)")) {
+            call.setString(1, title);
+            call.setString(2, description);
+            call.setInt(3, id);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1124,15 +1259,16 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editQuestion(Integer id, String title, String question, String answer, Integer points, Integer index, QuestionType type) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE otazka SET nazev = ?, otazka = ?, odpoved = ?, body = ?, poradi = ?, druh_otazky_id = ? WHERE id_otazka = '" + id + "'")) {
-            up.setString(1, title);
-            up.setString(2, question);
-            up.setString(3, answer);
-            up.setInt(4, points);
-            up.setInt(5, index);
-            up.setInt(6, type.getId());
-            
-            up.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.editQuestion(?, ?, ?, ?, ?, ?, ?)")) {
+            call.setString(1, title);
+            call.setString(2, question);
+            call.setString(3, answer);
+            call.setInt(4, points);
+            call.setInt(5, index);
+            call.setInt(6, type.getId());
+            call.setInt(7, id);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1146,14 +1282,16 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editImage(Image image) throws SQLException, IOException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE uzivatel SET image = ? WHERE id_uzivatel = '" + user.getId() + "'")) {
+        try (CallableStatement call = con.prepareCall("call ELSA.editImage(?, ?)")) {
             BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
             ByteArrayOutputStream s = new ByteArrayOutputStream();
             ImageIO.write(bImage, "png", s);
             byte[] res = s.toByteArray();
-            
-            up.setBinaryStream(1, new ByteArrayInputStream(res));
-            up.executeUpdate();
+
+            call.setBinaryStream(1, new ByteArrayInputStream(res));
+            call.setInt(2, user.getId());
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1170,14 +1308,15 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editProfileInformation(String firstName, String lastName, String email, String phone, String address) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE uzivatel SET jmeno = ?, prijmeni = ?, email = ?, telefon = ?, adresa = ? WHERE id_uzivatel = '" + user.getId() + "'")) {
-            up.setString(1, firstName);
-            up.setString(2, lastName);
-            up.setString(3, email);
-            up.setString(4, phone);
-            up.setString(5, address);
-            
-            up.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.editProfileInformation(?, ?, ?, ?, ?, ?)")) {
+            call.setString(1, firstName);
+            call.setString(2, lastName);
+            call.setString(3, email);
+            call.setString(4, phone);
+            call.setString(5, address);
+            call.setInt(6, user.getId());
+
+            call.executeUpdate();
             con.commit();
         }
 
@@ -1200,17 +1339,23 @@ public class DatabaseManager extends DatabaseConfig {
         PreparedStatement up;
 
         if (password.isEmpty()) {
-            up = con.prepareStatement("UPDATE uzivatel SET login = ? WHERE id_uzivatel = '" + user.getId() + "'");
-            up.setString(1, login);
-        } else {
-            up = con.prepareStatement("UPDATE uzivatel SET login = ?, heslo = ? WHERE id_uzivatel = '" + user.getId() + "'");
-            up.setString(1, login);
-            up.setString(2, encryptPassword(password));
-        }
+            try (CallableStatement call = con.prepareCall("call ELSA.editLoginInformation(?, ?)")) {
+                call.setString(1, login);
+                call.setInt(2, user.getId());
 
-        up.executeUpdate();
-        con.commit();
-        up.close();
+                call.executeUpdate();
+                con.commit();
+            }
+        } else {
+            try (CallableStatement call = con.prepareCall("call ELSA.editLoginInformationPassword(?, ?, ?)")) {
+                call.setString(1, login);
+                call.setString(2, encryptPassword(password));
+                call.setInt(3, user.getId());
+
+                call.executeUpdate();
+                con.commit();
+            }
+        }
 
         user.setLogin(login);
     }
@@ -1224,10 +1369,11 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editComment(Integer id, String text) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE komentar SET text = ?, datumzmeny = SYSDATE WHERE id_komentar = '" + id + "'")) {
-            up.setString(1, text);
-            
-            up.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.editComment(?, ?)")) {
+            call.setString(1, text);
+            call.setInt(2, id);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1243,12 +1389,13 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editStudyMaterialType(Integer id, String text, String shortcut, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("UPDATE kategorie_materialu SET nazev = ?, zkratka = ?, popis = ? WHERE id_kategoriematerialu = '" + id + "'")) {
-            in.setString(1, text);
-            in.setString(2, shortcut);
-            in.setString(3, description);
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.editStudyMaterialType(?, ?, ?, ?)")) {
+            call.setString(1, text);
+            call.setString(2, shortcut);
+            call.setString(3, description);
+            call.setInt(4, id);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1264,12 +1411,13 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editQuestionType(Integer id, String text, String shortcut, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement in = con.prepareStatement("UPDATE druh_otazky SET nazev = ?, zkratka = ?, popis = ? WHERE id_druhotazky = '" + id + "'")) {
-            in.setString(1, text);
-            in.setString(2, shortcut);
-            in.setString(3, description);
-            
-            in.executeUpdate();
+        try (CallableStatement call = con.prepareCall("call ELSA.editQuestionType(?, ?, ?, ?)")) {
+            call.setString(1, text);
+            call.setString(2, shortcut);
+            call.setString(3, description);
+            call.setInt(4, id);
+
+            call.executeUpdate();
             con.commit();
         }
     }
@@ -1283,22 +1431,650 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void changePermission(User u, Permission permit) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (PreparedStatement up = con.prepareStatement("UPDATE uzivatel SET role_id = ? WHERE id_uzivatel = '" + u.getId() + "'")) {
+        try (CallableStatement call = con.prepareCall("call ELSA.changePermission(?, ?)")) {
             switch (permit) {
                 case ADMINISTRATOR:
-                    up.setInt(1, 1);
+                    call.setInt(1, 1);
                     break;
                 case TEACHER:
-                    up.setInt(1, 2);
+                    call.setInt(1, 2);
                     break;
                 case STUDENT:
-                    up.setInt(1, 3);
+                    call.setInt(1, 3);
                     break;
             }
-            
-            up.executeUpdate();
+            call.setInt(2, u.getId());
+
+            call.executeUpdate();
             con.commit();
         }
+    }
+
+    public ArrayList<StudyMaterial> find(String title, Subject subject, StudyMaterialType type, User teacher) throws SQLException {
+        ArrayList<StudyMaterial> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.find(?, ?, ?, ?, ?)")) {
+
+            call.setString(1, title);
+            call.setInt(2, subject.getId());
+            call.setInt(3, type.getId());
+            call.setInt(4, teacher.getId());
+            call.registerOutParameter(5, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(5);
+
+            while (rs.next()) {
+                data.add(new StudyMaterial(
+                        rs.getInt("id_studijnimaterial"),
+                        rs.getString("nazev"),
+                        rs.getInt("stran"),
+                        rs.getDate("datumvytvoreni"),
+                        rs.getDate("datumzmeny"),
+                        rs.getString("nazev_predmet"),
+                        null,
+                        null,
+                        rs.getString("jmeno") + " " + rs.getString("prijmeni"),
+                        rs.getInt("predmet_id")
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    public ArrayList<User> getCommunications() throws SQLException {
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getCommunications(?, ?)")) {
+
+            call.setInt(1, user.getId());
+            call.registerOutParameter(2, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(2);
+
+            while (rs.next()) {
+                data.add(new User(
+                        rs.getInt("prijemce_id"),
+                        null,
+                        null,
+                        rs.getString("jmeno"),
+                        rs.getString("prijmeni"),
+                        null,
+                        null,
+                        null,
+                        null
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    /**
+     * Loads all Messages from database
+     *
+     * @return ArrayList<Message>
+     * @throws SQLException
+     */
+    public ArrayList<Message> getAllMessagesFromUser(User u) throws SQLException {
+
+        ArrayList<Message> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getCommunication(?, ?, ?)")) {
+
+            call.setInt(1, user.getId());
+            call.setInt(2, u.getId());
+            call.registerOutParameter(3, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(3);
+
+            while (rs.next()) {
+                data.add(new Message(
+                        rs.getInt("id_zprava"),
+                        rs.getString("text"),
+                        rs.getDate("datum"),
+                        new User(
+                                rs.getInt("odesilatel_id"),
+                                null,
+                                null,
+                                rs.getString("odesilatel_jmeno"),
+                                rs.getString("odesilatel_prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        ),
+                        new User(
+                                rs.getInt("prijemce_id"),
+                                null,
+                                null,
+                                rs.getString("prijemce_jmeno"),
+                                rs.getString("prijemce_prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        )
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    /**
+     * Sends Message to selected user
+     *
+     * @throws SQLException
+     */
+    public void addMessage(User recipient, String text) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.addMessage(?, ?, ?)")) {
+            call.setString(1, text);
+            call.setInt(2, user.getId());
+            call.setInt(3, recipient.getId());
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    /**
+     * Removes selected Message from database
+     *
+     * @param s Selected Message
+     * @throws SQLException
+     */
+    public void removeMessage(Message s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeMessage(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    /**
+     * Loads all Files in database
+     *
+     * @return ArrayList<CloudFile>
+     * @throws SQLException
+     */
+    public ArrayList<CloudFile> getAllCloudFiles() throws SQLException {
+
+        ArrayList<CloudFile> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM SOUBORY_UZIVATELU WHERE uzivatel_id = " + user.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new CloudFile(
+                        rset.getInt("id_soubor"),
+                        rset.getString("nazev"),
+                        null,
+                        rset.getString("pripona"),
+                        rset.getDate("nahrano"),
+                        rset.getDate("upraveno")
+                ));
+            }
+        }
+        return data;
+    }
+
+    /**
+     * Updates information about selected Cloud File
+     *
+     * @param id Selected CoudFile
+     * @param title
+     * @throws SQLException
+     */
+    public void editCloudFile(Integer id, String title) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.editCloudFile(?, ?)")) {
+            call.setString(1, title);
+            call.setInt(2, id);
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    /**
+     * Adds new CloudFile
+     *
+     * @param
+     * @throws SQLException
+     */
+    public void addCloudFile(String title, File file) throws SQLException, FileNotFoundException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.addCloudFile(?, ?, ?, ?)")) {
+            call.setString(1, title);
+
+            if (file == null) {
+                return;
+            } else {
+                call.setBinaryStream(2, new FileInputStream(file));
+                call.setString(3, getFileExtension(file.getName()));
+            }
+
+            call.setInt(4, user.getId());
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public Blob getFileFromCloudFile(Integer id) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getFileFromCloudFile(?, ?)")) {
+
+            call.setInt(1, id);
+            call.registerOutParameter(2, BLOB);
+            call.executeUpdate();
+
+            return (Blob) call.getObject(2);
+        }
+    }
+
+    public void removeCloudFile(CloudFile s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeCloudFile(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<ForbiddenWord> getAllForbiddenWords() throws SQLException {
+
+        ArrayList<ForbiddenWord> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM NEVHODNA_SLOVA")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new ForbiddenWord(
+                        rset.getInt("id_nevhodne_slovo"),
+                        rset.getString("text")
+                ));
+            }
+        }
+        return data;
+    }
+
+    public void removeForbiddenWord(ForbiddenWord s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeForbiddenWord(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void addForbiddenWord(String text) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addForbiddenWord(?)")) {
+            call.setString(1, text);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<Group> getAllGroups() throws SQLException {
+
+        ArrayList<Group> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM SKUPINY")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new Group(
+                        rset.getInt("id_skupina"),
+                        rset.getString("rok_studia"),
+                        rset.getString("obor")
+                ));
+            }
+        }
+        return data;
+    }
+
+    public ArrayList<Group> getAllGroupsOfUser() throws SQLException {
+
+        ArrayList<Group> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE_SKUPIN WHERE uzivatel_id = " + user.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new Group(
+                        rset.getInt("skupina_id"),
+                        rset.getString("rok_studia"),
+                        rset.getString("obor")
+                ));
+            }
+        }
+        return data;
+    }
+
+    public void removeGroup(Group s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeGroup(?)")) {
+            call.setInt(1, s.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void addGroup(String year, String title) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addGroup(?, ?)")) {
+            call.setString(1, year);
+            call.setString(2, title);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void editGroup(Integer id, String year, String title) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.editGroup(?, ?, ?)")) {
+            call.setString(1, year);
+            call.setString(2, title);
+            call.setInt(3, id);
+
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<Subject> getAllSubjectsOfGroup(Group g) throws SQLException {
+
+        ArrayList<Subject> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM PREDMETY_SKUPIN WHERE skupina_id = " + g.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new Subject(
+                        rset.getInt("predmet_id"),
+                        rset.getString("nazev"),
+                        rset.getString("zkratka"),
+                        null
+                ));
+            }
+        }
+        return data;
+    }
+
+    public ArrayList<User> getAllUsersOfGroup(Group g) throws SQLException {
+
+        ArrayList<User> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM UZIVATELE_SKUPIN WHERE skupina_id = " + g.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                data.add(new User(
+                        rset.getInt("uzivatel_id"),
+                        null,
+                        null,
+                        rset.getString("jmeno"),
+                        rset.getString("prijmeni"),
+                        null,
+                        null,
+                        null,
+                        null
+                ));
+            }
+        }
+        return data;
+    }
+
+    public void addUserToGroup(Group g, User u) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addUserToGroup(?, ?)")) {
+            call.setInt(1, u.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void addSubjectToGroup(Group g, Subject s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.addSubjectToGroup(?, ?)")) {
+            call.setInt(1, s.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void removeUserFromGroup(Group g, User u) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeUserFromGroup(?, ?)")) {
+            call.setInt(1, u.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public void removeSubjectFromGroup(Group g, Subject s) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.removeSubjectFromGroup(?, ?)")) {
+            call.setInt(1, s.getId());
+            call.setInt(2, g.getId());
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public StudyMaterial getStudyMateria(Integer id) throws SQLException {
+
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM studijni_materialy WHERE id_studijnimaterial = '" + id + "' ORDER BY datumvytvoreni ASC")) {
+            ResultSet rset = stmt.executeQuery();
+            while (rset.next()) {
+                StudyMaterial s = new StudyMaterial(
+                        rset.getInt("id_studijniMaterial"),
+                        rset.getString("nazev"),
+                        rset.getInt("stran"),
+                        rset.getDate("datumVytvoreni"),
+                        rset.getDate("datumZmeny"),
+                        rset.getString("popis"),
+                        rset.getBlob("soubor"),
+                        rset.getString("pripona"),
+                        rset.getString("jmeno") + " " + rset.getString("prijmeni"),
+                        rset.getInt("uzivatel_id")
+                );
+
+                s.setType(getAllTypesForStudyMaterial(s.getId()));
+
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public void submitAnswers(Integer quizId, int points, HashMap<Integer, String> answers) throws SQLException {
+
+        // Holder
+        String[] keys = new String[answers.keySet().size()];
+        String[] answ = new String[answers.keySet().size()];
+
+        // Moving data
+        int i = 0;
+        for (Integer key : answers.keySet()) {
+            keys[i] = key.toString();
+            answ[i] = answers.get(key);
+            i++;
+        }
+
+        Connection con = OracleConnector.getConnection();
+
+        try (CallableStatement call = con.prepareCall("call ELSA.submitQuiz(?, ?, ?, ?, ?)")) {
+
+            OracleConnection oraConn = con.unwrap(OracleConnection.class);
+
+            Array k = oraConn.createARRAY("ELSA.STRING_ARRAY", keys);
+            Array a = oraConn.createARRAY("ELSA.STRING_ARRAY", answ);
+
+            call.setInt(1, user.getId());
+            call.setInt(2, quizId);
+            call.setInt(3, points);
+            call.setArray(4, a);
+            call.setArray(5, k);
+            call.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public ArrayList<EvaluationData> getUsersEvaluationOnSubject(Subject s) throws SQLException {
+        ArrayList<EvaluationData> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getUsersEvaluationOnSubject(?, ?)")) {
+
+            call.setInt(1, s.getId());
+            call.registerOutParameter(2, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(2);
+
+            while (rs.next()) {
+                data.add(new EvaluationData(
+                        new User(
+                                rs.getInt("uzivatel_id"),
+                                null,
+                                null,
+                                rs.getString("jmeno"),
+                                rs.getString("prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        ),
+                        rs.getInt("splnenych_kvizu"),
+                        rs.getInt("max_kvizu"),
+                        rs.getInt("ziskano_bodu"),
+                        rs.getInt("max_body")
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    public ArrayList<EvaluationData> getUserEvaluationOnSubject(Subject s) throws SQLException {
+        ArrayList<EvaluationData> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (CallableStatement call = con.prepareCall("call ELSA.getUserEvaluationOnSubject(?, ?, ?)")) {
+
+            call.setInt(1, s.getId());
+            call.setInt(2, user.getId());
+            call.registerOutParameter(3, CURSOR);
+            call.executeUpdate();
+
+            ResultSet rs = (ResultSet) call.getObject(3);
+
+            while (rs.next()) {
+                data.add(new EvaluationData(
+                        new User(
+                                rs.getInt("uzivatel_id"),
+                                null,
+                                null,
+                                rs.getString("jmeno"),
+                                rs.getString("prijmeni"),
+                                null,
+                                null,
+                                null,
+                                null
+                        ),
+                        rs.getInt("splnenych_kvizu"),
+                        rs.getInt("max_kvizu"),
+                        rs.getInt("ziskano_bodu"),
+                        rs.getInt("max_body")
+                ));
+            }
+
+        }
+        return data;
+    }
+
+    public ArrayList<EvaluatedQuizData> getEvaluatedQuizesOfUserFromSubject(User u, Subject s) throws SQLException {
+        ArrayList<EvaluatedQuizData> data = new ArrayList<>();
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM VYPLNENE_KVIZY WHERE uzivatel_id = " + u.getId() + " AND predmet_id = " + s.getId() + " ORDER BY nazev ASC")) {
+            ResultSet rset = stmt.executeQuery();
+            while (rset.next()) {
+                data.add(new EvaluatedQuizData(
+                        rset.getInt("id_vyplneny_kviz"),
+                        rset.getString("nazev"),
+                        rset.getInt("body"),
+                        rset.getInt("max_body"),
+                        null
+                ));
+            }
+        }
+        return data;
+    }
+
+    public EvaluatedQuizData getEvaluatedQuestionsOfQuiz(EvaluatedQuizData d) throws SQLException {
+        d.setQuestions(new ArrayList<>());
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM VYPLNENE_OTAZKY WHERE vyplneny_kviz_id = " + d.getId() + " ORDER BY poradi ASC")) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                d.getQuestions().add(new EvaluatedQuestionData(
+                        rset.getInt("id_vyplnena_otazka"),
+                        rset.getInt("poradi"),
+                        rset.getString("nazev"),
+                        rset.getString("otazka"),
+                        rset.getString("odpoved"),
+                        rset.getString("odpoved_puvodni"),
+                        rset.getInt("body"),
+                        new QuestionType(
+                                0,
+                                rset.getString("druh_otazky_nazev"),
+                                rset.getString("druh_otazky_zkratka"),
+                                rset.getString("druh_otazky_popis"))
+                ));
+            }
+        }
+        return d;
+    }
+
+    /**
+     * Checks if Quiz was already completed
+     *
+     * @param q Selected Quiz
+     * @return
+     * @throws SQLException
+     */
+    public boolean checkIfQuizCompleted(Quiz q) throws SQLException {
+        Connection con = OracleConnector.getConnection();
+        try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM VYPLNENE_KVIZY WHERE kviz_id = " + q.getId() + " AND uzivatel_id = " + user.getId())) {
+            ResultSet rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*

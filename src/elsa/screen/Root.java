@@ -3,13 +3,25 @@ package elsa.screen;
 import elsa.database.DBException;
 import elsa.database.DatabaseManager;
 import elsa.database.Permission;
+import elsa.database.User;
 import elsa.screen.handlers.ICompositor;
 import elsa.screen.handlers.ModuleLoader;
 import elsa.screen.handlers.Screen;
 import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.module.Administration;
 import elsa.screen.module.AllSubjects;
+import elsa.screen.module.Chat;
+import elsa.screen.module.Cloud;
 import elsa.screen.module.Comments;
+import elsa.screen.module.Communications;
+import elsa.screen.module.EvaluatedQuiz;
+import elsa.screen.module.EvaluatedQuizes;
+import elsa.screen.module.Evaluation;
+import elsa.screen.module.Finder;
+import elsa.screen.module.ForbiddenWords;
+import elsa.screen.module.GroupSubjects;
+import elsa.screen.module.GroupUsers;
+import elsa.screen.module.Groups;
 import elsa.screen.module.Main;
 import elsa.screen.module.MaterialTypes;
 import elsa.screen.module.MySubjects;
@@ -54,6 +66,7 @@ public class Root extends Screen<Root> implements Initializable {
 
     // Testing mode, automatic admin login
     private final boolean TESTING = true;
+    private User emulatedUser = null;
 
     private DatabaseManager db;
     private Compositor compositor;
@@ -72,6 +85,17 @@ public class Root extends Screen<Root> implements Initializable {
     private ModuleLoader<QuestionTypes, Root> questionTypes;
     private ModuleLoader<MaterialTypes, Root> materialTypes;
     private ModuleLoader<PublicProfile, Root> publicProfile;
+    private ModuleLoader<Communications, Root> communications;
+    private ModuleLoader<Finder, Root> finder;
+    private ModuleLoader<Chat, Root> chat;
+    private ModuleLoader<Cloud, Root> cloud;
+    private ModuleLoader<ForbiddenWords, Root> forbiddenWords;
+    private ModuleLoader<Groups, Root> groups;
+    private ModuleLoader<GroupSubjects, Root> groupSubjects;
+    private ModuleLoader<GroupUsers, Root> groupUsers;
+    private ModuleLoader<Evaluation, Root> evaluation;
+    private ModuleLoader<EvaluatedQuizes, Root> evaluatedQuizes;
+    private ModuleLoader<EvaluatedQuiz, Root> evaluatedQuiz;
 
     @FXML
     private BorderPane box;
@@ -140,6 +164,10 @@ public class Root extends Screen<Root> implements Initializable {
         db.setSelectedSubject(null);
         db.setSelectedStudyMaterial(null);
 
+        if (emulatedUser != null) {
+            stage.close();
+        }
+
         compositor.compose();
     }
 
@@ -158,6 +186,36 @@ public class Root extends Screen<Root> implements Initializable {
     @FXML
     private void materialTypes(ActionEvent event) {
         compositor.viewType = ViewType.MATERIAL_TYPES;
+        compositor.compose();
+    }
+
+    @FXML
+    private void communications(ActionEvent event) {
+        compositor.viewType = ViewType.COMMUNICATIONS;
+        compositor.compose();
+    }
+
+    @FXML
+    private void finder(ActionEvent event) {
+        compositor.viewType = ViewType.FINDER;
+        compositor.compose();
+    }
+
+    @FXML
+    private void groups(ActionEvent event) {
+        compositor.viewType = ViewType.GROUPS;
+        compositor.compose();
+    }
+
+    @FXML
+    private void cloud(ActionEvent event) {
+        compositor.viewType = ViewType.CLOUD;
+        compositor.compose();
+    }
+
+    @FXML
+    private void forbiddenWords(ActionEvent event) {
+        compositor.viewType = ViewType.FORBIDDEN_WORDS;
         compositor.compose();
     }
 
@@ -188,6 +246,17 @@ public class Root extends Screen<Root> implements Initializable {
             questionTypes = new ModuleLoader<>("QuestionTypes");
             materialTypes = new ModuleLoader<>("MaterialTypes");
             publicProfile = new ModuleLoader<>("PublicProfile");
+            communications = new ModuleLoader<>("Communications");
+            finder = new ModuleLoader<>("Finder");
+            chat = new ModuleLoader<>("Chat");
+            cloud = new ModuleLoader<>("Cloud");
+            forbiddenWords = new ModuleLoader<>("ForbiddenWords");
+            groups = new ModuleLoader<>("Groups");
+            groupSubjects = new ModuleLoader<>("GroupSubjects");
+            groupUsers = new ModuleLoader<>("GroupUsers");
+            evaluation = new ModuleLoader<>("Evaluation");
+            evaluatedQuizes = new ModuleLoader<>("EvaluatedQuizes");
+            evaluatedQuiz = new ModuleLoader<>("EvaluatedQuiz");
         }
 
         /**
@@ -234,6 +303,39 @@ public class Root extends Screen<Root> implements Initializable {
 
             publicProfile.setCallback(controller);
             publicProfile.getController().setDb(db);
+
+            communications.setCallback(controller);
+            communications.getController().setDb(db);
+
+            finder.setCallback(controller);
+            finder.getController().setDb(db);
+
+            chat.setCallback(controller);
+            chat.getController().setDb(db);
+
+            cloud.setCallback(controller);
+            cloud.getController().setDb(db);
+
+            forbiddenWords.setCallback(controller);
+            forbiddenWords.getController().setDb(db);
+
+            groups.setCallback(controller);
+            groups.getController().setDb(db);
+
+            groupSubjects.setCallback(controller);
+            groupSubjects.getController().setDb(db);
+
+            groupUsers.setCallback(controller);
+            groupUsers.getController().setDb(db);
+
+            evaluation.setCallback(controller);
+            evaluation.getController().setDb(db);
+
+            evaluatedQuizes.setCallback(controller);
+            evaluatedQuizes.getController().setDb(db);
+
+            evaluatedQuiz.setCallback(controller);
+            evaluatedQuiz.getController().setDb(db);
         }
 
         /**
@@ -282,6 +384,42 @@ public class Root extends Screen<Root> implements Initializable {
                 case PUBLIC_PROFILE:
                     composePublicProfile();
                     break;
+                case COMMUNICATIONS:
+                    composeCommunications();
+                    break;
+                case FINDER:
+                    composeFinder();
+                    break;
+                case EMULATOR:
+                    composeEmulator();
+                    break;
+                case GROUPS:
+                    composeGroups();
+                    break;
+                case GROUP_SUBJECTS:
+                    composeGroupSubjects();
+                    break;
+                case GROUP_USERS:
+                    composeGroupUsers();
+                    break;
+                case CLOUD:
+                    composeCloud();
+                    break;
+                case CHAT:
+                    composeChat();
+                    break;
+                case FORBIDDEN_WORDS:
+                    composeForbiddenWords();
+                    break;
+                case EVALUATION:
+                    composeEvaluation();
+                    break;
+                case EVALUATED_QUIZES:
+                    composeEvaluatedQuizes();
+                    break;
+                case EVALUATED_QUIZ:
+                    composeEvaluatedQuiz();
+                    break;
             }
         }
 
@@ -322,7 +460,51 @@ public class Root extends Screen<Root> implements Initializable {
             }
 
             statusLabel.setText("Uživatel:");
-            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + " (" + db.getUser().getLogin() + ")");
+            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + "\n(" + db.getUser().getLogin().trim() + ")");
+
+            compositor.viewType = ViewType.MAIN;
+            compositor.compose();
+        }
+
+        private void composeEmulator() {
+
+            adminZone.setVisible(false);
+            location.getChildren().clear();
+            Label l = new Label("Přihlášení");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            Pane p = new Pane();
+            p.setBackground(new Background(new BackgroundFill(Color.rgb(120, 120, 120), CornerRadii.EMPTY, Insets.EMPTY)));
+            box.setCenter(p);
+
+            statusLabel.setText("Autor:");
+            statusContent.setText("Petr Bednář (st58214)");
+
+            db.setUser(null);
+            db.setSelectedSubject(null);
+            db.setSelectedStudyMaterial(null);
+
+            if (emulatedUser != null) {
+                try {
+                    db.loginAs(emulatedUser);
+                } catch (SQLException | IOException ex) {
+                    Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                login.getStage().showAndWait();
+            }
+
+            if (db.getUser() == null) {
+                System.exit(0);
+            }
+
+            if (db.getUser().getPermission() == Permission.ADMINISTRATOR) {
+                adminZone.setVisible(true);
+            }
+
+            statusLabel.setText("Uživatel:");
+            statusContent.setText(db.getUser().getFirstName() + " " + db.getUser().getLastName() + "\n(" + db.getUser().getLogin().trim() + ")");
 
             compositor.viewType = ViewType.MAIN;
             compositor.compose();
@@ -514,6 +696,231 @@ public class Root extends Screen<Root> implements Initializable {
             box.setCenter(publicProfile.getContent());
         }
 
+        private void composeCommunications() {
+            location.getChildren().clear();
+            Label l = new Label("Komunikace");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            communications.getController().load();
+            box.setCenter(communications.getContent());
+        }
+
+        private void composeFinder() {
+            location.getChildren().clear();
+            Label l = new Label("Vyhledávač");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            finder.getController().load();
+            box.setCenter(finder.getContent());
+        }
+
+        private void composeCloud() {
+            location.getChildren().clear();
+            Label l = new Label("Cloud");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            cloud.getController().load();
+            box.setCenter(cloud.getContent());
+        }
+
+        private void composeForbiddenWords() {
+            location.getChildren().clear();
+            Label l = new Label("Nevhodná slova");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            forbiddenWords.getController().load();
+            box.setCenter(forbiddenWords.getContent());
+        }
+
+        private void composeGroups() {
+            location.getChildren().clear();
+            Label l = new Label("Skupiny");
+            l.getStyleClass().add("location-label");
+            location.getChildren().add(l);
+
+            groups.getController().load();
+            box.setCenter(groups.getContent());
+        }
+
+        private void composeEvaluation() {
+            location.getChildren().clear();
+            Label l1 = new Label(db.getSelectedSubject().getTitle() + " (" + db.getSelectedSubject().getShortcut() + ")");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label("Klasifikace");
+            l2.getStyleClass().add("location-label");
+            location.getChildren().addAll(l1, arrow1, l2);
+
+            evaluation.getController().load(db.getSelectedSubject());
+            box.setCenter(evaluation.getContent());
+        }
+
+        private void composeEvaluatedQuizes() {
+            location.getChildren().clear();
+            Label l1 = new Label(db.getSelectedSubject().getTitle() + " (" + db.getSelectedSubject().getShortcut() + ")");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label("Klasifikace");
+            l2.getStyleClass().add("location-label");
+
+            l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.EVALUATION;
+                compose();
+            });
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label(db.getSelectedEvaluationUser().getFirstName() + " " + db.getSelectedEvaluationUser().getLastName());
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            evaluatedQuizes.getController().load(db.getSelectedEvaluationUser());
+            box.setCenter(evaluatedQuizes.getContent());
+        }
+
+        private void composeEvaluatedQuiz() {
+            location.getChildren().clear();
+            Label l1 = new Label(db.getSelectedSubject().getTitle() + " (" + db.getSelectedSubject().getShortcut() + ")");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.SUBJECT_VIEW;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label("Klasifikace");
+            l2.getStyleClass().add("location-label");
+
+            l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.EVALUATION;
+                compose();
+            });
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label(db.getSelectedEvaluationUser().getFirstName() + " " + db.getSelectedEvaluationUser().getLastName());
+            l3.getStyleClass().add("location-label");
+
+            l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.EVALUATED_QUIZES;
+                compose();
+            });
+
+            Label arrow3 = new Label("🡺");
+            arrow3.getStyleClass().add("location-arrow");
+
+            Label l4 = new Label(db.getSelectedEvaluationQuiz().getTitle() + " (" + db.getSelectedEvaluationQuiz().getPoints() + "/" + db.getSelectedEvaluationQuiz().getMaxPoints() + ") (" + (int) (db.getSelectedEvaluationQuiz().getPoints().doubleValue() / db.getSelectedEvaluationQuiz().getMaxPoints().doubleValue() * 100.0) + "%)");
+            l4.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3, arrow3, l4);
+
+            evaluatedQuiz.getController().load(db.getSelectedEvaluationQuiz());
+            box.setCenter(evaluatedQuiz.getContent());
+        }
+
+        private void composeGroupUsers() {
+            location.getChildren().clear();
+            Label l1 = new Label("Skupiny");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.GROUPS;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedGroup().getTitle() + " (" + db.getSelectedGroup().getYear() + ")");
+            l2.getStyleClass().add("location-label");
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label("Uživatelé");
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            groupUsers.getController().load(db.getSelectedGroup());
+            box.setCenter(groupUsers.getContent());
+        }
+
+        private void composeGroupSubjects() {
+            location.getChildren().clear();
+            Label l1 = new Label("Skupiny");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.GROUPS;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedGroup().getTitle() + " (" + db.getSelectedGroup().getYear() + ")");
+            l2.getStyleClass().add("location-label");
+
+            Label arrow2 = new Label("🡺");
+            arrow2.getStyleClass().add("location-arrow");
+
+            Label l3 = new Label("Předměty");
+            l3.getStyleClass().add("location-label");
+
+            location.getChildren().addAll(l1, arrow1, l2, arrow2, l3);
+
+            groupSubjects.getController().load(db.getSelectedGroup());
+            box.setCenter(groupSubjects.getContent());
+        }
+
+        private void composeChat() {
+            location.getChildren().clear();
+            Label l1 = new Label("Komunikace");
+            l1.getStyleClass().add("location-label");
+
+            l1.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                viewType = ViewType.COMMUNICATIONS;
+                compose();
+            });
+
+            Label arrow1 = new Label("🡺");
+            arrow1.getStyleClass().add("location-arrow");
+
+            Label l2 = new Label(db.getSelectedCommunication().getFirstName() + " " + db.getSelectedCommunication().getLastName());
+            l2.getStyleClass().add("location-label");
+            location.getChildren().addAll(l1, arrow1, l2);
+
+            chat.getController().load(db.getSelectedCommunication());
+            box.setCenter(chat.getContent());
+        }
+
         @Override
         public void decompose() {
             box.setCenter(null);
@@ -529,6 +936,19 @@ public class Root extends Screen<Root> implements Initializable {
     public void compose(ViewType viewType) {
         compositor.viewType = viewType;
         compositor.compose();
+    }
+
+    /**
+     * Sets up emulated user to load
+     *
+     * @param u
+     */
+    public void setEmulatedUser(User u) {
+        Platform.runLater(() -> {
+            emulatedUser = u;
+            compositor.viewType = ViewType.EMULATOR;
+            compositor.compose();
+        });
     }
 
     public HBox getLocation() {

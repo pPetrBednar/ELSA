@@ -1,0 +1,115 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="684EDFB6-F3E4-7256-788E-E5C1CB374E71" name="ZPRAVA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>0D9BD1CE-65B5-1C75-3CAF-16AC120E2880</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_zprava" id="F28A0C16-097A-E605-B373-C288D589C83C">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>839E58DE-5EA4-1023-9B49-1FE2C270BCD0</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>ZPRAVA_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>ZPRAVA_TRG</autoIncrementTriggerName>
+</Column>
+<Column name="text" id="893F4BBF-668E-160F-75BC-70E98FA66F8E">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>FE8A42E5-53C5-EE96-1628-7C654FB33635</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1024</dataTypeSize>
+<ownDataTypeParameters>1024,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="datum" id="7C18C1B5-F859-0682-AA38-550B223FED91">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>BBFD6B02-4100-FF22-5E17-0EF55C8B1A73</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ODESILATEL_ID" id="C99A1E9B-5CB3-3F5B-9A95-4EDF262B65C6">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>9683439C-E6B9-E064-84D7-2DA95553E833</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1B13824C-590D-0B09-5416-985C7F3B37D7" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+<Column name="PRIJEMCE_ID" id="12921C3B-B0CB-73F0-F061-28AF72B63C8F">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>948745B6-DF4A-84C3-4DFE-EED89F16C5AD</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="EB09B9FE-BC4A-9B0A-C6C2-04C54D1F07FF" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3E6A364C-66C7-581E-6156-71271016821C" name="ZPRAVA_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>AFF20C05-572D-A031-3340-F0AE8FD8489C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F28A0C16-097A-E605-B373-C288D589C83C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0FC7A838-7A4D-9028-40AD-DCC0DDA7973E" name="ZPRAVA_UZIVATEL_O_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>44777B1A-62FE-4310-80F5-2D4E0D0C68AB</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C99A1E9B-5CB3-3F5B-9A95-4EDF262B65C6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="EDF4AFB6-6363-A972-FAEB-672BC7413EAC" name="ZPRAVA_UZIVATEL_P_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 13:59:29 UTC</createdTime>
+<generatorID>D0AE8FCC-D4DF-83CF-09AA-BFAEEBA80DA8</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="12921C3B-B0CB-73F0-F061-28AF72B63C8F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

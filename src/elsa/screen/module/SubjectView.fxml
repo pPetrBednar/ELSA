@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -15,7 +14,7 @@
          <content>
             <VBox>
                <children>
-                  <AnchorPane prefWidth="800.0" style="-fx-background-color: rgb(185, 210, 250);">
+                  <AnchorPane prefWidth="800.0">
                      <children>
                         <Label layoutX="33.0" layoutY="38.0" text="Název předmětu:" wrapText="true" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="40.0">
                            <font>
@@ -50,7 +49,11 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Separator opacity="0.2" prefWidth="200.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="460.0" />
+                        <JFXButton focusTraversable="false" layoutX="658.0" layoutY="145.0" onAction="#openEvaluation" styleClass="btn-open" stylesheets="@../style/StudyMaterialView.css" text="Klasifikace" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="145.0">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </JFXButton>
                         <Label layoutX="36.0" layoutY="483.0" text="Studijní materiály:" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="483.0">
                            <font>
                               <Font name="System Bold" size="19.0" />

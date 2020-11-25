@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E4B12606-A48E-16C5-C9C2-4598783DA018" containerWithKeyObject="42040CF1-052B-57CD-9308-69F6E7F143CC" localFKIndex="87432F77-EB90-EA68-771A-1B144F82D7E5" name="UZIVATELE_SKUPINY_SKUPINA_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>AF1244FD-38DE-4A9F-E16A-175CDAF9B94C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>SKUPINA</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>AAA0EFDE-00B1-D8B0-8FD9-0B0E51051E00</referredTableID>
+<keyObject>C51D7789-0861-9C4E-7A54-FF9950BCF4A1</keyObject>
+<referredKeyID>C51D7789-0861-9C4E-7A54-FF9950BCF4A1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_skupina</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

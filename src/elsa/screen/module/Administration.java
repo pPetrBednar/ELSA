@@ -7,6 +7,7 @@ import elsa.screen.ChangePermission;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
+import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
 import java.io.IOException;
 import java.net.URL;
@@ -56,7 +57,7 @@ public class Administration extends Module<Administration, Root> implements Init
         ap.setPrefHeight(70);
         ap.setStyle("-fx-border-color: rgba(0, 0, 0, 0.2);");
 
-        Label l2 = new Label(s.getFirstName() + " " + s.getLastName() + "(" + s.getLogin().trim() + ")\nOprávnění: " + s.getPermission().getText());
+        Label l2 = new Label(s.getFirstName() + " " + s.getLastName() + " (" + s.getLogin().trim() + ")\nOprávnění: " + s.getPermission().getText());
         l2.setAlignment(Pos.CENTER_LEFT);
         l2.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true; -fx-padding: 0px 0px 0px 16px;");
         l2.getStyleClass().add("hover-effect-15");
@@ -64,11 +65,27 @@ public class Administration extends Module<Administration, Root> implements Init
         AnchorPane.setTopAnchor(l2, 0.0);
         AnchorPane.setLeftAnchor(l2, 0.0);
         AnchorPane.setBottomAnchor(l2, 0.0);
-        AnchorPane.setRightAnchor(l2, 150.0);
+        AnchorPane.setRightAnchor(l2, 225.0);
 
         l2.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getButton() == MouseButton.PRIMARY) {
                 openUser(s);
+            }
+        });
+
+        Label l3 = new Label("Emulovat");
+        l3.setAlignment(Pos.CENTER);
+        l3.setPrefWidth(75);
+        l3.setStyle("-fx-text-fill: #000000d5; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        l3.getStyleClass().add("hover-effect-15");
+
+        AnchorPane.setTopAnchor(l3, 0.0);
+        AnchorPane.setBottomAnchor(l3, 0.0);
+        AnchorPane.setRightAnchor(l3, 150.0);
+
+        l3.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                emulateUser(s);
             }
         });
 
@@ -104,7 +121,7 @@ public class Administration extends Module<Administration, Root> implements Init
             }
         });
 
-        ap.getChildren().addAll(l2, l4, l5);
+        ap.getChildren().addAll(l2, l3, l4, l5);
 
         return ap;
     }
@@ -112,6 +129,21 @@ public class Administration extends Module<Administration, Root> implements Init
     private void openUser(User s) {
         db.setSelectedPublicProfile(s);
         callback.compose(ViewType.PUBLIC_PROFILE);
+    }
+
+    private void emulateUser(User s) {
+
+        try {
+            ScreenLoader<Root> root = new ScreenLoader<>("Root");
+            root.setupStage("eELSA", callback.getStage(), Modality.WINDOW_MODAL);
+            root.setTransparent(false);
+            root.setMinSize(1400, 1000);
+            root.getController().setEmulatedUser(s);
+            root.getStage().show();
+        } catch (IOException ex) {
+            Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     private void editUser(User s) {

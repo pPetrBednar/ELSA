@@ -219,7 +219,6 @@ public class Comments extends Module<Comments, Root> implements Initializable {
         }
 
         if (data != null && !data.isEmpty()) {
-            System.out.println(data.size());
             int i = data.size();
             for (Comment t : data) {
                 list.getChildren().add(createLabel(t, i--));

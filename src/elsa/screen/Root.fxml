@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="box" prefHeight="800.0" prefWidth="1200.0" stylesheets="@style/Root.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.Root">
+<BorderPane fx:id="box" prefHeight="912.0" prefWidth="1200.0" stylesheets="@style/Root.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elsa.screen.Root">
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="250.0" styleClass="box" BorderPane.alignment="CENTER">
          <children>
@@ -41,6 +41,24 @@
                      </font>
                   </JFXButton>
                   <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#cloud" styleClass="hover-effect-15" text="Cloud" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#groups" styleClass="hover-effect-15" text="Skupiny" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
                   <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#mySubjects" styleClass="hover-effect-15" text="Moje předměty" textFill="#ffffffcc">
                      <padding>
                         <Insets bottom="10.0" left="24.0" top="10.0" />
@@ -51,6 +69,24 @@
                   </JFXButton>
                   <Separator opacity="0.1" prefWidth="200.0" />
                   <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#allSubjects" styleClass="hover-effect-15" text="Všechny předměty" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#communications" styleClass="hover-effect-15" text="Komunikace" textFill="#ffffffcc">
+                     <padding>
+                        <Insets bottom="10.0" left="24.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <Separator opacity="0.1" prefWidth="200.0" />
+                  <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#finder" styleClass="hover-effect-15" text="Vyhledávač" textFill="#ffffffcc">
                      <padding>
                         <Insets bottom="10.0" left="24.0" top="10.0" />
                      </padding>
@@ -89,6 +125,15 @@
                            </font>
                         </JFXButton>
                         <Separator opacity="0.1" prefWidth="200.0" />
+                        <JFXButton alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#forbiddenWords" styleClass="hover-effect-15" text="Nevhodná slova" textFill="#ffffffcc">
+                           <padding>
+                              <Insets bottom="10.0" left="24.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.1" prefWidth="200.0" />
                      </children>
                      <VBox.margin>
                         <Insets top="50.0" />
@@ -111,13 +156,10 @@
                   <Insets bottom="16.0" left="16.0" />
                </padding>
             </Label>
-            <Label fx:id="statusContent" text="Petr Bednář (st58214)" textFill="#ffffffcc" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label fx:id="statusContent" alignment="CENTER" prefHeight="50.0" text="Petr Bednář (st58214)" textFill="#ffffffcc" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
-               <padding>
-                  <Insets bottom="16.0" right="16.0" />
-               </padding>
             </Label>
          </children>
       </AnchorPane>

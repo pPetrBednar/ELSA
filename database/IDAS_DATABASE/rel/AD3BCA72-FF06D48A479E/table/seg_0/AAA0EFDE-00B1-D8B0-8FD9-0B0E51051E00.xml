@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AAA0EFDE-00B1-D8B0-8FD9-0B0E51051E00" name="SKUPINA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>3270CBB1-F3EB-A4BD-FF89-40FA37B740CD</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_skupina" id="DEBECDD4-6BF6-87BD-A89D-B051109DF1DA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>AADD4A0E-EECC-C998-31FC-59B15A778B8C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SKUPINA_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>SKUPINA_TRG</autoIncrementTriggerName>
+</Column>
+<Column name="rok_studia" id="ED822A75-EB32-AA3F-9C34-B89491276889">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>C971D7D5-C6AC-981A-A93C-9220D5E5F01E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="obor" id="52B05BB1-C6DE-56BD-914B-E8B35E899A19">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>5E0304E0-037F-468E-C23B-037E620B61EF</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>256</dataTypeSize>
+<ownDataTypeParameters>256,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C51D7789-0861-9C4E-7A54-FF9950BCF4A1" name="SKUPINA_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>FA3F5386-181E-33E5-76A5-58DC0C4959CE</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DEBECDD4-6BF6-87BD-A89D-B051109DF1DA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

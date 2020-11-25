@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="069ADE4F-D912-D010-9B71-263A40A4EC97" containerWithKeyObject="90FC3E75-3169-8745-6FA1-C8E131F403CB" localFKIndex="B7DD8CC1-532D-99C2-AD91-4EF4C21C2147" name="VYPLNENY_KVIZ_KVIZ_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>9DDDEE2D-9A18-8A5F-D6ED-E18F90633DA5</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<referredTableLongName>KVIZ</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>95EF7110-DBCB-F669-3293-6118BD713101</referredTableID>
+<keyObject>49DB42CE-F201-D3C8-A1B3-5DC39CD112E8</keyObject>
+<referredKeyID>49DB42CE-F201-D3C8-A1B3-5DC39CD112E8</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_kviz</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

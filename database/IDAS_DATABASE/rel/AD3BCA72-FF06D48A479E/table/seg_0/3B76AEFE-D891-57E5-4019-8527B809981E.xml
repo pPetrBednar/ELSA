@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3B76AEFE-D891-57E5-4019-8527B809981E" name="VYPLNENA_OTAZKA">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>D38DDDE9-63F7-10EF-021A-AA3FD3E3F14F</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_vyplnena_otazka" id="D5619531-1241-8789-C26F-1DAD45785423">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>E320BA6D-2364-93A5-2E8F-2F5AB7C15127</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>VYPLNENA_OTAZKA_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>VYPLNENA_OTAZKA_TRG</autoIncrementTriggerName>
+</Column>
+<Column name="odpoved" id="F465B9A9-CF3B-71B3-D6A8-3C80C4DB499F">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>8AED1640-97FC-DFB5-85AC-61F6A34C1309</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1024</dataTypeSize>
+<ownDataTypeParameters>1024,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="OTAZKA_ID" id="C709E577-C898-3959-CA50-808FE13AFAB4">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>18FE97F7-0DC9-BFF1-0790-E848B0569AAC</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0AAF805C-0B8D-7E5C-17E9-E35494092836" referredColumn="DD7BBB2F-95A2-27E8-B459-FB315F4793D2"/>
+</associations>
+</Column>
+<Column name="VYPLNENY_KVIZ_ID" id="E6918AD0-23A9-2507-4F06-618C302CDB12">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>9D2B063A-C6CA-13BE-D59B-54B0F0315217</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5C1ECE66-12CA-5C82-88E3-9464E052BF5D" referredColumn="319BF125-CCAF-2742-A48D-29491F36A43C"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="36C5716D-B969-E0F3-2BC4-7B7B8562BFE9" name="VYPLNENA_OTAZKA_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>D89127E2-73DA-24AA-D5B1-4D165C56083C</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D5619531-1241-8789-C26F-1DAD45785423"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8C82F9C1-A884-D33C-2ED7-085C30B84C78" name="VYPLNENA_OTAZKA_OTAZKA_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>7A5ED4E4-4410-D60E-4314-25C326B4D03E</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C709E577-C898-3959-CA50-808FE13AFAB4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A9F4EF78-6373-BCEC-A713-F11D7D66B98E" name="VYPLNENA_OTAZKA_V_K_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:39:52 UTC</createdTime>
+<generatorID>3A3D7082-DE6A-9748-BA7B-E9A2F6382FA1</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E6918AD0-23A9-2507-4F06-618C302CDB12"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

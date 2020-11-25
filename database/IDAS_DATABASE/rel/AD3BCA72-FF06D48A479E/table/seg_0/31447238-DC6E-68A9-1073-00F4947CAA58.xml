@@ -1,0 +1,123 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="31447238-DC6E-68A9-1073-00F4947CAA58" name="SOUBOR">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>D184F90E-F5FA-695C-8585-F70C43A13ABA</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_soubor" id="160695D0-CF64-E26E-553F-D786A1631046">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>901BBFF2-3686-354D-8FD2-B2DA9A5B81A8</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SOUBOR_SEQ</autoIncrementSequenceName>
+<autoIncrementTriggerName>SOUBOR_TRG</autoIncrementTriggerName>
+</Column>
+<Column name="nazev" id="D355A4B0-2BD2-0C33-0E93-F441A04E40A0">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>8DC282D1-426B-B733-AA1A-A1818A4F6492</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>64</dataTypeSize>
+<ownDataTypeParameters>64,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="soubor" id="8530231D-6A36-D18A-85ED-66249DEFACDE">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>118FCFA2-5D99-3B76-DFC2-94F4A5BEA999</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pripona" id="46E552AA-0E89-75B7-699A-2F1A5D1CB3A4">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>F1A058A3-2F2E-F38B-F2AD-D6F6343CEB35</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>8</dataTypeSize>
+<ownDataTypeParameters>8,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nahrano" id="2CE632CA-638E-4F3B-829A-30A7BDF67B72">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>3DF32FBC-1BA9-7E9F-CAE9-D07F1DEB4E23</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="upraveno" id="36E2F794-91EE-A16B-92C2-DD9BB0BA49FB">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>10E1F9E9-AE70-BF8C-1E61-141601CB4604</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UZIVATEL_ID" id="E97B9E2C-299F-A4E5-F75C-2A8F6EF87286">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>F6FF22B9-C3C9-F135-D340-0186B595F36B</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5286D810-19A1-A632-EE61-6359912EB0DD" referredColumn="9B83E909-1620-9A67-8239-61698E216E06"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="84B72AD7-945A-CAAA-8DF8-C6075295221C" name="SOUBOR_PK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>42E49BBF-2F9F-9BD8-5E79-7DD0612DBB01</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="160695D0-CF64-E26E-553F-D786A1631046"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2334BD2A-7822-4E68-4865-42187FB19575" name="SOUBOR_UZIVATEL_FK">
+<createdBy>petrb</createdBy>
+<createdTime>2020-11-23 15:56:51 UTC</createdTime>
+<generatorID>5F060244-73A1-61D0-CDD3-B43E89D1A102</generatorID>
+<ownerDesignName>IDAS_DATABASE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E97B9E2C-299F-A4E5-F75C-2A8F6EF87286"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
