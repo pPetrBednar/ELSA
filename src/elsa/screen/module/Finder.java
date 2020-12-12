@@ -1,23 +1,16 @@
 package elsa.screen.module;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
-import elsa.database.Permission;
-import elsa.database.QuestionType;
 import elsa.database.StudyMaterial;
 import elsa.database.StudyMaterialType;
 import elsa.database.Subject;
 import elsa.database.User;
 import elsa.screen.AddQuestion;
-import elsa.screen.AddSubject;
-import elsa.screen.AddType;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
-import elsa.screen.handlers.ScreenLoader;
 import elsa.screen.tools.ViewType;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +27,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.util.StringConverter;
 
 /**
@@ -225,7 +217,7 @@ public class Finder extends Module<Finder, Root> implements Initializable {
                 }
             }
 
-            StudyMaterial sm = db.getStudyMateria(s.getId());
+            StudyMaterial sm = db.getStudyMaterial(s.getId());
 
             if (sm != null) {
                 db.setSelectedStudyMaterial(sm);

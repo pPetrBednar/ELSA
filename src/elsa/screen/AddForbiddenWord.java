@@ -1,11 +1,8 @@
 package elsa.screen;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
-import elsa.database.QuestionType;
-import elsa.database.StudyMaterialType;
 import elsa.screen.handlers.Screen;
 import elsa.screen.tools.Information;
 import java.net.URL;

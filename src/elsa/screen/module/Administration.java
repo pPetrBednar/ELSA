@@ -7,7 +7,6 @@ import elsa.screen.ChangePermission;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
 import elsa.screen.handlers.ScreenLoader;
-import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
 import java.io.IOException;
 import java.net.URL;

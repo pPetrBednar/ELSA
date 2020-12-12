@@ -2,10 +2,7 @@ package elsa.screen.module;
 
 import com.jfoenix.controls.JFXButton;
 import elsa.database.DatabaseManager;
-import elsa.database.Permission;
 import elsa.database.QuestionType;
-import elsa.database.Subject;
-import elsa.screen.AddSubject;
 import elsa.screen.AddType;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;

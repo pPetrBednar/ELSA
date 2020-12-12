@@ -25,7 +25,6 @@ import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 import oracle.jdbc.OracleConnection;
 import static oracle.jdbc.OracleTypes.CURSOR;
-import oracle.sql.ARRAY;
 
 /**
  *
@@ -748,7 +747,7 @@ public class DatabaseManager extends DatabaseConfig {
             call.setString(3, description);
 
             if (file == null) {
-                call.setNull(4, 0);
+                call.setBinaryStream(4, null);
                 call.setString(5, null);
             } else {
                 call.setBinaryStream(4, new FileInputStream(file));
@@ -1235,7 +1234,7 @@ public class DatabaseManager extends DatabaseConfig {
      */
     public void editQuiz(Integer id, String title, String description) throws SQLException {
         Connection con = OracleConnector.getConnection();
-        try (CallableStatement call = con.prepareCall("call ELSA.addStudyMaterialChange(?, ?, ?)")) {
+        try (CallableStatement call = con.prepareCall("call ELSA.editQuiz(?, ?, ?)")) {
             call.setString(1, title);
             call.setString(2, description);
             call.setInt(3, id);
@@ -1450,6 +1449,16 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Gets filtered study materials from database
+     *
+     * @param title
+     * @param subject
+     * @param type
+     * @param teacher
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<StudyMaterial> find(String title, Subject subject, StudyMaterialType type, User teacher) throws SQLException {
         ArrayList<StudyMaterial> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
@@ -1483,6 +1492,12 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Gets list of communication channels
+     *
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<User> getCommunications() throws SQLException {
         ArrayList<User> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
@@ -1668,6 +1683,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Downloads file from database
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Blob getFileFromCloudFile(Integer id) throws SQLException {
         Connection con = OracleConnector.getConnection();
         try (CallableStatement call = con.prepareCall("call ELSA.getFileFromCloudFile(?, ?)")) {
@@ -1680,6 +1702,12 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Deletes saved cloud file
+     *
+     * @param s
+     * @throws SQLException
+     */
     public void removeCloudFile(CloudFile s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1690,6 +1718,12 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Gets list of forbidden words
+     *
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<ForbiddenWord> getAllForbiddenWords() throws SQLException {
 
         ArrayList<ForbiddenWord> data = new ArrayList<>();
@@ -1707,6 +1741,12 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Removes selected forbidden word from db
+     *
+     * @param s
+     * @throws SQLException
+     */
     public void removeForbiddenWord(ForbiddenWord s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1717,6 +1757,12 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Add forbidden word to db
+     *
+     * @param text
+     * @throws SQLException
+     */
     public void addForbiddenWord(String text) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1727,6 +1773,12 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Gets list of all groups
+     *
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<Group> getAllGroups() throws SQLException {
 
         ArrayList<Group> data = new ArrayList<>();
@@ -1745,6 +1797,12 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Gets list of all groups user is in
+     *
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<Group> getAllGroupsOfUser() throws SQLException {
 
         ArrayList<Group> data = new ArrayList<>();
@@ -1763,6 +1821,12 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Removes group from database
+     *
+     * @param s
+     * @throws SQLException
+     */
     public void removeGroup(Group s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1773,6 +1837,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Adds group to database
+     *
+     * @param year
+     * @param title
+     * @throws SQLException
+     */
     public void addGroup(String year, String title) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1784,6 +1855,14 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Edits information of group
+     *
+     * @param id
+     * @param year
+     * @param title
+     * @throws SQLException
+     */
     public void editGroup(Integer id, String year, String title) throws SQLException {
         Connection con = OracleConnector.getConnection();
         try (CallableStatement call = con.prepareCall("call ELSA.editGroup(?, ?, ?)")) {
@@ -1796,6 +1875,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Gets list of all subject from selected group
+     *
+     * @param g
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<Subject> getAllSubjectsOfGroup(Group g) throws SQLException {
 
         ArrayList<Subject> data = new ArrayList<>();
@@ -1815,6 +1901,13 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Gets list of all users of selected group
+     *
+     * @param g
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<User> getAllUsersOfGroup(Group g) throws SQLException {
 
         ArrayList<User> data = new ArrayList<>();
@@ -1839,6 +1932,13 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Adds selected user to selected group
+     *
+     * @param g
+     * @param u
+     * @throws SQLException
+     */
     public void addUserToGroup(Group g, User u) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1850,6 +1950,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Adds selected subject to selected group
+     *
+     * @param g
+     * @param s
+     * @throws SQLException
+     */
     public void addSubjectToGroup(Group g, Subject s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1861,6 +1968,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Removes selected user from selected group
+     *
+     * @param g
+     * @param u
+     * @throws SQLException
+     */
     public void removeUserFromGroup(Group g, User u) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1872,6 +1986,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Removes selected subject from selected group
+     *
+     * @param g
+     * @param s
+     * @throws SQLException
+     */
     public void removeSubjectFromGroup(Group g, Subject s) throws SQLException {
         Connection con = OracleConnector.getConnection();
 
@@ -1883,7 +2004,14 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
-    public StudyMaterial getStudyMateria(Integer id) throws SQLException {
+    /**
+     * Gets study material data from db
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public StudyMaterial getStudyMaterial(Integer id) throws SQLException {
 
         Connection con = OracleConnector.getConnection();
         try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM studijni_materialy WHERE id_studijnimaterial = '" + id + "' ORDER BY datumvytvoreni ASC")) {
@@ -1910,6 +2038,14 @@ public class DatabaseManager extends DatabaseConfig {
         return null;
     }
 
+    /**
+     * Submits completed quiz answers
+     *
+     * @param quizId
+     * @param points
+     * @param answers
+     * @throws SQLException
+     */
     public void submitAnswers(Integer quizId, int points, HashMap<Integer, String> answers) throws SQLException {
 
         // Holder
@@ -1943,6 +2079,13 @@ public class DatabaseManager extends DatabaseConfig {
         }
     }
 
+    /**
+     * Gets evaluation data on all users from subject
+     *
+     * @param s
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<EvaluationData> getUsersEvaluationOnSubject(Subject s) throws SQLException {
         ArrayList<EvaluationData> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
@@ -1978,6 +2121,13 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Gets evaluation data of selected user
+     *
+     * @param s
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<EvaluationData> getUserEvaluationOnSubject(Subject s) throws SQLException {
         ArrayList<EvaluationData> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
@@ -2014,6 +2164,14 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Gets list of evaluated quizes of selected user from selected subject
+     *
+     * @param u
+     * @param s
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<EvaluatedQuizData> getEvaluatedQuizesOfUserFromSubject(User u, Subject s) throws SQLException {
         ArrayList<EvaluatedQuizData> data = new ArrayList<>();
         Connection con = OracleConnector.getConnection();
@@ -2032,6 +2190,13 @@ public class DatabaseManager extends DatabaseConfig {
         return data;
     }
 
+    /**
+     * Gets evaluated quiz data of selected quiz
+     *
+     * @param d
+     * @return
+     * @throws SQLException
+     */
     public EvaluatedQuizData getEvaluatedQuestionsOfQuiz(EvaluatedQuizData d) throws SQLException {
         d.setQuestions(new ArrayList<>());
         Connection con = OracleConnector.getConnection();

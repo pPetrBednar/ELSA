@@ -1,13 +1,10 @@
 package elsa.screen.module;
 
 import com.jfoenix.controls.JFXButton;
-import elsa.database.Comment;
 import elsa.database.DatabaseManager;
 import elsa.database.Message;
-import elsa.database.Permission;
 import elsa.database.StudyMaterial;
 import elsa.database.User;
-import elsa.screen.AddComment;
 import elsa.screen.AddMessage;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;

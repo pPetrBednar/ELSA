@@ -1,0 +1,24 @@
+CREATE OR REPLACE TRIGGER check_komentar
+BEFORE INSERT ON komentar
+FOR EACH ROW
+DECLARE
+    v_result BOOLEAN;
+BEGIN
+    v_result := ELSA.isStringValid(:new.text);
+    IF v_result = FALSE THEN
+        RAISE_APPLICATION_ERROR(-20111, 'Nalezeno nevhodné slovo.');
+    END IF;
+END;
+/
+
+create or replace TRIGGER system_message
+AFTER INSERT OR UPDATE ON uzivatel
+FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        INSERT INTO zprava VALUES(ZPRAVA_SEQ.NEXTVAL, 'Registrace byla úspěšná.', SYSDATE, 2, :old.id_uzivatel);
+    ELSIF UPDATING THEN
+        INSERT INTO zprava VALUES(ZPRAVA_SEQ.NEXTVAL, 'Informace o účtu byly upraveny.', SYSDATE, 2, :old.id_uzivatel);
+    END IF;
+END;
+/

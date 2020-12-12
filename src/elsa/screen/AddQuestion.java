@@ -7,7 +7,6 @@ import com.jfoenix.controls.JFXTextField;
 import elsa.database.DatabaseManager;
 import elsa.database.Question;
 import elsa.database.QuestionType;
-import elsa.database.Quiz;
 import elsa.screen.handlers.Screen;
 import elsa.screen.tools.Information;
 import java.net.URL;
@@ -20,7 +19,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.util.StringConverter;
 
 /**

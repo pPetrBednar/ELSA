@@ -3,8 +3,6 @@ package elsa.screen.tools;
 import elsa.screen.Info;
 import elsa.screen.handlers.ScreenLoader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
