@@ -8,7 +8,6 @@ package elsa.screen.handlers;
 
 import elsa.tools.Move;
 import elsa.tools.Resizer;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;

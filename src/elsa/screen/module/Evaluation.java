@@ -1,18 +1,13 @@
 package elsa.screen.module;
 
-import com.jfoenix.controls.JFXButton;
 import elsa.database.DatabaseManager;
 import elsa.database.EvaluationData;
 import elsa.database.Permission;
 import elsa.database.Subject;
 import elsa.database.User;
-import elsa.screen.ChangePermission;
 import elsa.screen.Root;
 import elsa.screen.handlers.Module;
-import elsa.screen.handlers.ScreenLoader;
-import elsa.screen.tools.Information;
 import elsa.screen.tools.ViewType;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +22,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 
 /**
  * FXML Controller class

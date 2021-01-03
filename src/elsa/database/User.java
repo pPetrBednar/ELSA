@@ -1,6 +1,5 @@
 package elsa.database;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 

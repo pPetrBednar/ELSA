@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Ètvrtek-listopadu-26-2020   
+--  File created - Sobota-prosince-12-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Package ELSA
@@ -14,6 +14,16 @@ p_login IN uzivatel.login%TYPE
 ) RETURN uzivatel.heslo%TYPE;
 
 FUNCTION isStringValid(p_string VARCHAR2) RETURN BOOLEAN;
+
+FUNCTION evaluateSubject(
+    p_user_id IN uzivatel.id_uzivatel%TYPE,
+    p_subject_id IN predmet.id_predmet%TYPE
+) RETURN NUMBER;
+
+FUNCTION validateSubject(
+    p_subject_id predmet.id_predmet%TYPE,
+    p_mode NUMBER
+) RETURN VARCHAR2;
 
 PROCEDURE register(
 p_login IN uzivatel.login%TYPE,
@@ -293,6 +303,11 @@ PROCEDURE getUserEvaluationOnSubject(
     p_predmet_id IN studijni_material.predmet_id%TYPE,
     p_uzivatel_id IN vyplneny_kviz.uzivatel_id%TYPE,
     p_uzivatele OUT SYS_REFCURSOR
+);
+
+PROCEDURE finalEvaluation(
+    p_user_id IN uzivatel.id_uzivatel%TYPE,
+    p_group_id IN skupina.id_skupina%TYPE
 );
 
 END ELSA;

@@ -2,11 +2,8 @@ package elsa.screen;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
-import elsa.database.Comment;
 import elsa.database.DatabaseManager;
 import elsa.database.Subject;
-import elsa.database.User;
 import elsa.screen.handlers.Screen;
 import elsa.screen.tools.Information;
 import java.net.URL;
