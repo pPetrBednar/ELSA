@@ -6,6 +6,6 @@ package elsa.database;
  */
 public class DatabaseConfig {
 
-    public static final String LOGIN = "st58214";
-    public static final String PASSWORD = "db192837456";
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
 }
